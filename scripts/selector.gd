@@ -61,7 +61,7 @@ func _input(event: InputEvent) -> void:
 func _handle_frustrum_shape() -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
 
-	var origin := camera.position
+	var origin := camera.global_position
 	var far := camera.far - 1
 	var corner_1 := camera.project_position(Vector2.ZERO, far)
 	var corner_2 := camera.project_position(Vector2(viewport_size.x, 0), far)
@@ -95,7 +95,7 @@ func _handle_unit_selection() -> void:
 	var rect_abs := selection_rect.abs()
 
 	for unit: Node3D in visible_units.values():
-		var point := camera.unproject_position(unit.position)
+		var point := camera.unproject_position(unit.global_position)
 		if unit is TestUnit:
 			(unit as TestUnit).set_selected(rect_abs.has_point(point))
 

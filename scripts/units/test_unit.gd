@@ -51,7 +51,7 @@ func _set_target_click(mouse_pos: Vector2) -> void:
 
 
 func _click_raycast(mouse_pos: Vector2) -> Vector3:
-	var from := camera.position
+	var from := camera.global_position
 	var to := camera.project_ray_normal(mouse_pos)
 	return ground_plane.intersects_ray(from, to)
 
@@ -63,14 +63,14 @@ func _navigate() -> void:
 		
 	var next_pos := nav_agent.get_next_path_position()
 
-	var direction := position.direction_to(next_pos)
+	var direction := global_position.direction_to(next_pos)
 	var new_velocity := direction * SPEED
 	nav_agent.set_velocity(new_velocity)
 
 
 func _animate() -> void:
 	if velocity.length() > 0.1:
-		look_at(position + velocity, Vector3.UP, true)
+		look_at(global_position + velocity, Vector3.UP, true)
 		animation_player.play('walk')
 	else:
 		animation_player.play('idle')

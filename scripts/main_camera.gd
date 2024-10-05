@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 
 	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, rotation.x)
 	var offset := offset_direction * distance
-	position = target_position + offset
+	global_position = target_position + offset
 
 	DebugDraw.marker(target_position, 0.05)
 
