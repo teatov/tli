@@ -73,7 +73,11 @@ func _animate(delta: float) -> void:
 	if velocity.length() > 0.1:
 		var velocity_normalized := velocity.normalized()
 		var angle := atan2(-velocity_normalized.x, -velocity_normalized.z) + PI
-		global_rotation.y = rotate_toward(global_rotation.y, angle, TURN_SPEED * delta)
+		global_rotation.y = rotate_toward(
+				global_rotation.y, 
+				angle, 
+				TURN_SPEED * delta,
+		)
 		# look_at(global_position + velocity, Vector3.UP, true)
 		animation_player.play('walk')
 	else:

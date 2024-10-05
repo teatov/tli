@@ -81,6 +81,7 @@ func _notification(what: int) -> void:
 		window_out_of_focus = true
 
 
+## Start gradually moving camera towards a position
 func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 	heading_to_position = to
 	heading_from_position = target_position
