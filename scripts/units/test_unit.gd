@@ -1,7 +1,8 @@
 extends CharacterBody3D
 class_name TestUnit
 
-const SPEED: float = 3
+const MOVE_SPEED: float = 3
+const TURN_SPEED: float = 10
 
 var selected: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
@@ -14,12 +15,12 @@ var ground_plane: Plane = Plane(Vector3.UP, 0)
 
 func _ready() -> void:
 	set_selected(false)
-	nav_agent.max_speed = SPEED
+	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
 
 
-func _process(_delta: float) -> void:
-	_animate()
+func _process(delta: float) -> void:
+	_animate(delta)
 
 
 func _physics_process(_delta: float) -> void:
@@ -64,13 +65,16 @@ func _navigate() -> void:
 	var next_pos := nav_agent.get_next_path_position()
 
 	var direction := global_position.direction_to(next_pos)
-	var new_velocity := direction * SPEED
+	var new_velocity := direction * MOVE_SPEED
 	nav_agent.set_velocity(new_velocity)
 
 
-func _animate() -> void:
+func _animate(delta: float) -> void:
 	if velocity.length() > 0.1:
-		look_at(global_position + velocity, Vector3.UP, true)
+		var velocity_normalized := velocity.normalized()
+		var angle := atan2(-velocity_normalized.x, -velocity_normalized.z) + PI
+		global_rotation.y = rotate_toward(global_rotation.y, angle, TURN_SPEED * delta)
+		# look_at(global_position + velocity, Vector3.UP, true)
 		animation_player.play('walk')
 	else:
 		animation_player.play('idle')
