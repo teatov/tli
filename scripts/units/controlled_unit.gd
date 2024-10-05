@@ -9,6 +9,9 @@ var ground_plane: Plane = Plane(Vector3.UP, 0)
 
 
 func _ready() -> void:
+	assert(camera != null, "camera missing!")
+	assert(selection_sprite != null, "selection_sprite missing!")
+
 	set_selected(false)
 	super._ready()
 

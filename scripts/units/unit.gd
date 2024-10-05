@@ -16,6 +16,11 @@ var is_on_screen: bool = false
 
 
 func _ready() -> void:
+	assert(hover_sprite != null, "hover_sprite missing!")
+	assert(nav_agent != null, "nav_agent missing!")
+	assert(animation_player != null, "animation_player missing!")
+	assert(visibility_notifier != null, "visibility_notifier missing!")
+
 	set_hovered(false)
 	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
