@@ -5,6 +5,8 @@ const MARKER_RADIUS: float = 0.2
 const CIRCLE_RADIUS: float = 3
 const DEFAULT_COLOR: Color = Color.RED
 
+var enable: bool = false
+
 var camera: Camera3D
 var control: Control = Control.new()
 
@@ -16,25 +18,26 @@ var circles_to_draw: Array[Dictionary] = []
 func _ready() -> void:
 	camera = get_viewport().get_camera_3d()
 	layer = 999
-	visible = false
+	enable = false
 	control.draw.connect(_on_control_draw)
 	add_child(control)
 
 
 func _process(_delta: float) -> void:
-	if not visible:
+	if not enable:
 		return
 	control.queue_redraw()
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_debug"):
-		visible = not visible
+		enable = not enable
+		visible = enable
 		vectors_to_draw.clear()
 
 
 func vector(from: Vector3, to: Vector3, color: Color = DEFAULT_COLOR) -> void:
-	if not visible:
+	if not enable:
 		return
 
 	vectors_to_draw.append({"from": from, "to": to, "color": color})
@@ -45,14 +48,14 @@ func marker(
 		radius: float = MARKER_RADIUS,
 		color: Color = DEFAULT_COLOR
 ) -> void:
-	if not visible:
+	if not enable:
 		return
 
 	markers_to_draw.append({"pos": pos, "radius": radius, "color": color})
 
 
 func circle(pos: Vector3, color: Color = DEFAULT_COLOR) -> void:
-	if not visible:
+	if not enable:
 		return
 
 	circles_to_draw.append({"pos": pos, "color": color})
@@ -102,7 +105,7 @@ func _draw_circle(pos: Vector3, color: Color) -> void:
 
 
 func _on_control_draw() -> void:
-	if not visible:
+	if not enable:
 		return
 
 	for v in vectors_to_draw:
