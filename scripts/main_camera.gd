@@ -23,6 +23,8 @@ var mouse_position: Vector2 = Vector2()
 var zoom_value: float = ZOOM_VALUE_DEFAULT
 var zoom_raw: float = zoom_value
 
+var mouse_outside_window: bool = false
+
 
 func _process(delta: float) -> void:
 	zoom_value = lerp(zoom_value, zoom_raw, delta * ZOOM_DAMP)
@@ -58,7 +60,17 @@ func _input(event: InputEvent) -> void:
 		zoom_raw = ZOOM_VALUE_DEFAULT
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_MOUSE_ENTER:
+		mouse_outside_window = false
+	elif what == NOTIFICATION_WM_MOUSE_EXIT:
+		mouse_outside_window = true
+
+
 func _handle_movement(delta: float) -> void:
+	if mouse_outside_window:
+		return
+
 	var viewport_size := get_viewport().get_visible_rect().size
 
 	var move_input := Vector2()
