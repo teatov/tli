@@ -65,7 +65,7 @@ func _handle_movement(delta: float) -> void:
 	# Horizontal
 	if (mouse_position.x <= EDGE_THRESHOLD):
 		move_input.x = -1
-	elif (mouse_position.x >= viewport_size.x - EDGE_THRESHOLD - 1):
+	elif (mouse_position.x > viewport_size.x - EDGE_THRESHOLD):
 		move_input.x = 1
 	else:
 		move_input.x = 0
@@ -73,7 +73,7 @@ func _handle_movement(delta: float) -> void:
 	# Vertical
 	if (mouse_position.y <= EDGE_THRESHOLD):
 		move_input.y = -1
-	elif (mouse_position.y >= viewport_size.y - EDGE_THRESHOLD - 1):
+	elif (mouse_position.y > viewport_size.y - EDGE_THRESHOLD):
 		move_input.y = 1
 	else:
 		move_input.y = 0
