@@ -5,15 +5,15 @@ const ZOOM_SPEED: float = 0.25
 ## from the screen edge to move the camera.
 const EDGE_THRESHOLD: float = 10
 
-@export var zoom_in_distance: float = 1
-@export var zoom_in_fov: float = 60
+@export var zoom_in_distance: float = 5
+@export var zoom_in_fov: float = 25
 @export var zoom_in_angle: float = -0.1 * PI
-@export var zoom_in_speed: float = 2
+@export var zoom_in_speed: float = 5
 
-@export var zoom_out_distance: float = 3
-@export var zoom_out_fov: float = 70
+@export var zoom_out_distance: float = 90
+@export var zoom_out_fov: float = 20
 @export var zoom_out_angle: float = -0.25 * PI
-@export var zoom_out_speed: float = 4
+@export var zoom_out_speed: float = 30
 
 var target_position: Vector3 = Vector3(0, 0, 0)
 var mouse_position: Vector2 = Vector2()
