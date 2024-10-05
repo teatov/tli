@@ -47,7 +47,6 @@ func _set_target_click(mouse_pos: Vector2) -> void:
 	if click_position == null:
 		return
 		
-	DebugDraw.marker(click_position)
 	nav_agent.set_target_position(click_position)
 
 
