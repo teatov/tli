@@ -53,7 +53,7 @@ func _input(event: InputEvent) -> void:
 			if mouse_pressed:
 				selection_rect.position = button_event.position
 				selection_rect.size = Vector2.ZERO
-			else:
+			elif selecting:
 				_set_selection_state(false)
 	
 	if event is InputEventMouseMotion and mouse_pressed:
