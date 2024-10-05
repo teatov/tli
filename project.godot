@@ -11,5 +11,29 @@ config_version=5
 [application]
 
 config/name="tli"
+config/description="A game about ants and aphids for Ludum Dare 56"
 config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[debug]
+
+settings/crash_handler/message="Oh my, there's a BUG in the game! How queer and unexpected!"
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/unsafe_property_access=2
+gdscript/warnings/unsafe_method_access=2
+gdscript/warnings/unsafe_cast=2
+gdscript/warnings/unsafe_call_argument=2
+gdscript/warnings/integer_division=0
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[filesystem]
+
+import/fbx2gltf/enabled=false
+import/blender/enabled=false
