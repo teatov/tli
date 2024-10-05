@@ -18,7 +18,7 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and selected:
 		var button_event := event as InputEventMouseButton
 		if button_event.pressed:
 			_set_target_click(button_event.position)
