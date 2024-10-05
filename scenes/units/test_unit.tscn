@@ -10,7 +10,6 @@ radius = 0.25
 
 [node name="TestUnit" instance=ExtResource("1_ff64u")]
 collision_mask = 0
-input_capture_on_drag = true
 script = ExtResource("1_e76lg")
 
 [node name="AnimationPlayer" parent="." index="1"]

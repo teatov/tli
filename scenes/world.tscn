@@ -56,6 +56,14 @@ transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 
 current = true
 far = 200.0
 script = ExtResource("1_xl1ut")
+zoom_in_distance = null
+zoom_in_fov = null
+zoom_in_angle = null
+zoom_in_speed = null
+zoom_out_distance = null
+zoom_out_fov = null
+zoom_out_angle = null
+zoom_out_speed = null
 
 [node name="Static" type="Node" parent="."]
 
@@ -813,6 +821,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_16ver")
 
 [node name="FrustrumArea" type="Area3D" parent="Selector"]
+input_ray_pickable = false
 
 [node name="FrustrumCollisionShape" type="CollisionShape3D" parent="Selector/FrustrumArea"]
 shape = SubResource("ConvexPolygonShape3D_n34fh")
