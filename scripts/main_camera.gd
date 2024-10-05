@@ -8,6 +8,13 @@ const EDGE_THRESHOLD: float = 10
 var mouse_position: Vector2 = Vector2()
 
 func _process(delta: float) -> void:
+	handle_movement(delta)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		mouse_position = (event as InputEventMouseMotion).position
+
+func handle_movement(delta: float) -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
 
 	var move_input := Vector2()
@@ -35,7 +42,3 @@ func _process(delta: float) -> void:
 
 	var velocity := direction * MOVE_SPEED
 	position += velocity * delta
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		mouse_position = (event as InputEventMouseMotion).position
