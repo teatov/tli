@@ -6,9 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bgbe5l2woe5b2" path="res://assets/textures/gui/selection_box.png" id="4_k36pt"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6jq54"]
-vertices = PackedVector3Array(-1.45696, 0.02, -1.07509, -0.706959, 0.02, -1.32509, -0.706959, 0.02, -5.32509, -7.95696, 0.02, -5.32509, -7.95696, 0.02, -0.575085, -1.45696, 0.02, -0.575085, -0.206959, 0.02, -1.07509, 12.543, 0.02, -5.32509, -0.206959, 0.02, -0.325085, -0.706959, 0.02, -0.0750852, -0.706959, 0.02, 5.42491, 12.543, 0.02, 5.42491, -7.95696, 0.02, 5.42491)
+vertices = PackedVector3Array(-1.45696, 0.5, -1.07509, -0.706959, 0.5, -1.32509, -0.706959, 0.5, -5.32509, -7.95696, 0.5, -5.32509, -7.95696, 0.5, -0.575085, -1.45696, 0.5, -0.575085, -0.206959, 0.5, -1.07509, 12.543, 0.5, -5.32509, -0.206959, 0.5, -0.325085, -0.706959, 0.5, -0.0750852, -0.706959, 0.5, 5.42491, 12.543, 0.5, 5.42491, -7.95696, 0.5, 5.42491)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(0, 5, 4), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 7), PackedInt32Array(8, 6, 7), PackedInt32Array(9, 10, 5), PackedInt32Array(5, 10, 4), PackedInt32Array(4, 10, 12)]
-cell_height = 0.01
 agent_height = 0.5
 agent_radius = 0.25
 
