@@ -11,7 +11,7 @@ const ZOOM_VALUE_DEFAULT: float = 0.3
 ## How many pixels the mouse needs to be away
 ## from the screen edge to move the camera.
 const EDGE_THRESHOLD: float = 10
-const HEADING_SPEED: float = 1
+const HEADING_SPEED: float = 0.75
 
 @export var zoom_in_distance: float = 5
 @export var zoom_in_fov: float = 25
@@ -30,6 +30,7 @@ var zoom_value: float = ZOOM_VALUE_DEFAULT
 var zoom_raw: float = zoom_value
 
 var heading_to_position: Vector3 = Vector3.ZERO
+var heading_to_zoom: float = 0
 var heading_from_position: Vector3 = Vector3.ZERO
 var heading_from_zoom: float = 0
 var heading_progress: float = 0
@@ -80,11 +81,12 @@ func _notification(what: int) -> void:
 		window_out_of_focus = true
 
 
-func head_to(to: Vector3) -> void:
+func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 	heading_to_position = to
 	heading_from_position = target_position
 	heading_progress = 0
 	heading_from_zoom = zoom_value
+	heading_to_zoom = zoom
 	state = CameraState.HEADING_TO
 
 
@@ -131,8 +133,18 @@ func _handle_heading_to(delta: float) -> void:
 		state = CameraState.FREE
 	
 	heading_progress += HEADING_SPEED * delta
-	target_position = lerp(heading_from_position, heading_to_position, heading_progress)
-	zoom_raw = quadratic_bezier(heading_from_zoom, 1, ZOOM_VALUE_DEFAULT, heading_progress)
+	var eased_progress := ease(heading_progress, -3)
+	target_position = lerp(
+			heading_from_position, 
+			heading_to_position, 
+			eased_progress,
+	)
+	zoom_raw = quadratic_bezier(
+			heading_from_zoom, 
+			1, 
+			heading_to_zoom, 
+			eased_progress,
+	)
 	zoom_value = zoom_raw
 
 	
