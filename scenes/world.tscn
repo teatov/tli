@@ -1,10 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=6 format=3 uid="uid://ceru75se7ifkb"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt7ar"]
 size = Vector2(4, 4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_w7g3k"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_po5ks"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_au5yl"]
+sky_material = SubResource("ProceduralSkyMaterial_po5ks")
+
+[sub_resource type="Environment" id="Environment_nnr3k"]
+background_mode = 1
+background_color = Color(0.547785, 0.658701, 0.745764, 1)
+sky = SubResource("Sky_au5yl")
 
 [node name="World" type="Node3D"]
 
@@ -19,6 +31,14 @@ mesh = SubResource("PlaneMesh_qt7ar")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("BoxMesh_w7g3k")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Static"]
+environment = SubResource("Environment_nnr3k")
+
+[node name="SunLight" type="DirectionalLight3D" parent="Static"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
+shadow_enabled = true
+
 [node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
 current = true
+far = 100.0
