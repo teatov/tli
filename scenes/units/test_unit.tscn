@@ -26,3 +26,9 @@ texture = ExtResource("2_5725f")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="4"]
 path_desired_distance = 0.5
 target_desired_distance = 0.5
+avoidance_enabled = true
+height = 0.5
+radius = 0.25
+neighbor_distance = 10.0
+debug_enabled = true
+debug_use_custom = true
