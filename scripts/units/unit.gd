@@ -4,8 +4,13 @@ class_name Unit
 const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
+const MAX_WANDER_DISTANCE: float = 5
+const MIN_WANDER_INTERVAL: float = 0.25
+const MAX_WANDER_INTERVAL: float = 5
+
 var hovered: bool = false
 var is_on_screen: bool = false
+var wandering_timer: float = 0
 
 @onready var hover_sprite: Sprite3D = $HoverSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
@@ -13,6 +18,7 @@ var is_on_screen: bool = false
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
 )
+@onready var wandering_center: Vector3 = global_position
 
 
 func _ready() -> void:
@@ -82,6 +88,19 @@ func _animate(delta: float) -> void:
 		animation_player.play('idle')
 	
 	hover_sprite.visible = hovered
+
+
+func _wander(delta: float) -> void:
+	wandering_timer -= delta
+	if wandering_timer <= 0:
+		var new_pos_offset := Vector3(
+				randf_range(-MAX_WANDER_DISTANCE, MAX_WANDER_DISTANCE),
+				0,
+				randf_range(-MAX_WANDER_DISTANCE, MAX_WANDER_DISTANCE),
+		)
+		var new_pos := wandering_center + new_pos_offset
+		nav_agent.set_target_position(new_pos)
+		wandering_timer = randf_range(-MIN_WANDER_INTERVAL, MAX_WANDER_INTERVAL)
 
 
 func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
