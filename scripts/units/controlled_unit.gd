@@ -14,6 +14,9 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if not is_on_screen:
+		return
+
 	if event is InputEventMouseButton and selected:
 		var button_event := event as InputEventMouseButton
 		if (

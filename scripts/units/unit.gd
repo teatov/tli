@@ -5,10 +5,14 @@ const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
 var hovered: bool = false
+var is_on_screen: bool = false
 
 @onready var hover_sprite: Sprite3D = $HoverSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var visibility_notifier: VisibleOnScreenNotifier3D = (
+		$VisibleOnScreenNotifier3D
+)
 
 
 func _ready() -> void:
@@ -18,6 +22,12 @@ func _ready() -> void:
 	set_max_slides(2)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
+	visibility_notifier.screen_entered.connect(
+			_on_visibility_notifier_screen_entered,
+	)
+	visibility_notifier.screen_exited.connect(
+			_on_visibility_notifier_screen_exited,
+	)
 
 
 func _process(delta: float) -> void:
@@ -30,6 +40,7 @@ func _physics_process(_delta: float) -> void:
 
 func set_hovered(on: bool) -> void:
 	hovered = on
+
 
 func _navigate() -> void:
 	if nav_agent.is_navigation_finished():
@@ -44,6 +55,14 @@ func _navigate() -> void:
 
 
 func _animate(delta: float) -> void:
+	if not is_on_screen:
+		if velocity.length() > 0.1:
+			var velocity_normalized := velocity.normalized()
+			global_rotation.y = atan2(
+					-velocity_normalized.x, -velocity_normalized.z
+			) + PI
+		return
+
 	if velocity.length() > 0.1:
 		var velocity_normalized := velocity.normalized()
 		var angle := atan2(-velocity_normalized.x, -velocity_normalized.z) + PI
@@ -65,9 +84,17 @@ func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
 	move_and_slide()
 
 
-func _on_mouse_entered()->void:
+func _on_mouse_entered() -> void:
 	set_hovered(true)
 
 
-func _on_mouse_exited()->void:
+func _on_mouse_exited() -> void:
 	set_hovered(false)
+
+
+func _on_visibility_notifier_screen_entered() -> void:
+	is_on_screen = true
+
+
+func _on_visibility_notifier_screen_exited() -> void:
+	is_on_screen = false

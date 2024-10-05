@@ -39,3 +39,6 @@ avoidance_enabled = true
 height = 0.5
 radius = 0.25
 neighbor_distance = 10.0
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="6"]
+aabb = AABB(-0.5, 0, -0.5, 1, 0.5, 1)
