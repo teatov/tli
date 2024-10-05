@@ -4,9 +4,9 @@ class_name Unit
 const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
-const MAX_WANDER_DISTANCE: float = 5
-const MIN_WANDER_INTERVAL: float = 0.25
-const MAX_WANDER_INTERVAL: float = 5
+var max_wander_distance: float = 5
+var min_wander_interval: float = 0.25
+var max_wander_interval: float = 5
 
 var hovered: bool = false
 var is_on_screen: bool = false
@@ -94,13 +94,13 @@ func _wander(delta: float) -> void:
 	wandering_timer -= delta
 	if wandering_timer <= 0:
 		var new_pos_offset := Vector3(
-				randf_range(-MAX_WANDER_DISTANCE, MAX_WANDER_DISTANCE),
+				randf_range(-max_wander_distance, max_wander_distance),
 				0,
-				randf_range(-MAX_WANDER_DISTANCE, MAX_WANDER_DISTANCE),
+				randf_range(-max_wander_distance, max_wander_distance),
 		)
 		var new_pos := wandering_center + new_pos_offset
 		nav_agent.set_target_position(new_pos)
-		wandering_timer = randf_range(-MIN_WANDER_INTERVAL, MAX_WANDER_INTERVAL)
+		wandering_timer = randf_range(-min_wander_interval, max_wander_interval)
 
 
 func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:

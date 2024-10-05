@@ -1,11 +1,21 @@
 extends Unit
 class_name ControlledUnit
 
+signal moving_started
+signal moving_ended
+
 var selected: bool = false
+var moving_to_target: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
 @onready var selection_sprite: Sprite3D = $SelectionSprite
+
+
+func _init() -> void:
+	max_wander_distance = 2
+	min_wander_interval = 0.5
+	max_wander_interval = 30
 
 
 func _ready() -> void:
@@ -14,6 +24,13 @@ func _ready() -> void:
 
 	set_selected(false)
 	super._ready()
+
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	if moving_to_target and nav_agent.is_navigation_finished():
+		moving_to_target = false
+		moving_ended.emit()
 
 
 func _input(event: InputEvent) -> void:
@@ -26,6 +43,8 @@ func _input(event: InputEvent) -> void:
 				button_event.button_index == MOUSE_BUTTON_RIGHT
 				and button_event.pressed
 		):
+			moving_to_target = true
+			moving_started.emit()
 			_set_target_click(button_event.position)
 
 
