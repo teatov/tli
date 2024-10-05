@@ -17,6 +17,7 @@ func _ready() -> void:
 	set_selected(false)
 	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
+	set_max_slides(2)
 
 
 func _process(delta: float) -> void:
