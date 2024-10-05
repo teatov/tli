@@ -1,12 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=14 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_xl1ut"]
 [ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_bk426"]
 [ext_resource type="Script" path="res://scripts/selector.gd" id="3_522u5"]
 [ext_resource type="Texture2D" uid="uid://bgbe5l2woe5b2" path="res://assets/textures/gui/selection_box.png" id="4_k36pt"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_6jq54"]
+vertices = PackedVector3Array(-1.45696, 0.02, -1.07509, -0.706959, 0.02, -1.32509, -0.706959, 0.02, -5.32509, -7.95696, 0.02, -5.32509, -7.95696, 0.02, -0.575085, -1.45696, 0.02, -0.575085, -0.206959, 0.02, -1.07509, 12.543, 0.02, -5.32509, -0.206959, 0.02, -0.325085, -0.706959, 0.02, -0.0750852, -0.706959, 0.02, 5.42491, 12.543, 0.02, 5.42491, -7.95696, 0.02, 5.42491)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(0, 5, 4), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 7), PackedInt32Array(8, 6, 7), PackedInt32Array(9, 10, 5), PackedInt32Array(5, 10, 4), PackedInt32Array(4, 10, 12)]
+cell_height = 0.01
+agent_height = 0.5
+agent_radius = 0.25
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt7ar"]
-size = Vector2(4, 4)
+size = Vector2(20.97, 11.275)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21sta"]
 albedo_color = Color(0.114897, 0.114897, 0.114897, 1)
@@ -45,17 +52,27 @@ points = PackedVector3Array(-0.0778407, 1.54508, 4.75528, -31.3231, -5, -72.1516
 
 [node name="World" type="Node3D"]
 
+[node name="MainCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
+current = true
+far = 200.0
+script = ExtResource("1_xl1ut")
+
 [node name="Static" type="Node" parent="."]
 
-[node name="Meshes" type="Node" parent="Static"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Static"]
+navigation_mesh = SubResource("NavigationMesh_6jq54")
 
-[node name="PlaneMesh" type="MeshInstance3D" parent="Static/Meshes"]
+[node name="PlaneMesh" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27804, 0, 0.0624147)
 mesh = SubResource("PlaneMesh_qt7ar")
+skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_21sta")
 
-[node name="BoxMesh" type="MeshInstance3D" parent="Static/Meshes"]
+[node name="BoxMesh" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.731028, 0.25, -0.696817)
 mesh = SubResource("BoxMesh_w7g3k")
+skeleton = NodePath("")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Static"]
 environment = SubResource("Environment_nnr3k")
@@ -63,12 +80,6 @@ environment = SubResource("Environment_nnr3k")
 [node name="SunLight" type="DirectionalLight3D" parent="Static"]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
 shadow_enabled = true
-
-[node name="MainCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
-current = true
-far = 200.0
-script = ExtResource("1_xl1ut")
 
 [node name="Units" type="Node" parent="."]
 
