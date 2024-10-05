@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=8 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_xl1ut"]
+[ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="2_at2lm"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt7ar"]
 size = Vector2(4, 4)
@@ -30,7 +31,7 @@ sky = SubResource("Sky_au5yl")
 mesh = SubResource("PlaneMesh_qt7ar")
 
 [node name="BoxMesh" type="MeshInstance3D" parent="Static/Meshes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.731028, 0.25, -0.696817)
 mesh = SubResource("BoxMesh_w7g3k")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Static"]
@@ -45,3 +46,8 @@ transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 
 current = true
 far = 100.0
 script = ExtResource("1_xl1ut")
+
+[node name="Units" type="Node" parent="."]
+
+[node name="ant2" parent="Units" instance=ExtResource("2_at2lm")]
+transform = Transform3D(0.78188, 0, -0.623429, 0, 1, 0, 0.623429, 0, 0.78188, 0, 0, 0)
