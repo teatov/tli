@@ -50,9 +50,11 @@ func _input(event: InputEvent) -> void:
 		var button_event := event as InputEventMouseButton
 		if button_event.button_index == MOUSE_BUTTON_LEFT:
 			mouse_pressed = button_event.pressed
-			if button_event.pressed:
+			if mouse_pressed:
 				selection_rect.position = button_event.position
 				selection_rect.size = Vector2.ZERO
+			else:
+				_set_selection_state(false)
 	
 	if event is InputEventMouseMotion and mouse_pressed:
 		var motion_event := event as InputEventMouseMotion
@@ -93,6 +95,10 @@ func _handle_unit_selection() -> void:
 	if not selecting:
 		return
 	
+	_set_selection_state(true)
+
+
+func _set_selection_state(hover: bool) -> void:
 	var rect_abs := selection_rect.abs()
 
 	for unit: Node3D in visible_units.values():
@@ -101,7 +107,11 @@ func _handle_unit_selection() -> void:
 				+ (Vector3.UP * UNIT_SELECT_OFFSET)
 		)
 		if unit is TestUnit:
-			(unit as TestUnit).set_selected(rect_abs.has_point(point))
+			if hover:
+				(unit as TestUnit).set_hovered(rect_abs.has_point(point))
+			else:
+				(unit as TestUnit).set_selected(rect_abs.has_point(point))
+				(unit as TestUnit).set_hovered(false)
 
 
 func _on_frustrum_area_unit_entered(unit: Node3D) -> void:

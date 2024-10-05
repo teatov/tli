@@ -5,10 +5,12 @@ const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
 var selected: bool = false
+var hovered: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
 @onready var selection_sprite: Sprite3D = $SelectionSprite
+@onready var hover_sprite: Sprite3D = $HoverSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -40,7 +42,10 @@ func _input(event: InputEvent) -> void:
 
 func set_selected(on: bool) -> void:
 	selected = on
-	selection_sprite.visible = selected
+
+
+func set_hovered(on: bool) -> void:
+	hovered = on
 
 
 func _set_target_click(mouse_pos: Vector2) -> void:
@@ -74,14 +79,17 @@ func _animate(delta: float) -> void:
 		var velocity_normalized := velocity.normalized()
 		var angle := atan2(-velocity_normalized.x, -velocity_normalized.z) + PI
 		global_rotation.y = rotate_toward(
-				global_rotation.y, 
-				angle, 
+				global_rotation.y,
+				angle,
 				TURN_SPEED * delta,
 		)
 		# look_at(global_position + velocity, Vector3.UP, true)
 		animation_player.play('walk')
 	else:
 		animation_player.play('idle')
+	
+	selection_sprite.visible = selected
+	hover_sprite.visible = hovered
 
 
 func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
