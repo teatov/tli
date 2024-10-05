@@ -22,9 +22,11 @@ func _ready() -> void:
 	layer = 999
 	enabled = false
 	control.draw.connect(_on_control_draw)
+	control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(control)
 
 	label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(label)
 
 

@@ -20,6 +20,8 @@ func _ready() -> void:
 	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
 	set_max_slides(2)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
 
 func _process(delta: float) -> void:
@@ -61,7 +63,6 @@ func _click_raycast(mouse_pos: Vector2) -> Vector3:
 	var to := camera.project_ray_normal(mouse_pos)
 	return ground_plane.intersects_ray(from, to)
 
-
 func _navigate() -> void:
 	if nav_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
@@ -95,3 +96,11 @@ func _animate(delta: float) -> void:
 func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
 	velocity = safe_velocity
 	move_and_slide()
+
+
+func _on_mouse_entered()->void:
+	set_hovered(true)
+
+
+func _on_mouse_exited()->void:
+	set_hovered(false)
