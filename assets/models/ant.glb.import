@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/ant.glb-2bc83283752a3a739ab3e737bef4a96c.scn"
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="StaticBody3D"
+nodes/root_name="TestUnit"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -29,7 +29,7 @@ animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
-animation/import_rest_as_RESET=false
+animation/import_rest_as_RESET=true
 import_script/path=""
 _subresources={}
 gltf/naming_version=1
