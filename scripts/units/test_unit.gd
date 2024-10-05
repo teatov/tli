@@ -1,12 +1,15 @@
 extends CharacterBody3D
 class_name TestUnit
 
+const SPEED: float = 3
+
 var selected: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
 
+@onready var camera: Camera3D = get_viewport().get_camera_3d()
 @onready var selection_sprite: Sprite3D = $SelectionSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
-@onready var camera: Camera3D = get_viewport().get_camera_3d()
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 func _ready() -> void:
@@ -14,6 +17,10 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	_animate()
+
+
+func _physics_process(_delta: float) -> void:
 	_navigate()
 
 
@@ -31,7 +38,6 @@ func set_selected(on: bool) -> void:
 
 func _set_target_click(mouse_pos: Vector2) -> void:
 	var click_position := _click_raycast(mouse_pos)
-	print(click_position)
 	if click_position == null:
 		return
 	
@@ -52,4 +58,15 @@ func _navigate() -> void:
 	var target_pos := nav_agent.get_next_path_position()
 	DebugDraw.vector(position, target_pos)
 	DebugDraw.marker(nav_agent.get_final_position())
-	# position = target_pos
+
+	var direction := position.direction_to(target_pos)
+	velocity = direction * SPEED
+	move_and_slide()
+
+
+func _animate() -> void:
+	if velocity.length() > 0.1:
+		animation_player.play('walk')
+	else:
+		animation_player.play('idle')
+	look_at(position + velocity, Vector3.UP, true)
