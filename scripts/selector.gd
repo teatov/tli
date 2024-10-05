@@ -97,7 +97,7 @@ func _on_frustrum_area_unit_entered(unit: Node3D) -> void:
 	if visible_units.keys().has(unit_id):
 		return
 	
-	visible_units[unit_id] = unit.get_parent()
+	visible_units[unit_id] = unit
 
 
 func _on_frustrum_area_unit_exited(unit: Node3D) -> void:

@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/ant.glb-2bc83283752a3a739ab3e737bef4a96c.scn"
 
 [params]
 
-nodes/root_type="StaticBody3D"
+nodes/root_type="CharacterBody3D"
 nodes/root_name="TestUnit"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
