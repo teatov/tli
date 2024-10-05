@@ -1,10 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=13 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_xl1ut"]
-[ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="2_at2lm"]
+[ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_bk426"]
+[ext_resource type="Script" path="res://scripts/selector.gd" id="3_522u5"]
+[ext_resource type="Texture2D" uid="uid://bgbe5l2woe5b2" path="res://assets/textures/gui/selection_box.png" id="4_k36pt"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt7ar"]
 size = Vector2(4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21sta"]
+albedo_color = Color(0.114897, 0.114897, 0.114897, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_w7g3k"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -21,6 +26,23 @@ background_mode = 1
 background_color = Color(0.547785, 0.658701, 0.745764, 1)
 sky = SubResource("Sky_au5yl")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_16ver"]
+texture = ExtResource("4_k36pt")
+texture_margin_left = 21.0
+texture_margin_top = 20.0
+texture_margin_right = 23.0
+texture_margin_bottom = 20.0
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+draw_center = false
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_n34fh"]
+points = PackedVector3Array(-0.0778407, 1.54508, 4.75528, -31.3231, -5, -72.1516, 31.0442, -5, -72.1516, -5.20198, -5, -6.07939, 5.0261, -5, -6.07939)
+
 [node name="World" type="Node3D"]
 
 [node name="Static" type="Node" parent="."]
@@ -29,6 +51,7 @@ sky = SubResource("Sky_au5yl")
 
 [node name="PlaneMesh" type="MeshInstance3D" parent="Static/Meshes"]
 mesh = SubResource("PlaneMesh_qt7ar")
+surface_material_override/0 = SubResource("StandardMaterial3D_21sta")
 
 [node name="BoxMesh" type="MeshInstance3D" parent="Static/Meshes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.731028, 0.25, -0.696817)
@@ -49,5 +72,47 @@ script = ExtResource("1_xl1ut")
 
 [node name="Units" type="Node" parent="."]
 
-[node name="ant2" parent="Units" instance=ExtResource("2_at2lm")]
-transform = Transform3D(0.78188, 0, -0.623429, 0, 1, 0, 0.623429, 0, 0.78188, 0, 0, 0)
+[node name="TestUnit" parent="Units" instance=ExtResource("2_bk426")]
+
+[node name="TestUnit2" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.96245, 0, 0)
+
+[node name="TestUnit3" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.97171, 0, 0)
+
+[node name="TestUnit4" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.80899, 0, 0)
+
+[node name="TestUnit5" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.67063, 0, 0)
+
+[node name="TestUnit6" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.55902, 0, 0)
+
+[node name="TestUnit7" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.39631, 0, 0)
+
+[node name="TestUnit8" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.34148, 0, 0)
+
+[node name="TestUnit9" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.27442, 0, 0)
+
+[node name="TestUnit10" parent="Units" instance=ExtResource("2_bk426")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.07759, 0, 0)
+
+[node name="Selector" type="Node" parent="."]
+script = ExtResource("3_522u5")
+
+[node name="SelectionRect" type="Panel" parent="Selector"]
+offset_left = 267.0
+offset_top = 229.0
+offset_right = 424.0
+offset_bottom = 287.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_16ver")
+
+[node name="FrustrumArea" type="Area3D" parent="Selector"]
+
+[node name="FrustrumCollisionShape" type="CollisionShape3D" parent="Selector/FrustrumArea"]
+shape = SubResource("ConvexPolygonShape3D_n34fh")
