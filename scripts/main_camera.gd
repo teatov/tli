@@ -1,6 +1,7 @@
 extends Camera3D
 
 const ZOOM_SPEED: float = 0.1
+const ZOOM_DAMP: float = 5
 ## How many pixels the mouse needs to be away
 ## from the screen edge to move the camera.
 const EDGE_THRESHOLD: float = 10
@@ -19,8 +20,11 @@ var target_position: Vector3 = Vector3(0, 0, 0)
 var mouse_position: Vector2 = Vector2()
 ## 0 = zoomed in. 1 = zoomed out.
 var zoom_value: float = 0.3
+var zoom_raw: float = zoom_value
 
 func _process(delta: float) -> void:
+	zoom_value = lerp(zoom_value, zoom_raw, delta * ZOOM_DAMP)
+
 	handle_movement(delta)
 
 	fov = lerp(zoom_in_fov, zoom_out_fov, zoom_value)
@@ -39,10 +43,10 @@ func _input(event: InputEvent) -> void:
 		var button_event := event as InputEventMouseButton
 		if button_event.pressed:
 			if button_event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				zoom_value -= ZOOM_SPEED
+				zoom_raw -= ZOOM_SPEED
 			elif button_event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				zoom_value += ZOOM_SPEED
-			zoom_value = clamp(zoom_value, 0, 1)
+				zoom_raw += ZOOM_SPEED
+			zoom_raw = clamp(zoom_raw, 0, 1)
 
 func handle_movement(delta: float) -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
