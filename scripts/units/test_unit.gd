@@ -62,8 +62,6 @@ func _navigate() -> void:
 		return
 		
 	var next_pos := nav_agent.get_next_path_position()
-	DebugDraw.vector(position, next_pos)
-	DebugDraw.marker(nav_agent.get_final_position())
 
 	var direction := position.direction_to(next_pos)
 	var new_velocity := direction * SPEED
