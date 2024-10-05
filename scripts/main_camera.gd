@@ -1,6 +1,6 @@
 extends Camera3D
 
-const ZOOM_SPEED: float = 0.25
+const ZOOM_SPEED: float = 0.1
 ## How many pixels the mouse needs to be away
 ## from the screen edge to move the camera.
 const EDGE_THRESHOLD: float = 10
@@ -11,14 +11,14 @@ const EDGE_THRESHOLD: float = 10
 @export var zoom_in_speed: float = 5
 
 @export var zoom_out_distance: float = 90
-@export var zoom_out_fov: float = 20
+@export var zoom_out_fov: float = 30
 @export var zoom_out_angle: float = -0.25 * PI
-@export var zoom_out_speed: float = 30
+@export var zoom_out_speed: float = 35
 
 var target_position: Vector3 = Vector3(0, 0, 0)
 var mouse_position: Vector2 = Vector2()
 ## 0 = zoomed in. 1 = zoomed out.
-var zoom_value: float = 0.25
+var zoom_value: float = 0.3
 
 func _process(delta: float) -> void:
 	handle_movement(delta)

@@ -44,7 +44,7 @@ shadow_enabled = true
 [node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
 current = true
-far = 100.0
+far = 200.0
 script = ExtResource("1_xl1ut")
 
 [node name="Units" type="Node" parent="."]
