@@ -40,7 +40,11 @@ func vector(from: Vector3, to: Vector3, color: Color = DEFAULT_COLOR) -> void:
 	vectors_to_draw.append({"from": from, "to": to, "color": color})
 
 
-func marker(pos: Vector3, radius: float = MARKER_RADIUS, color: Color = DEFAULT_COLOR) -> void:
+func marker(
+		pos: Vector3,
+		radius: float = MARKER_RADIUS,
+		color: Color = DEFAULT_COLOR
+) -> void:
 	if not visible:
 		return
 
@@ -65,7 +69,12 @@ func _draw_vector(from: Vector3, to: Vector3, color: Color) -> void:
 	_draw_triangle(end, start.direction_to(end), 5, color)
 
 
-func _draw_triangle(pos: Vector2, dir: Vector2, size: float, color: Color) -> void:
+func _draw_triangle(
+		pos: Vector2,
+		dir: Vector2,
+		size: float,
+		color: Color
+) -> void:
 	var a := pos + dir * size
 	var b := pos + dir.rotated(2 * PI / 3) * size
 	var c := pos + dir.rotated(4 * PI / 3) * size
@@ -97,11 +106,19 @@ func _on_control_draw() -> void:
 		return
 
 	for v in vectors_to_draw:
-		_draw_vector(v["from"] as Vector3, v["to"] as Vector3, v["color"] as Color)
+		_draw_vector(
+				v["from"] as Vector3,
+				v["to"] as Vector3,
+				v["color"] as Color
+		)
 	vectors_to_draw.clear()
 
 	for v in markers_to_draw:
-		_draw_marker(v["pos"] as Vector3, v["radius"] as float, v["color"] as Color)
+		_draw_marker(
+				v["pos"] as Vector3,
+				v["radius"] as float,
+				v["color"] as Color
+		)
 	markers_to_draw.clear()
 
 	for v in circles_to_draw:
