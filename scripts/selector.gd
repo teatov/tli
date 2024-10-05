@@ -106,12 +106,13 @@ func _set_selection_state(hover: bool) -> void:
 				unit.global_position
 				+ (Vector3.UP * UNIT_SELECT_OFFSET)
 		)
-		if unit is TestUnit:
+		if unit is ControlledUnit:
+			var controlled_unit := unit as ControlledUnit
 			if hover:
-				(unit as TestUnit).set_hovered(rect_abs.has_point(point))
+				controlled_unit.set_hovered(rect_abs.has_point(point))
 			else:
-				(unit as TestUnit).set_selected(rect_abs.has_point(point))
-				(unit as TestUnit).set_hovered(false)
+				controlled_unit.set_selected(rect_abs.has_point(point))
+				controlled_unit.set_hovered(false)
 
 
 func _on_frustrum_area_unit_entered(unit: Node3D) -> void:

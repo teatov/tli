@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cfixshlmwhpmi"]
 
-[ext_resource type="Script" path="res://scripts/units/test_unit.gd" id="1_e76lg"]
 [ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="1_ff64u"]
 [ext_resource type="Texture2D" uid="uid://dehqm00kiljut" path="res://assets/textures/selection_unit_decal.png" id="2_5725f"]
+[ext_resource type="Script" path="res://scripts/units/controlled_unit.gd" id="2_gj6f7"]
 [ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="4_umx1w"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e8dcp"]
@@ -10,7 +10,7 @@ radius = 0.25
 
 [node name="TestUnit" instance=ExtResource("1_ff64u")]
 collision_mask = 0
-script = ExtResource("1_e76lg")
+script = ExtResource("2_gj6f7")
 
 [node name="AnimationPlayer" parent="." index="1"]
 deterministic = true
@@ -39,5 +39,3 @@ avoidance_enabled = true
 height = 0.5
 radius = 0.25
 neighbor_distance = 10.0
-debug_enabled = true
-debug_use_custom = true
