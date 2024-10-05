@@ -92,7 +92,11 @@ func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 
 
 func _handle_movement(delta: float) -> void:
-	if window_out_of_focus or state != CameraState.FREE:
+	if (
+			window_out_of_focus 
+			or state != CameraState.FREE 
+			or CursorManager.disable_confinement
+	):
 		return
 
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -136,14 +140,14 @@ func _handle_heading_to(delta: float) -> void:
 	heading_progress += HEADING_SPEED * delta
 	var eased_progress := ease(heading_progress, -3)
 	target_position = lerp(
-			heading_from_position, 
-			heading_to_position, 
+			heading_from_position,
+			heading_to_position,
 			eased_progress,
 	)
 	zoom_raw = quadratic_bezier(
-			heading_from_zoom, 
-			1, 
-			heading_to_zoom, 
+			heading_from_zoom,
+			1,
+			heading_to_zoom,
 			eased_progress,
 	)
 	zoom_value = zoom_raw

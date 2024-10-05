@@ -5,6 +5,8 @@ const CURSOR_HOTSPOT = Vector2(32, 32)
 var cursor_normal := load("res://assets/textures/gui/cursor.png")
 var cursor_click := load("res://assets/textures/gui/cursor_click.png")
 
+var disable_confinement: bool = false
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
@@ -21,6 +23,14 @@ func _input(event: InputEvent) -> void:
 				_set_cursor(cursor_click)
 			else:
 				_set_cursor(cursor_normal)
+
+	if event.is_action_pressed("toggle_camera_navigation"):
+		disable_confinement = not disable_confinement
+		if disable_confinement:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+
 
 
 func _set_cursor(image: Resource) -> void:
