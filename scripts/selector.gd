@@ -1,6 +1,7 @@
 extends Node
 
 const MIN_DRAG_DISTANCE: float = 15
+const UNIT_SELECT_OFFSET: float = 0.25
 
 var frustrum_polygon: ConvexPolygonShape3D = ConvexPolygonShape3D.new()
 var frustrum_polygon_points: PackedVector3Array = [
@@ -95,7 +96,10 @@ func _handle_unit_selection() -> void:
 	var rect_abs := selection_rect.abs()
 
 	for unit: Node3D in visible_units.values():
-		var point := camera.unproject_position(unit.global_position)
+		var point := camera.unproject_position(
+				unit.global_position
+				+ (Vector3.UP * UNIT_SELECT_OFFSET)
+		)
 		if unit is TestUnit:
 			(unit as TestUnit).set_selected(rect_abs.has_point(point))
 
