@@ -2,6 +2,7 @@ extends Camera3D
 
 const ZOOM_SPEED: float = 0.1
 const ZOOM_DAMP: float = 5
+const ZOOM_VALUE_DEFAULT: float = 0.3
 ## How many pixels the mouse needs to be away
 ## from the screen edge to move the camera.
 const EDGE_THRESHOLD: float = 10
@@ -16,10 +17,10 @@ const EDGE_THRESHOLD: float = 10
 @export var zoom_out_angle: float = -0.25 * PI
 @export var zoom_out_speed: float = 35
 
-var target_position: Vector3 = Vector3(0, 0, 0)
+var target_position: Vector3 = Vector3.ZERO
 var mouse_position: Vector2 = Vector2()
 ## 0 = zoomed in. 1 = zoomed out.
-var zoom_value: float = 0.3
+var zoom_value: float = ZOOM_VALUE_DEFAULT
 var zoom_raw: float = zoom_value
 
 
@@ -52,6 +53,9 @@ func _input(event: InputEvent) -> void:
 				zoom_raw += ZOOM_SPEED
 			zoom_raw = clamp(zoom_raw, 0, 1)
 
+	if event.is_action_pressed("reset_camera"):
+		target_position = Vector3.ZERO
+		zoom_raw = ZOOM_VALUE_DEFAULT
 
 func _handle_movement(delta: float) -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
