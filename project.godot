@@ -18,6 +18,10 @@ boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
+[autoload]
+
+CursorManager="*res://scripts/globals/cursor_manager.gd"
+
 [debug]
 
 settings/crash_handler/message="Oh my, there's a BUG in the game! How queer and unexpected!"
