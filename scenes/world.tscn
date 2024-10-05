@@ -18,3 +18,7 @@ mesh = SubResource("PlaneMesh_qt7ar")
 [node name="BoxMesh" type="MeshInstance3D" parent="Static/Meshes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("BoxMesh_w7g3k")
+
+[node name="MainCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
+current = true
