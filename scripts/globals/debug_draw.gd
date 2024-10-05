@@ -12,6 +12,7 @@ var vectors_to_draw: Array[Dictionary] = []
 var markers_to_draw: Array[Dictionary] = []
 var circles_to_draw: Array[Dictionary] = []
 
+
 func _ready() -> void:
 	camera = get_viewport().get_camera_3d()
 	layer = 999
@@ -19,15 +20,18 @@ func _ready() -> void:
 	control.draw.connect(_on_control_draw)
 	add_child(control)
 
+
 func _process(_delta: float) -> void:
 	if not visible:
 		return
 	control.queue_redraw()
 
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_debug"):
 		visible = not visible
 		vectors_to_draw.clear()
+
 
 func vector(from: Vector3, to: Vector3, color: Color = DEFAULT_COLOR) -> void:
 	if not visible:
@@ -35,11 +39,13 @@ func vector(from: Vector3, to: Vector3, color: Color = DEFAULT_COLOR) -> void:
 
 	vectors_to_draw.append({"from": from, "to": to, "color": color})
 
+
 func marker(pos: Vector3, radius: float = MARKER_RADIUS, color: Color = DEFAULT_COLOR) -> void:
 	if not visible:
 		return
 
 	markers_to_draw.append({"pos": pos, "radius": radius, "color": color})
+
 
 func circle(pos: Vector3, color: Color = DEFAULT_COLOR) -> void:
 	if not visible:
@@ -47,8 +53,10 @@ func circle(pos: Vector3, color: Color = DEFAULT_COLOR) -> void:
 
 	circles_to_draw.append({"pos": pos, "color": color})
 
+
 func _unproject(pos: Vector3) -> Vector2:
 	return camera.unproject_position(pos)
+
 
 func _draw_vector(from: Vector3, to: Vector3, color: Color) -> void:
 	var start := _unproject(from)
@@ -56,12 +64,14 @@ func _draw_vector(from: Vector3, to: Vector3, color: Color) -> void:
 	control.draw_line(start, end, color, LINE_WIDTH)
 	_draw_triangle(end, start.direction_to(end), 5, color)
 
+
 func _draw_triangle(pos: Vector2, dir: Vector2, size: float, color: Color) -> void:
 	var a := pos + dir * size
 	var b := pos + dir.rotated(2 * PI / 3) * size
 	var c := pos + dir.rotated(4 * PI / 3) * size
 	var points := PackedVector2Array([a, b, c])
 	control.draw_polygon(points, PackedColorArray([color]))
+
 
 func _draw_marker(pos: Vector3, radius: float, color: Color) -> void:
 	var x_start := _unproject(pos + (Vector3.LEFT * radius))
@@ -76,9 +86,11 @@ func _draw_marker(pos: Vector3, radius: float, color: Color) -> void:
 	var z_end := camera.unproject_position(pos + (Vector3.BACK * radius))
 	control.draw_line(z_start, z_end, color, LINE_WIDTH)
 
+
 func _draw_circle(pos: Vector3, color: Color) -> void:
 	var point := camera.unproject_position(pos)
 	control.draw_circle(point, CIRCLE_RADIUS, color)
+
 
 func _on_control_draw() -> void:
 	if not visible:

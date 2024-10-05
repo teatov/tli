@@ -22,6 +22,7 @@ var mouse_position: Vector2 = Vector2()
 var zoom_value: float = 0.3
 var zoom_raw: float = zoom_value
 
+
 func _process(delta: float) -> void:
 	zoom_value = lerp(zoom_value, zoom_raw, delta * ZOOM_DAMP)
 
@@ -37,6 +38,7 @@ func _process(delta: float) -> void:
 
 	DebugDraw.marker(target_position, 0.05)
 
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse_position = (event as InputEventMouseMotion).position
@@ -49,6 +51,7 @@ func _input(event: InputEvent) -> void:
 			elif button_event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				zoom_raw += ZOOM_SPEED
 			zoom_raw = clamp(zoom_raw, 0, 1)
+
 
 func _handle_movement(delta: float) -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
