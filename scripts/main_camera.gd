@@ -25,7 +25,7 @@ var zoom_raw: float = zoom_value
 func _process(delta: float) -> void:
 	zoom_value = lerp(zoom_value, zoom_raw, delta * ZOOM_DAMP)
 
-	handle_movement(delta)
+	_handle_movement(delta)
 
 	fov = lerp(zoom_in_fov, zoom_out_fov, zoom_value)
 	rotation.x = lerp(zoom_in_angle, zoom_out_angle, zoom_value)
@@ -48,7 +48,7 @@ func _input(event: InputEvent) -> void:
 				zoom_raw += ZOOM_SPEED
 			zoom_raw = clamp(zoom_raw, 0, 1)
 
-func handle_movement(delta: float) -> void:
+func _handle_movement(delta: float) -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
 
 	var move_input := Vector2()

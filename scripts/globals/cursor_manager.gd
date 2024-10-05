@@ -11,9 +11,9 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if (event as InputEventMouseButton).pressed:
-			set_cursor(cursor_click)
+			_set_cursor(cursor_click)
 		else:
-			set_cursor(cursor_normal)
+			_set_cursor(cursor_normal)
 
-func set_cursor(image: Resource) -> void:
+func _set_cursor(image: Resource) -> void:
 	Input.set_custom_mouse_cursor(image, Input.CURSOR_ARROW, CURSOR_HOTSPOT)
