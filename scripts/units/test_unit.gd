@@ -27,7 +27,10 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and selected:
 		var button_event := event as InputEventMouseButton
-		if button_event.pressed:
+		if (
+				button_event.button_index == MOUSE_BUTTON_LEFT
+				and button_event.pressed
+		):
 			_set_target_click(button_event.position)
 
 

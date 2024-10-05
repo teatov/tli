@@ -12,10 +12,15 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if (event as InputEventMouseButton).pressed:
-			_set_cursor(cursor_click)
-		else:
-			_set_cursor(cursor_normal)
+		var button_event := event as InputEventMouseButton
+		if (
+				button_event.button_index == MOUSE_BUTTON_LEFT
+				or button_event.button_index == MOUSE_BUTTON_RIGHT
+		):
+			if button_event.pressed:
+				_set_cursor(cursor_click)
+			else:
+				_set_cursor(cursor_normal)
 
 
 func _set_cursor(image: Resource) -> void:

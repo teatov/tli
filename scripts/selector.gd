@@ -47,10 +47,11 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var button_event := event as InputEventMouseButton
-		mouse_pressed = button_event.pressed
-		if mouse_pressed:
-			selection_rect.position = button_event.position
-			selection_rect.size = Vector2.ZERO
+		if button_event.button_index == MOUSE_BUTTON_LEFT:
+			mouse_pressed = button_event.pressed
+			if button_event.pressed:
+				selection_rect.position = button_event.position
+				selection_rect.size = Vector2.ZERO
 	
 	if event is InputEventMouseMotion and mouse_pressed:
 		var motion_event := event as InputEventMouseMotion
