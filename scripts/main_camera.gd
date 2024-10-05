@@ -57,6 +57,7 @@ func _input(event: InputEvent) -> void:
 		target_position = Vector3.ZERO
 		zoom_raw = ZOOM_VALUE_DEFAULT
 
+
 func _handle_movement(delta: float) -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
 
