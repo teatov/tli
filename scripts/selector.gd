@@ -1,5 +1,7 @@
 extends Node
 
+const MIN_DRAG_DISTANCE: float = 15
+
 var frustrum_polygon: ConvexPolygonShape3D = ConvexPolygonShape3D.new()
 var frustrum_polygon_points: PackedVector3Array = [
 		Vector3.ZERO,
@@ -11,8 +13,8 @@ var frustrum_polygon_points: PackedVector3Array = [
 
 var visible_units: Dictionary = {}
 
+var mouse_pressed: bool = false
 var selecting: bool = false
-var selecting2: bool = false
 var selection_rect: Rect2 = Rect2()
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
@@ -20,18 +22,23 @@ var selection_rect: Rect2 = Rect2()
 @onready var frustrum_collision_shape: CollisionShape3D = (
 		$FrustrumArea/FrustrumCollisionShape
 )
-@onready var rect_box: Panel = $SelectionRect
+@onready var rect_panel: Panel = $SelectionRect
 
 
 func _ready() -> void:
 	frustrum_polygon.points = frustrum_polygon_points
 	frustrum_collision_shape.shape = frustrum_polygon
-	rect_box.visible = false
+	rect_panel.visible = false
 	frustrum_area.body_entered.connect(_on_frustrum_area_unit_entered)
 	frustrum_area.body_exited.connect(_on_frustrum_area_unit_exited)
 
 
 func _process(_delta: float) -> void:
+	selecting = (
+			mouse_pressed
+			and selection_rect.size.length() >= MIN_DRAG_DISTANCE
+	)
+
 	_handle_frustrum_shape()
 	_handle_selection_box()
 	_handle_unit_selection()
@@ -40,12 +47,12 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var button_event := event as InputEventMouseButton
-		selecting = button_event.pressed
-		if selecting:
+		mouse_pressed = button_event.pressed
+		if mouse_pressed:
 			selection_rect.position = button_event.position
 			selection_rect.size = Vector2.ZERO
 	
-	if event is InputEventMouseMotion and selecting:
+	if event is InputEventMouseMotion and mouse_pressed:
 		var motion_event := event as InputEventMouseMotion
 		selection_rect.size = motion_event.position - selection_rect.position
 
@@ -70,14 +77,14 @@ func _handle_frustrum_shape() -> void:
 
 
 func _handle_selection_box() -> void:
-	rect_box.visible = selecting
+	rect_panel.visible = selecting
 	if not selecting:
 		return
 	
 	var rect_abs := selection_rect.abs()
 
-	rect_box.position = rect_abs.position
-	rect_box.size = rect_abs.size
+	rect_panel.position = rect_abs.position
+	rect_panel.size = rect_abs.size
 
 
 func _handle_unit_selection() -> void:
@@ -89,7 +96,7 @@ func _handle_unit_selection() -> void:
 	for unit: Node3D in visible_units.values():
 		var point := camera.unproject_position(unit.position)
 		if unit is TestUnit:
-			(unit as  TestUnit).set_selected(rect_abs.has_point(point))
+			(unit as TestUnit).set_selected(rect_abs.has_point(point))
 
 
 func _on_frustrum_area_unit_entered(unit: Node3D) -> void:
@@ -102,7 +109,7 @@ func _on_frustrum_area_unit_entered(unit: Node3D) -> void:
 
 func _on_frustrum_area_unit_exited(unit: Node3D) -> void:
 	var unit_id := unit.get_instance_id()
-	if !visible_units.keys().has(unit_id):
+	if not visible_units.keys().has(unit_id):
 		return
 	
 	visible_units.erase(unit_id)
