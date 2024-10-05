@@ -34,8 +34,8 @@ func _process(delta: float) -> void:
 	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, rotation.x)
 	var offset := offset_direction * distance
 	position = target_position + offset
-	DebugDraw.vector(target_position, target_position + Vector3.UP)
-	DebugDraw.vector(Vector3.ZERO, Vector3.UP, Color.GREEN)
+
+	DebugDraw.marker(target_position, 0.05)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
