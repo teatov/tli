@@ -28,7 +28,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and selected:
 		var button_event := event as InputEventMouseButton
 		if (
-				button_event.button_index == MOUSE_BUTTON_LEFT
+				button_event.button_index == MOUSE_BUTTON_RIGHT
 				and button_event.pressed
 		):
 			_set_target_click(button_event.position)
