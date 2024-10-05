@@ -35,7 +35,8 @@ func _process(_delta: float) -> void:
 		return
 	control.queue_redraw()
 
-	text('fps: ' + str(Engine.get_frames_per_second()))
+	text('fps: ' + str(Performance.get_monitor(Performance.TIME_FPS)))
+	text('draw calls: ' + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
 
 
 func _input(event: InputEvent) -> void:
