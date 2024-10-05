@@ -14,7 +14,7 @@ var wandering_timer: float = 0
 
 @onready var hover_sprite: Sprite3D = $HoverSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
 )
@@ -24,7 +24,7 @@ var wandering_timer: float = 0
 func _ready() -> void:
 	assert(hover_sprite != null, "hover_sprite missing!")
 	assert(nav_agent != null, "nav_agent missing!")
-	assert(animation_player != null, "animation_player missing!")
+	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 
 	set_hovered(false)
@@ -74,7 +74,7 @@ func _animate(delta: float) -> void:
 			) + PI
 		return
 
-	if velocity.length() > 0.1:
+	if velocity.length() > 0.01:
 		var velocity_normalized := velocity.normalized()
 		var angle := atan2(-velocity_normalized.x, -velocity_normalized.z) + PI
 		global_rotation.y = rotate_toward(
@@ -83,10 +83,12 @@ func _animate(delta: float) -> void:
 				TURN_SPEED * delta,
 		)
 		# look_at(global_position + velocity, Vector3.UP, true)
-		animation_player.play('walk')
-	else:
-		animation_player.play('idle')
-	
+
+	animation_tree.set(
+			"parameters/locomotion/blend_position", 
+			velocity.length() / MOVE_SPEED,
+	)
+
 	hover_sprite.visible = hovered
 
 
