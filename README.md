@@ -8,3 +8,6 @@ If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/
 ### For development
 - Game engine - Godot
 - Code editor - VSCode
+
+### For art
+- 2D art and texturework - Krita
