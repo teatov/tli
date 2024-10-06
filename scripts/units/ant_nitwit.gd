@@ -23,6 +23,10 @@ func _process(delta: float) -> void:
 	_handle_wandering(delta)
 
 
+static func get_cost() -> int:
+	return 5
+
+
 func _handle_wandering(delta: float) -> void:
 	if state != AntNitwitState.WANDERING:
 		return

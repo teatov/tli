@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=19 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
 [ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_4bgm6"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://k11usj2shbtr" path="res://scenes/units/ant_nitwit.tscn" id="4_jcvdx"]
 [ext_resource type="Texture2D" uid="uid://bgbe5l2woe5b2" path="res://assets/textures/gui/selection_box.png" id="5_g1xtt"]
 [ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/Anthill.tscn" id="7_f30w3"]
+[ext_resource type="PackedScene" uid="uid://d8ut24fit87x" path="res://scenes/ui/anthill_info.tscn" id="8_ohyy4"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6jq54"]
 vertices = PackedVector3Array(-2.95696, 0.5, 1.42491, -0.95696, 0.5, -0.0750852, -1.45696, 0.5, -0.325085, -3.20696, 0.5, 0.924915, -7.95696, 0.5, 5.42491, -4.70696, 0.5, 2.17491, -4.70696, 0.5, 1.42491, -7.95696, 0.5, -5.32509, -1.45696, 0.5, -1.07509, -3.70696, 0.5, 5.42491, -3.70696, 0.5, 2.67491, -4.20696, 0.5, 0.924915, -0.70696, 0.5, -5.32509, -0.70696, 0.5, -1.32509, -2.95696, 0.5, 2.42491, -0.20696, 0.5, -0.325085, 12.543, 0.5, -5.32509, -0.20696, 0.5, -1.07509, 12.543, 0.5, 5.42491)
@@ -55,12 +56,6 @@ draw_center = false
 points = PackedVector3Array(-0.0778407, 1.54508, 4.75528, -31.3231, -5, -72.1516, 31.0442, -5, -72.1516, -5.20198, -5, -6.07939, 5.0261, -5, -6.07939)
 
 [node name="World" type="Node3D"]
-
-[node name="MainCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
-current = true
-far = 200.0
-script = ExtResource("1_gnxhh")
 
 [node name="Static" type="Node" parent="."]
 
@@ -155,3 +150,13 @@ shape = SubResource("ConvexPolygonShape3D_n34fh")
 
 [node name="Anthill" parent="Structures" instance=ExtResource("7_f30w3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
+
+[node name="UI" type="Node" parent="."]
+
+[node name="AnthillInfo" parent="UI" instance=ExtResource("8_ohyy4")]
+
+[node name="MainCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)
+current = true
+far = 200.0
+script = ExtResource("1_gnxhh")

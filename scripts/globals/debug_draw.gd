@@ -116,12 +116,12 @@ func _draw_marker(pos: Vector3, radius: float, color: Color) -> void:
 	control.draw_line(y_start, y_end, color, LINE_WIDTH)
 
 	var z_start := _unproject(pos + (Vector3.FORWARD * radius))
-	var z_end := camera.unproject_position(pos + (Vector3.BACK * radius))
+	var z_end := _unproject(pos + (Vector3.BACK * radius))
 	control.draw_line(z_start, z_end, color, LINE_WIDTH)
 
 
 func _draw_circle(pos: Vector3, color: Color) -> void:
-	var point := camera.unproject_position(pos)
+	var point := _unproject(pos)
 	control.draw_circle(point, CIRCLE_RADIUS, color)
 
 

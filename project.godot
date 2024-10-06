@@ -24,6 +24,7 @@ CursorManager="*res://scripts/globals/cursor_manager.gd"
 FullscreenManager="*res://scripts/globals/fullscreen_manager.gd"
 QuittingManager="*res://scripts/globals/quitting_manager.gd"
 DebugDraw="*res://scripts/globals/debug_draw.gd"
+UiManager="*res://scripts/globals/ui_manager.gd"
 
 [debug]
 

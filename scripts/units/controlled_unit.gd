@@ -5,6 +5,7 @@ signal moving_started
 signal moving_ended
 
 var anthill: Anthill
+var spawn_pos: Vector3
 
 var selected: bool = false
 var moving_to_target: bool = false
@@ -26,6 +27,8 @@ func _ready() -> void:
 
 	set_selected(false)
 	super._ready()
+	if spawn_pos != null:
+		global_position = spawn_pos
 
 
 func _physics_process(delta: float) -> void:
@@ -52,8 +55,12 @@ func _input(event: InputEvent) -> void:
 
 func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
 	anthill = from
-	global_position = pos
+	spawn_pos = pos
 	return self
+
+
+static func get_cost() -> int:
+	return 5
 
 
 func set_selected(on: bool) -> void:

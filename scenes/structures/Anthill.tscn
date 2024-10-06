@@ -22,3 +22,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00
 pixel_size = 0.0135
 axis = 1
 texture = ExtResource("1_bk5n4")
+
+[node name="UiOrigin" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15587, 0)
