@@ -1,15 +1,15 @@
 extends Control
 class_name FollowingUi
 
+const EDGE_MARGIN = 10
+
 var target: Node3D
 var is_mouse_over: bool = false
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
-@onready var panel: Panel = $Panel
 
 func _ready() -> void:
 	assert(camera != null, "camera missing!")
-	assert(panel != null, "panel missing!")
 	visible = false
 
 
@@ -18,7 +18,13 @@ func _process(_delta: float) -> void:
 		return
 
 	var pos := camera.unproject_position(target.global_position)
-	position = pos
+	var corner_1 := Vector2.ONE * EDGE_MARGIN
+	var viewport_size := get_viewport().get_visible_rect().size
+	var corner_2 := Vector2(
+			viewport_size.x - size.x - EDGE_MARGIN,
+			viewport_size.y - size.y - EDGE_MARGIN,
+	)
+	position = (pos - pivot_offset).clamp(corner_1, corner_2)
 
 
 func _input(event: InputEvent) -> void:
@@ -38,7 +44,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var motion_event := event as InputEventMouseMotion
 		is_mouse_over = (
-				Rect2(panel.global_position, panel.size)
+				Rect2(global_position, size)
 				.has_point(motion_event.position)
 		)
 

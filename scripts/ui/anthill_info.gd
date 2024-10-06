@@ -3,11 +3,11 @@ class_name AnthillInfo
 
 var anthill: Anthill
 
-@onready var label: Label = $Panel/Label
-@onready var nitwit_button: Button = $Panel/NitwitButton
-@onready var add_one_button: Button = $Panel/AddOneButton
-@onready var add_five_button: Button = $Panel/AddFiveButton
-@onready var counter: HoneydewCounter = $Panel/HoneydewCounter
+@onready var label: Label = $Label
+@onready var nitwit_button: Button = $NitwitButton
+@onready var add_one_button: Button = $AddOneButton
+@onready var add_five_button: Button = $AddFiveButton
+@onready var counter: HoneydewCounter = $HoneydewCounter
 
 
 func _ready() -> void:
