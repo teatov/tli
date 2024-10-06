@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=14 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
 [ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_4bgm6"]
 [ext_resource type="PackedScene" uid="uid://d4c6ujs1ra1ob" path="res://scenes/units/aphid.tscn" id="3_eh22j"]
-[ext_resource type="PackedScene" uid="uid://dx544tb0so0b4" path="res://scenes/items/honeydew.tscn" id="4_r46td"]
 [ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/anthill.tscn" id="7_f30w3"]
 [ext_resource type="PackedScene" uid="uid://d8ut24fit87x" path="res://scenes/ui/anthill_info.tscn" id="8_ohyy4"]
 
@@ -108,21 +107,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19235, -2.38419e-07, -2.63
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
 
 [node name="Items" type="Node" parent="."]
-
-[node name="Honeydew" parent="Items" instance=ExtResource("4_r46td")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.892827, 0.216695, 0.344013)
-
-[node name="Honeydew2" parent="Items" instance=ExtResource("4_r46td")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12159, 0.216695, -0.043911)
-
-[node name="Honeydew3" parent="Items" instance=ExtResource("4_r46td")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2906, 0.216695, 0.330591)
-
-[node name="Honeydew4" parent="Items" instance=ExtResource("4_r46td")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.59292, 0.216695, -0.148498)
-
-[node name="Honeydew5" parent="Items" instance=ExtResource("4_r46td")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.827838, 0.216695, -0.385943)
 
 [node name="UI" type="Node" parent="."]
 

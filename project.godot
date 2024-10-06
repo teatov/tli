@@ -27,6 +27,7 @@ DebugDraw="*res://scripts/globals/debug_draw.gd"
 UiManager="*res://scripts/globals/ui_manager.gd"
 HoveringManager="*res://scripts/globals/hovering_manager.gd"
 SelectionManager="*res://scripts/globals/selection_manager.gd"
+ItemsManager="*res://scripts/globals/items_manager.gd"
 
 [debug]
 
