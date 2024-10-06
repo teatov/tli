@@ -5,7 +5,6 @@ signal moving_started
 signal moving_ended
 
 var anthill: Anthill
-var spawn_pos: Vector3
 
 var hovered_rect: bool = false
 var selected: bool = false
@@ -30,9 +29,6 @@ func _ready() -> void:
 	assert(camera != null, "camera missing!")
 	assert(selection_sprite != null, "selection_sprite missing!")
 	nav_agent.navigation_finished.connect(_on_nav_agent_navigation_finished)
-
-	if spawn_pos != null and spawn_pos != Vector3.ZERO:
-		global_position = spawn_pos
 	super._ready()
 
 

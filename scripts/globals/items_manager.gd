@@ -9,13 +9,12 @@ var honeydew_scene := preload("res://scenes/items/honeydew.tscn")
 
 func _ready() -> void:
 	assert(items_holder != null, "items_holder missing!")
-	spawn_a_bunch(Vector3.ZERO, 125, 3)
 
 
 func spawn_honeydew(pos: Vector3) -> Honeydew:
 	var honeydew := honeydew_scene.instantiate() as Honeydew
-	items_holder.add_child(honeydew)
 	honeydew.global_position = pos
+	items_holder.add_child(honeydew)
 	return honeydew
 
 

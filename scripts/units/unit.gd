@@ -11,6 +11,7 @@ var max_wander_interval: float = 5
 var is_on_screen: bool = false
 var wandering_timer: float = 0
 var wandering_center: Vector3 = Vector3.ZERO
+var spawn_pos: Vector3
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
@@ -26,6 +27,9 @@ func _ready() -> void:
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 	assert(ui_origin != null, "ui_origin missing!")
 	super._ready()
+
+	if spawn_pos != null and spawn_pos != Vector3.ZERO:
+		global_position = spawn_pos
 
 	wandering_center = global_position
 	nav_agent.max_speed = MOVE_SPEED
