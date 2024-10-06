@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=15 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
 [ext_resource type="PackedScene" uid="uid://d4c6ujs1ra1ob" path="res://scenes/units/aphid.tscn" id="3_eh22j"]
+[ext_resource type="PackedScene" uid="uid://c70rhvk2okkcu" path="res://scenes/ui/buy_ants.tscn" id="4_irvxk"]
+[ext_resource type="PackedScene" uid="uid://davys5ol18oyo" path="res://scenes/ui/pause_menu.tscn" id="5_ljrsn"]
 [ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/anthill.tscn" id="7_f30w3"]
 [ext_resource type="PackedScene" uid="uid://d8ut24fit87x" path="res://scenes/ui/anthill_info.tscn" id="8_ohyy4"]
 
@@ -95,6 +97,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
 [node name="UI" type="Node" parent="."]
 
 [node name="AnthillInfo" parent="UI" instance=ExtResource("8_ohyy4")]
+
+[node name="BuyAnts" parent="UI" instance=ExtResource("4_irvxk")]
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("5_ljrsn")]
 
 [node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)

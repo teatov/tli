@@ -22,18 +22,18 @@ script = ExtResource("2_aj5vl")
 
 [node name="AddOneButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 239.0
-offset_top = -10.0
-offset_right = 266.0
-offset_bottom = 21.0
+offset_left = 166.0
+offset_top = 44.0
+offset_right = 193.0
+offset_bottom = 75.0
 text = "+1"
 
 [node name="AddFiveButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 270.0
-offset_top = -10.0
-offset_right = 297.0
-offset_bottom = 21.0
+offset_left = 197.0
+offset_top = 44.0
+offset_right = 224.0
+offset_bottom = 75.0
 text = "+5"
 
 [node name="HoneydewCounter" parent="." instance=ExtResource("3_8onrx")]

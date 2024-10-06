@@ -25,9 +25,14 @@ func _process(delta: float) -> void:
 	if anthill == null or not visible:
 		return
 	counter.update_counter(anthill.honeydew)
+	add_one_button.disabled = not DebugDraw.enabled
+	add_one_button.visible = DebugDraw.enabled
+	add_five_button.disabled = not DebugDraw.enabled
+	add_five_button.visible = DebugDraw.enabled
 
 
 func open(at: Anthill) -> void:
+	visible = true
 	anthill = at
 	set_target(anthill.ui_origin)
 	counter.initialize(anthill.honeydew, anthill.max_honeydew)
@@ -39,7 +44,8 @@ func close() -> void:
 
 
 func _on_ant_buy_button_pressed() -> void:
-	print('AAAAAA')
+	UiManager.buy_ants.open(anthill)
+	close()
 
 
 func _on_add_one_button_pressed() -> void:

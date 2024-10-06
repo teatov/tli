@@ -10,6 +10,7 @@ var rects: Array[TextureRect] = []
 
 var max_count: int = 0
 var count_per_row: int = 0
+var rect_size: float = RECT_SIZE
 
 var counter_1 := preload("res://assets/textures/gui/honeydew_1.png")
 var counter_2 := preload("res://assets/textures/gui/honeydew_2.png")
@@ -19,11 +20,16 @@ var counter_5 := preload("res://assets/textures/gui/honeydew_5.png")
 
 
 func _ready() -> void:
-	count_per_row = floor(size.x / (RECT_SIZE + GAP))
+	count_per_row = floor(size.x / (rect_size + GAP))
 
 
-func initialize(init_count: int, init_max_count: int) -> void:
+func initialize(
+		init_count: int,
+		init_max_count: int,
+		r_size: float = RECT_SIZE,
+) -> void:
 	max_count = init_max_count
+	rect_size = r_size
 	rects.clear()
 	for rect in get_children():
 		remove_child(rect)
@@ -75,13 +81,13 @@ func _create_rect(col: int, row: int) -> TextureRect:
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.position.x = (
 			col
-			* (RECT_SIZE + GAP)
+			* (rect_size + GAP)
 			+ randf_range(-RANDOM_OFFSET, RANDOM_OFFSET)
 	)
 	rect.position.y = (
 			row
-			* (RECT_SIZE + GAP)
+			* (rect_size + GAP)
 			+ randf_range(-RANDOM_OFFSET, RANDOM_OFFSET)
 	)
-	rect.size = Vector2(RECT_SIZE, RECT_SIZE)
+	rect.size = Vector2(rect_size, rect_size)
 	return rect

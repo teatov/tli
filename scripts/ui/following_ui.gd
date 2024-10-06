@@ -27,7 +27,6 @@ func _process(_delta: float) -> void:
 
 
 func set_target(to: Node3D) -> void:
-	visible = true
 	target = to
 
 
