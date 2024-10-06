@@ -23,7 +23,7 @@ texture = ExtResource("1_a35ol")
 shape = SubResource("SphereShape3D_8lnyq")
 
 [node name="HoverSprite" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00236732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, -0.0180028, -0.00236732)
 pixel_size = 0.004
 axis = 1
 texture = ExtResource("2_vinjw")
