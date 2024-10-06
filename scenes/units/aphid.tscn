@@ -1,22 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://d4c6ujs1ra1ob"]
+[gd_scene load_steps=10 format=3 uid="uid://cwi5twmeq7b2a"]
 
-[ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="1_0xhpn"]
-[ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_mwxoc"]
-[ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="4_w3eta"]
+[ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="1_cchbm"]
+[ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_ohs5l"]
+[ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="3_wmvub"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0qv88"]
-albedo_color = Color(0.297709, 0.675387, 0.346609, 1)
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v2qr3"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_akr28"]
 animation = &"idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1hsi0"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qxrp5"]
 animation = &"walk"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xy8wv"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_v2qr3")
+blend_point_0/node = SubResource("AnimationNodeAnimation_akr28")
 blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_1hsi0")
+blend_point_1/node = SubResource("AnimationNodeAnimation_qxrp5")
 blend_point_1/pos = 1.0
 min_space = 0.0
 sync = true
@@ -24,38 +21,31 @@ sync = true
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hnsr3"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_avnq4"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_uieo6"]
 states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_xy8wv")
 states/locomotion/position = Vector2(365, 100)
 transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_hnsr3")]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_e8dcp"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_0fs3n"]
 radius = 0.25
 
-[node name="Aphid" instance=ExtResource("1_0xhpn")]
-collision_mask = 0
-script = ExtResource("2_mwxoc")
-
-[node name="ant" parent="." index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_0qv88")
-
-[node name="AnimationPlayer" parent="." index="1"]
-deterministic = true
+[node name="Aphid" instance=ExtResource("1_cchbm")]
+script = ExtResource("2_ohs5l")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-tree_root = SubResource("AnimationNodeStateMachine_avnq4")
+tree_root = SubResource("AnimationNodeStateMachine_uieo6")
 anim_player = NodePath("../AnimationPlayer")
-parameters/locomotion/blend_position = 0
+parameters/locomotion/blend_position = 0.00585774
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-shape = SubResource("SphereShape3D_e8dcp")
+shape = SubResource("SphereShape3D_0fs3n")
 
 [node name="HoverSprite" type="Sprite3D" parent="." index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00236732)
 pixel_size = 0.0085
 axis = 1
-texture = ExtResource("4_w3eta")
+texture = ExtResource("3_wmvub")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="5"]
 path_desired_distance = 0.5
@@ -67,7 +57,7 @@ radius = 0.25
 neighbor_distance = 10.0
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="6"]
-aabb = AABB(-0.5, 0, -0.5, 1, 0.5, 1)
+aabb = AABB(-0.283093, 0, -0.300282, 0.566186, 0.5, 0.600564)
 
 [node name="UiOrigin" type="Marker3D" parent="." index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58746, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.531097, 0)
