@@ -25,6 +25,7 @@ FullscreenManager="*res://scripts/globals/fullscreen_manager.gd"
 QuittingManager="*res://scripts/globals/quitting_manager.gd"
 DebugDraw="*res://scripts/globals/debug_draw.gd"
 UiManager="*res://scripts/globals/ui_manager.gd"
+HoveringManager="*res://scripts/globals/hovering_manager.gd"
 
 [debug]
 

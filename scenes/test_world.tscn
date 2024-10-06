@@ -1,10 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=18 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
 [ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_4bgm6"]
 [ext_resource type="PackedScene" uid="uid://d4c6ujs1ra1ob" path="res://scenes/units/aphid.tscn" id="3_eh22j"]
 [ext_resource type="Script" path="res://scripts/selector.gd" id="4_5avpj"]
-[ext_resource type="PackedScene" uid="uid://k11usj2shbtr" path="res://scenes/units/ant_nitwit.tscn" id="4_jcvdx"]
 [ext_resource type="Texture2D" uid="uid://bgbe5l2woe5b2" path="res://assets/textures/gui/selection_box.png" id="5_g1xtt"]
 [ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/Anthill.tscn" id="7_f30w3"]
 [ext_resource type="PackedScene" uid="uid://d8ut24fit87x" path="res://scenes/ui/anthill_info.tscn" id="8_ohyy4"]
@@ -91,18 +90,19 @@ shadow_enabled = true
 [node name="TestUnits" type="Node" parent="Units"]
 
 [node name="TestUnit" parent="Units/TestUnits" instance=ExtResource("2_4bgm6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97063, 0, -0.12038)
 
 [node name="TestUnit2" parent="Units/TestUnits" instance=ExtResource("2_4bgm6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.96245, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.93308, 0, -0.12038)
 
 [node name="TestUnit3" parent="Units/TestUnits" instance=ExtResource("2_4bgm6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.97171, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.94234, 0, -0.12038)
 
 [node name="TestUnit4" parent="Units/TestUnits" instance=ExtResource("2_4bgm6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.80899, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.77962, 0, -0.12038)
 
 [node name="TestUnit5" parent="Units/TestUnits" instance=ExtResource("2_4bgm6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.67063, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.64126, 0, -0.12038)
 
 [node name="Aphids" type="Node" parent="Units"]
 
@@ -120,16 +120,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19235, -2.38419e-07, -2.63
 
 [node name="Nitwits" type="Node" parent="Units"]
 
-[node name="AntNitwit" parent="Units/Nitwits" instance=ExtResource("4_jcvdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.449057, 0, -3.08498)
+[node name="Structures" type="Node" parent="."]
 
-[node name="AntNitwit2" parent="Units/Nitwits" instance=ExtResource("4_jcvdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.971017, 0, -3.08498)
+[node name="Anthill" parent="Structures" instance=ExtResource("7_f30w3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
 
-[node name="AntNitwit3" parent="Units/Nitwits" instance=ExtResource("4_jcvdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.39845, 0, -3.08498)
+[node name="UI" type="Node" parent="."]
 
-[node name="Selector" type="Node" parent="."]
+[node name="AnthillInfo" parent="UI" instance=ExtResource("8_ohyy4")]
+
+[node name="Selector" type="Node3D" parent="."]
 script = ExtResource("4_5avpj")
 
 [node name="SelectionRect" type="Panel" parent="Selector"]
@@ -145,15 +145,6 @@ input_ray_pickable = false
 
 [node name="FrustrumCollisionShape" type="CollisionShape3D" parent="Selector/FrustrumArea"]
 shape = SubResource("ConvexPolygonShape3D_n34fh")
-
-[node name="Structures" type="Node" parent="."]
-
-[node name="Anthill" parent="Structures" instance=ExtResource("7_f30w3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
-
-[node name="UI" type="Node" parent="."]
-
-[node name="AnthillInfo" parent="UI" instance=ExtResource("8_ohyy4")]
 
 [node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 1, 2)

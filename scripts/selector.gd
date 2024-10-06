@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 const MIN_DRAG_DISTANCE: float = 15
 const UNIT_SELECT_OFFSET: float = 0.25
@@ -56,10 +56,11 @@ func _input(event: InputEvent) -> void:
 			elif selecting:
 				_set_selection_state(false)
 	
-	if event is InputEventMouseMotion and mouse_pressed:
-		var motion_event := event as InputEventMouseMotion
-		selection_rect.size = motion_event.position - selection_rect.position
-
+	if event is InputEventMouseMotion:
+		if mouse_pressed:
+			var mouse_pos := (event as InputEventMouseMotion).position
+			selection_rect.size = mouse_pos - selection_rect.position
+		
 
 func _handle_frustrum_shape() -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -109,10 +110,10 @@ func _set_selection_state(hover: bool) -> void:
 		if unit is ControlledUnit:
 			var controlled_unit := unit as ControlledUnit
 			if hover:
-				controlled_unit.set_hovered(rect_abs.has_point(point))
+				controlled_unit.set_hovered_rect(rect_abs.has_point(point))
 			else:
 				controlled_unit.set_selected(rect_abs.has_point(point))
-				controlled_unit.set_hovered(false)
+				controlled_unit.set_hovered_rect(false)
 
 
 func _on_frustrum_area_unit_entered(unit: Node3D) -> void:

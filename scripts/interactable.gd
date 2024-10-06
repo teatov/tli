@@ -11,11 +11,10 @@ var click_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	assert(hover_sprite != null, "hover_sprite missing!")
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
 
 
 func _process(_delta: float) -> void:
+	hovered = HoveringManager.hovered_node == self
 	_animate()
 
 
@@ -42,10 +41,3 @@ func _click() -> void:
 func _animate() -> void:
 	hover_sprite.visible = hovered
 
-
-func _on_mouse_entered() -> void:
-	hovered = true
-
-
-func _on_mouse_exited() -> void:
-	hovered = false

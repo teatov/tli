@@ -26,7 +26,7 @@ func _ready() -> void:
 	assert(selection_sprite != null, "selection_sprite missing!")
 
 	set_selected(false)
-	if spawn_pos != null:
+	if spawn_pos != null and spawn_pos != Vector3.ZERO:
 		global_position = spawn_pos
 	super._ready()
 

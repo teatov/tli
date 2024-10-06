@@ -8,6 +8,7 @@ var max_wander_distance: float = 5
 var min_wander_interval: float = 0.25
 var max_wander_interval: float = 5
 
+var hovered_rect: bool = false
 var hovered: bool = false
 var is_on_screen: bool = false
 var wandering_timer: float = 0
@@ -28,12 +29,9 @@ func _ready() -> void:
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 
 	wandering_center = global_position
-	set_hovered(false)
 	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
 	set_max_slides(2)
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
 	visibility_notifier.screen_entered.connect(
 			_on_visibility_notifier_screen_entered,
 	)
@@ -43,15 +41,17 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	hovered = HoveringManager.hovered_node == self
 	_animate(delta)
+	hover_sprite.visible = hovered or hovered_rect
 
 
 func _physics_process(_delta: float) -> void:
 	_navigate()
 
 
-func set_hovered(on: bool) -> void:
-	hovered = on
+func set_hovered_rect(on: bool) -> void:
+	hovered_rect = on
 
 
 func _navigate() -> void:
@@ -109,14 +109,6 @@ func _wander(delta: float) -> void:
 func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
 	velocity = safe_velocity
 	move_and_slide()
-
-
-func _on_mouse_entered() -> void:
-	set_hovered(true)
-
-
-func _on_mouse_exited() -> void:
-	set_hovered(false)
 
 
 func _on_visibility_notifier_screen_entered() -> void:
