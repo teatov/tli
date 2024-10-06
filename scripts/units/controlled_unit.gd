@@ -48,9 +48,12 @@ func _input(event: InputEvent) -> void:
 				button_event.button_index == MOUSE_BUTTON_RIGHT
 				and button_event.pressed
 		):
-			moving_to_target = true
-			moving_started.emit()
-			_set_target_click(button_event.position)
+			if HoveringManager.hovered_node is Interactable:
+				pass
+			else:
+				moving_to_target = true
+				moving_started.emit()
+				_set_target_click(button_event.position)
 
 
 func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:

@@ -1,3 +1,27 @@
-[gd_scene format=3 uid="uid://dx544tb0so0b4"]
+[gd_scene load_steps=5 format=3 uid="uid://dx544tb0so0b4"]
 
-[node name="Honeydew" type="Node3D"]
+[ext_resource type="Script" path="res://scripts/items/honeydew.gd" id="1_6fg3d"]
+[ext_resource type="Texture2D" uid="uid://pbcyrj6uvp40" path="res://assets/textures/items/honeydew.png" id="1_a35ol"]
+[ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="2_vinjw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8lnyq"]
+radius = 0.213583
+
+[node name="Honeydew" type="CharacterBody3D"]
+script = ExtResource("1_6fg3d")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.0007
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture = ExtResource("1_a35ol")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_8lnyq")
+
+[node name="HoverSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00236732)
+pixel_size = 0.004
+axis = 1
+texture = ExtResource("2_vinjw")

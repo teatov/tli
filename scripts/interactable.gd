@@ -1,4 +1,4 @@
-extends StaticBody3D
+extends PhysicsBody3D
 class_name Interactable
 
 const MIN_DRAG_DISTANCE: float = 15
@@ -40,4 +40,3 @@ func _click() -> void:
 
 func _animate() -> void:
 	hover_sprite.visible = hovered
-
