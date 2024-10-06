@@ -15,5 +15,5 @@ If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/
 
 ### For audio
 - Audio editing - Kdenlive
-- Nature sounds - my nearby forest
+- Nature sounds - a nearby forest
 - Other sounds - my mouth
