@@ -7,6 +7,7 @@ signal stop_gathering
 const DEFAULT_MAX_CARRYING = 3
 const DEFAULT_DROP_INTERVAL = 0.25
 const DEFAULT_PICKUP_INTERVAL = 0.5
+const DROP_SPREAD: float = 0.1
 
 enum GatherState {
 	PICKING_UP,
@@ -33,18 +34,14 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	for i in range(carrying_items.size()):
 		var item := carrying_items[i]
-		item.global_position = (
-				global_position
-				+ (Vector3.UP * 0.5)
-				+ (Vector3.UP * 0.1 * i)
-		)
+		item.global_position = get_nth_pile_pos(i)
 
 	if target != null:
 		DebugDraw.circle(target.global_position)
 
 
 func initialize(
-		from: Anthill, 
+		from: Anthill,
 		max_carry: int = DEFAULT_MAX_CARRYING,
 		drop_interv: float = DEFAULT_DROP_INTERVAL,
 		pickup_interv: float = DEFAULT_PICKUP_INTERVAL,
@@ -92,11 +89,21 @@ func stop_all_gathering() -> void:
 	state = GatherState.STOP
 	target = null
 
+func get_nth_pile_pos(n: int) -> Vector3:
+	return (
+			global_position
+			+ (Vector3.UP * 0.5)
+			+ (Vector3.UP * 0.1 * n)
+	)
+
 
 func _pick_up() -> void:
 	if not target.carried:
 		carrying_items.append(target)
 		target.set_carried(true)
+		await target.start_moving(
+				get_nth_pile_pos(carrying_items.size() - 1)
+		).moved
 
 		await get_tree().create_timer(pickup_interval).timeout
 		if carrying_items.size() >= max_carrying:
@@ -125,6 +132,7 @@ func _deposit() -> void:
 			return
 
 		var item := carrying_items.pop_back() as Honeydew
+		await item.start_moving(anthill.global_position).moved
 		ItemsManager.erase_honeydew(item)
 		_erase_honeydew(item)
 		item.queue_free()
@@ -149,7 +157,12 @@ func _deposit() -> void:
 func _drop_everything() -> void:
 	while carrying_items.size() > 0:
 		var item := carrying_items.pop_back() as Honeydew
-		item.set_carried(false)
+		var new_pos := Vector3(
+			randf_range(-DROP_SPREAD, DROP_SPREAD),
+			Honeydew.HEIGHT_OFFSET,
+			randf_range(-DROP_SPREAD, DROP_SPREAD),
+		)
+		await item.start_moving(global_position + new_pos).moved
 		await get_tree().create_timer(drop_interval).timeout
 
 
