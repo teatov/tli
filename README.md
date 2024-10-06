@@ -14,5 +14,6 @@ If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/
 - 3D art - Blender
 
 ### For audio
+- Audio editing - Kdenlive
 - Nature sounds - my nearby forest
 - Other sounds - my mouth
