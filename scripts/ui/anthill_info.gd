@@ -14,6 +14,7 @@ func _ready() -> void:
 	assert(label != null, "label missing!")
 	assert(nitwit_button != null, "nitwit_button missing!")
 	assert(add_one_button != null, "add_one_button missing!")
+	assert(add_five_button != null, "add_five_button missing!")
 	assert(counter != null, "counter missing!")
 	super._ready()
 	nitwit_button.pressed.connect(_on_nitwit_button_pressed)

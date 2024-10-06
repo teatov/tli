@@ -13,6 +13,12 @@ var ant_nitwit := preload("res://scenes/units/ant_nitwit.tscn")
 @onready var nitwits_holder: Node = $/root/World/Units/Nitwits
 
 
+func _ready() -> void:
+	assert(ui_origin != null, "ui_origin missing!")
+	assert(nitwits_holder != null, "nitwits_holder missing!")
+	super._ready()
+
+
 ## Returns amount of honeydew that did not fit
 func put_honeydew(amount: int) -> int:
 	var new_honeydew_amount := honeydew + amount

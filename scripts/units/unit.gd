@@ -20,7 +20,6 @@ var wandering_center: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
-	assert(hover_sprite != null, "hover_sprite missing!")
 	assert(nav_agent != null, "nav_agent missing!")
 	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
