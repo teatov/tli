@@ -26,9 +26,9 @@ func _ready() -> void:
 	assert(selection_sprite != null, "selection_sprite missing!")
 
 	set_selected(false)
-	super._ready()
 	if spawn_pos != null:
 		global_position = spawn_pos
+	super._ready()
 
 
 func _physics_process(delta: float) -> void:

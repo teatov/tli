@@ -11,6 +11,7 @@ var max_wander_interval: float = 5
 var hovered: bool = false
 var is_on_screen: bool = false
 var wandering_timer: float = 0
+var wandering_center: Vector3 = Vector3.ZERO
 
 @onready var hover_sprite: Sprite3D = $HoverSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
@@ -18,7 +19,6 @@ var wandering_timer: float = 0
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
 )
-@onready var wandering_center: Vector3 = global_position
 
 
 func _ready() -> void:
@@ -27,6 +27,7 @@ func _ready() -> void:
 	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 
+	wandering_center = global_position
 	set_hovered(false)
 	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
