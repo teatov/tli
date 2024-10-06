@@ -18,12 +18,12 @@ var mouse_pressed: bool = false
 var selecting: bool = false
 var selection_rect: Rect2 = Rect2()
 
+var rect_style := preload("res://resources/styles/selection_rect.tres")
+
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
-@onready var frustrum_area: Area3D = $FrustrumArea
-@onready var frustrum_collision_shape: CollisionShape3D = (
-		$FrustrumArea/FrustrumCollisionShape
-)
-@onready var rect_panel: Panel = $SelectionRect
+@onready var frustrum_area: Area3D = Area3D.new()
+@onready var frustrum_collision_shape: CollisionShape3D = CollisionShape3D.new()
+@onready var rect_panel: Panel = Panel.new()
 
 
 func _ready() -> void:
@@ -32,6 +32,12 @@ func _ready() -> void:
 	rect_panel.visible = false
 	frustrum_area.body_entered.connect(_on_frustrum_area_unit_entered)
 	frustrum_area.body_exited.connect(_on_frustrum_area_unit_exited)
+	frustrum_area.input_ray_pickable = false
+	rect_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rect_panel.add_theme_stylebox_override("panel", rect_style)
+	add_child(rect_panel)
+	add_child(frustrum_area)
+	frustrum_area.add_child(frustrum_collision_shape)
 
 
 func _process(_delta: float) -> void:

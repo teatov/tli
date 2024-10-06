@@ -96,6 +96,7 @@ func _handle_movement(delta: float) -> void:
 			window_out_of_focus 
 			or state != CameraState.FREE 
 			or CursorManager.disable_confinement
+			or SelectionManager.selecting
 	):
 		return
 
