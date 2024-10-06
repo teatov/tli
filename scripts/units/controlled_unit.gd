@@ -4,6 +4,8 @@ class_name ControlledUnit
 signal moving_started
 signal moving_ended
 
+var anthill: Anthill
+
 var selected: bool = false
 var moving_to_target: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
@@ -46,6 +48,12 @@ func _input(event: InputEvent) -> void:
 			moving_to_target = true
 			moving_started.emit()
 			_set_target_click(button_event.position)
+
+
+func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
+	anthill = from
+	global_position = pos
+	return self
 
 
 func set_selected(on: bool) -> void:
