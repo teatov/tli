@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Interactable
 class_name Unit
 
 const MOVE_SPEED: float = 3
@@ -8,13 +8,10 @@ var max_wander_distance: float = 5
 var min_wander_interval: float = 0.25
 var max_wander_interval: float = 5
 
-var hovered_rect: bool = false
-var hovered: bool = false
 var is_on_screen: bool = false
 var wandering_timer: float = 0
 var wandering_center: Vector3 = Vector3.ZERO
 
-@onready var hover_sprite: Sprite3D = $HoverSprite
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
@@ -27,6 +24,7 @@ func _ready() -> void:
 	assert(nav_agent != null, "nav_agent missing!")
 	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
+	super._ready()
 
 	wandering_center = global_position
 	nav_agent.max_speed = MOVE_SPEED
@@ -41,17 +39,12 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	hovered = HoveringManager.hovered_node == self
+	super._process(delta)
 	_animate(delta)
-	hover_sprite.visible = hovered or hovered_rect
 
 
 func _physics_process(_delta: float) -> void:
 	_navigate()
-
-
-func set_hovered_rect(on: bool) -> void:
-	hovered_rect = on
 
 
 func _navigate() -> void:
@@ -89,8 +82,6 @@ func _animate(delta: float) -> void:
 			"parameters/locomotion/blend_position", 
 			velocity.length() / MOVE_SPEED,
 	)
-
-	hover_sprite.visible = hovered
 
 
 func _wander(delta: float) -> void:

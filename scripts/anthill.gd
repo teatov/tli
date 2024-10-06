@@ -33,7 +33,6 @@ func spawn_nitwit() -> void:
 
 
 func _click() -> void:
-	print('AAAAAAAAA')
 	UiManager.anthill_info.open(self)
 
 

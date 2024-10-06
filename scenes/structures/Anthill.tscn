@@ -7,7 +7,7 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ruupa"]
 
-[node name="Anthill" type="StaticBody3D"]
+[node name="Anthill" type="CharacterBody3D"]
 script = ExtResource("1_8k02d")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

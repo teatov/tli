@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_4bgm6"]
 [ext_resource type="PackedScene" uid="uid://d4c6ujs1ra1ob" path="res://scenes/units/aphid.tscn" id="3_eh22j"]
 [ext_resource type="PackedScene" uid="uid://dx544tb0so0b4" path="res://scenes/items/honeydew.tscn" id="4_r46td"]
-[ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/Anthill.tscn" id="7_f30w3"]
+[ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/anthill.tscn" id="7_f30w3"]
 [ext_resource type="PackedScene" uid="uid://d8ut24fit87x" path="res://scenes/ui/anthill_info.tscn" id="8_ohyy4"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6jq54"]

@@ -7,6 +7,7 @@ signal moving_ended
 var anthill: Anthill
 var spawn_pos: Vector3
 
+var hovered_rect: bool = false
 var selected: bool = false
 var moving_to_target: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
@@ -31,6 +32,12 @@ func _ready() -> void:
 	super._ready()
 
 
+func _process(delta: float) -> void:
+	super._process(delta)
+	selection_sprite.visible = selected
+	hover_sprite.visible = hovered or hovered_rect
+
+
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	if moving_to_target and nav_agent.is_navigation_finished():
@@ -39,6 +46,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	super._input(event)
 	if not is_on_screen:
 		return
 
@@ -49,7 +57,7 @@ func _input(event: InputEvent) -> void:
 				and button_event.pressed
 		):
 			if HoveringManager.hovered_node is Interactable:
-				pass
+				_interact(HoveringManager.hovered_node as Interactable)
 			else:
 				moving_to_target = true
 				moving_started.emit()
@@ -62,6 +70,10 @@ func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
 	return self
 
 
+func set_hovered_rect(on: bool) -> void:
+	hovered_rect = on
+
+
 static func get_cost() -> int:
 	return 5
 
@@ -70,20 +82,19 @@ func set_selected(on: bool) -> void:
 	selected = on
 
 
+func _interact(with: Interactable) -> void:
+	print(self, ' interacting with ', with)
+
+
 func _set_target_click(mouse_pos: Vector2) -> void:
-	var click_position := _click_raycast(mouse_pos)
-	if click_position == null:
+	var click_pos := _click_raycast(mouse_pos)
+	if click_pos == null:
 		return
 		
-	nav_agent.set_target_position(click_position)
+	nav_agent.set_target_position(click_pos)
 
 
 func _click_raycast(mouse_pos: Vector2) -> Vector3:
 	var from := camera.global_position
 	var to := camera.project_ray_normal(mouse_pos)
 	return ground_plane.intersects_ray(from, to)
-
-
-func _animate(delta: float) -> void:
-	super._animate(delta)
-	selection_sprite.visible = selected

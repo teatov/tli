@@ -1,4 +1,4 @@
-extends PhysicsBody3D
+extends CharacterBody3D
 class_name Interactable
 
 const MIN_DRAG_DISTANCE: float = 15
@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	hovered = HoveringManager.hovered_node == self
-	_animate()
+	hover_sprite.visible = hovered
 
 
 func _input(event: InputEvent) -> void:
@@ -36,7 +36,3 @@ func _input(event: InputEvent) -> void:
 
 func _click() -> void:
 	print(self, ' clicked!')
-
-
-func _animate() -> void:
-	hover_sprite.visible = hovered
