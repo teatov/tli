@@ -30,8 +30,8 @@ func _ready() -> void:
 	frustrum_polygon.points = frustrum_polygon_points
 	frustrum_collision_shape.shape = frustrum_polygon
 	rect_panel.visible = false
-	frustrum_area.body_entered.connect(_on_frustrum_area_unit_entered)
-	frustrum_area.body_exited.connect(_on_frustrum_area_unit_exited)
+	frustrum_area.body_entered.connect(_on_frustrum_area_body_entered)
+	frustrum_area.body_exited.connect(_on_frustrum_area_body_exited)
 	frustrum_area.input_ray_pickable = false
 	rect_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rect_panel.add_theme_stylebox_override("panel", rect_style)
@@ -108,29 +108,30 @@ func _handle_unit_selection() -> void:
 func _set_selection_state(hover: bool) -> void:
 	var rect_abs := selection_rect.abs()
 
-	for unit: Node3D in visible_units.values():
+	for unit: ControlledUnit in visible_units.values():
 		var point := camera.unproject_position(
 				unit.global_position
 				+ (Vector3.UP * UNIT_SELECT_OFFSET)
 		)
-		if unit is ControlledUnit:
-			var controlled_unit := unit as ControlledUnit
-			if hover:
-				controlled_unit.set_hovered_rect(rect_abs.has_point(point))
-			else:
-				controlled_unit.set_selected(rect_abs.has_point(point))
-				controlled_unit.set_hovered_rect(false)
+		if hover:
+			unit.set_hovered_rect(rect_abs.has_point(point))
+		else:
+			unit.set_selected(rect_abs.has_point(point))
+			unit.set_hovered_rect(false)
 
 
-func _on_frustrum_area_unit_entered(unit: Node3D) -> void:
+func _on_frustrum_area_body_entered(unit: Node3D) -> void:
+	if unit is not ControlledUnit:
+		return
+
 	var unit_id := unit.get_instance_id()
 	if visible_units.keys().has(unit_id):
 		return
 	
-	visible_units[unit_id] = unit
+	visible_units[unit_id] = unit as ControlledUnit
 
 
-func _on_frustrum_area_unit_exited(unit: Node3D) -> void:
+func _on_frustrum_area_body_exited(unit: Node3D) -> void:
 	var unit_id := unit.get_instance_id()
 	if not visible_units.keys().has(unit_id):
 		return

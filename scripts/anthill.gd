@@ -19,8 +19,12 @@ func _ready() -> void:
 	super._ready()
 
 
+func space_left() -> int:
+	return max_honeydew - honeydew
+
+
 ## Returns amount of honeydew that did not fit
-func put_honeydew(amount: int) -> int:
+func deposit_honeydew(amount: int) -> int:
 	var new_honeydew_amount := honeydew + amount
 	var leftover: int = 0
 	if new_honeydew_amount > max_honeydew:

@@ -46,8 +46,8 @@ func _on_nitwit_button_pressed() -> void:
 
 
 func _on_add_one_button_pressed() -> void:
-	anthill.put_honeydew(1)
+	anthill.deposit_honeydew(1)
 
 
 func _on_add_five_button_pressed() -> void:
-	anthill.put_honeydew(5)
+	anthill.deposit_honeydew(5)

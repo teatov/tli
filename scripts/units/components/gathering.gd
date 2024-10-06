@@ -1,16 +1,22 @@
 extends Area3D
 class_name Gathering
 
+signal target_set(pos: Vector3)
+signal stop_gathering
+
 enum GatherState {
 	PICKING_UP,
 	DEPOSITING,
+	STOP,
 }
 
-var items: Dictionary = {}
+var nearby_items: Dictionary = {}
+var carrying_items: Array[Honeydew] = []
 var max_carrying: int = 3
-var carrying: int = 0
-var state: GatherState = GatherState.PICKING_UP
+var deposit_leftover: int = 0
+var state: GatherState = GatherState.STOP
 var target: Honeydew
+var anthill: Anthill
 
 
 func _ready() -> void:
@@ -18,9 +24,136 @@ func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 
 
-func gather(item: Honeydew)->void:
+func _process(_delta: float) -> void:
+	for i in range(carrying_items.size()):
+		var item := carrying_items[i]
+		item.global_position = (
+				global_position
+				+ (Vector3.UP * 0.5)
+				+ (Vector3.UP * 0.1 * i)
+		)
+
+	if target != null:
+		DebugDraw.circle(target.global_position)
+
+
+func go_gather(item: Honeydew) -> void:
+	if anthill.space_left() <= 0:
+		return
+	if carrying_items.size() >= max_carrying:
+		go_deposit()
+		return
 	target = item
 	state = GatherState.PICKING_UP
+	target_set.emit(item.global_position)
+
+
+func go_deposit() -> void:
+	state = GatherState.DEPOSITING
+	target_set.emit(Vector3.ZERO)
+
+
+func handle_gathering(stop: bool) -> void:
+	if stop:
+		state = GatherState.STOP
+
+
+func on_nav_agent_navigation_finished() -> void:
+	if state == GatherState.PICKING_UP and target != null:
+		_pick_up()
+
+	if state == GatherState.DEPOSITING:
+		_deposit()
+
+
+func set_leftover(value: int) -> void:
+	deposit_leftover = value
+
+
+func stop_all_gathering() -> void:
+	state = GatherState.STOP
+	target = null
+
+
+func _pick_up() -> void:
+	if not target.carried:
+		carrying_items.append(target)
+		target.set_carried(true)
+
+		await get_tree().create_timer(0.5).timeout
+		if carrying_items.size() >= max_carrying:
+			go_deposit()
+			return
+
+	var nearest := _find_nearest(nearby_items.values())
+	if nearest != null:
+		go_gather(nearest)
+		return
+
+	go_deposit()
+
+
+func _deposit() -> void:
+	await get_tree().create_timer(0.5).timeout
+	while carrying_items.size() > 0:
+		if state != GatherState.DEPOSITING:
+			return
+
+		if anthill.space_left() <= 0:
+			print('DROP!')
+			_drop_everything()
+			stop_all_gathering()
+			stop_gathering.emit()
+			return
+
+		var item := carrying_items.pop_back() as Honeydew
+		ItemsManager.erase_honeydew(item)
+		_erase_honeydew(item)
+		item.queue_free()
+		anthill.deposit_honeydew(1)
+		await get_tree().create_timer(0.25).timeout
+	
+	state = GatherState.PICKING_UP
+	var nearest := _find_nearest(nearby_items.values())
+	if nearest != null:
+		go_gather(nearest)
+		return
+
+	var nearest_global := _find_nearest(ItemsManager.honeydews.values())
+	if nearest_global != null:
+		go_gather(nearest_global)
+		return
+	
+	stop_all_gathering()
+	stop_gathering.emit()
+
+
+func _drop_everything() -> void:
+	while carrying_items.size() > 0:
+		var item := carrying_items.pop_back() as Honeydew
+		item.set_carried(false)
+		await get_tree().create_timer(0.25).timeout
+
+
+func _find_nearest(items: Array) -> Honeydew:
+	var nearest: Node3D = null
+	var nearest_distance: float = INF
+	for item: Honeydew in items:
+		if item.carried:
+			continue
+		var distance := global_position.distance_to(item.global_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest = item
+	return nearest
+
+
+func _erase_honeydew(item: Honeydew) -> void:
+	var item_id := item.get_instance_id()
+	if not nearby_items.keys().has(item_id):
+		return
+	
+	nearby_items.erase(item_id)
 
 
 func _on_body_entered(item: Node3D) -> void:
@@ -28,15 +161,14 @@ func _on_body_entered(item: Node3D) -> void:
 		return
 
 	var item_id := item.get_instance_id()
-	if items.keys().has(item_id):
+	if nearby_items.keys().has(item_id):
 		return
 	
-	items[item_id] = item
+	nearby_items[item_id] = item as Honeydew
 
 
 func _on_body_exited(item: Node3D) -> void:
-	var item_id := item.get_instance_id()
-	if not items.keys().has(item_id):
+	if item is not Honeydew:
 		return
-	
-	items.erase(item_id)
+
+	_erase_honeydew(item as Honeydew)

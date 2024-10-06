@@ -8,6 +8,7 @@
 radius = 0.213583
 
 [node name="Honeydew" type="CharacterBody3D"]
+collision_mask = 0
 script = ExtResource("1_6fg3d")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]

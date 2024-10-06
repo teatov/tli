@@ -16,6 +16,10 @@ var ground_plane: Plane = Plane(Vector3.UP, 0)
 @onready var selection_sprite: Sprite3D = $SelectionSprite
 
 
+static func get_cost() -> int:
+	return 5
+
+
 func _init() -> void:
 	max_wander_distance = 2
 	min_wander_interval = 0.5
@@ -71,10 +75,6 @@ func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
 
 func set_hovered_rect(on: bool) -> void:
 	hovered_rect = on
-
-
-static func get_cost() -> int:
-	return 5
 
 
 func set_selected(on: bool) -> void:
