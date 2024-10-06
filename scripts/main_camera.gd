@@ -13,6 +13,7 @@ const ZOOM_VALUE_DEFAULT: float = 0.3
 ## from the screen edge to move the camera.
 const EDGE_THRESHOLD: float = 10
 const HEADING_SPEED: float = 0.75
+const BOUNDARY: float = 150 / 2
 
 @export var zoom_in_distance: float = 5
 @export var zoom_in_fov: float = 25
@@ -41,6 +42,10 @@ var state: CameraState = CameraState.FREE
 var window_out_of_focus: bool = false
 
 @onready var anthill: Anthill = $/root/World/Structures/Anthill
+
+
+func _ready() -> void:
+	target_position = anthill.global_position
 
 
 func _process(delta: float) -> void:
@@ -131,6 +136,8 @@ func _handle_movement(delta: float) -> void:
 	var speed: float = lerp(zoom_in_speed, zoom_out_speed, zoom_value)
 	var velocity := direction * speed
 	target_position += velocity * delta
+	target_position.x = clamp(target_position.x, -BOUNDARY, BOUNDARY)
+	target_position.z = clamp(target_position.z, -BOUNDARY, BOUNDARY)
 
 
 func _handle_heading_to(delta: float) -> void:

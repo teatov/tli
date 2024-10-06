@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="1_asokb"]
 [ext_resource type="Script" path="res://scripts/units/ant_gatherer.gd" id="2_vcqni"]
-[ext_resource type="Material" uid="uid://b68amtoih28uv" path="res://resources/materials/ant_gatherer_material.tres" id="3_1br5i"]
+[ext_resource type="Material" uid="uid://b68amtoih28uv" path="res://resources/materials/ant_gatherer_mat.tres" id="3_1br5i"]
 [ext_resource type="Texture2D" uid="uid://dehqm00kiljut" path="res://assets/textures/selection_unit_decal.png" id="3_5dykx"]
 [ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="4_1jps0"]
 [ext_resource type="PackedScene" uid="uid://fal1ond30jey" path="res://scenes/units/components/gathering.tscn" id="5_wwnxg"]

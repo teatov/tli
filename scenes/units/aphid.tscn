@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="1_cchbm"]
 [ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_ohs5l"]
-[ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_material.tres" id="3_dcaja"]
+[ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_mat.tres" id="3_dcaja"]
 [ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="3_wmvub"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_akr28"]

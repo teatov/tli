@@ -1,7 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=15 format=3 uid="uid://ceru75se7ifkb"]
 
+[ext_resource type="PackedScene" uid="uid://brjxxr7h0o0ay" path="res://scenes/static/ground.tscn" id="1_7osoy"]
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
-[ext_resource type="PackedScene" uid="uid://d4c6ujs1ra1ob" path="res://scenes/units/aphid.tscn" id="3_eh22j"]
 [ext_resource type="PackedScene" uid="uid://c70rhvk2okkcu" path="res://scenes/ui/buy_ants.tscn" id="4_irvxk"]
 [ext_resource type="PackedScene" uid="uid://dhtofjn8dnuw3" path="res://scenes/ui/unit_info.tscn" id="5_asam3"]
 [ext_resource type="PackedScene" uid="uid://davys5ol18oyo" path="res://scenes/ui/pause_menu.tscn" id="5_ljrsn"]
@@ -10,21 +10,16 @@
 [ext_resource type="PackedScene" uid="uid://d8ut24fit87x" path="res://scenes/ui/anthill_info.tscn" id="8_ohyy4"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6jq54"]
-vertices = PackedVector3Array(-2.95696, 0.5, 1.42491, -0.95696, 0.5, -0.0750852, -1.45696, 0.5, -0.325085, -3.20696, 0.5, 0.924915, -7.95696, 0.5, 5.42491, -4.70696, 0.5, 2.17491, -4.70696, 0.5, 1.42491, -7.95696, 0.5, -5.32509, -1.45696, 0.5, -1.07509, -3.70696, 0.5, 5.42491, -3.70696, 0.5, 2.67491, -4.20696, 0.5, 0.924915, -0.70696, 0.5, -5.32509, -0.70696, 0.5, -1.32509, -2.95696, 0.5, 2.42491, -0.20696, 0.5, -0.325085, 12.543, 0.5, -5.32509, -0.20696, 0.5, -1.07509, 12.543, 0.5, 5.42491)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(8, 2, 3), PackedInt32Array(10, 9, 5), PackedInt32Array(5, 9, 4), PackedInt32Array(3, 11, 8), PackedInt32Array(8, 11, 12), PackedInt32Array(12, 13, 8), PackedInt32Array(6, 7, 11), PackedInt32Array(11, 7, 12), PackedInt32Array(9, 10, 14), PackedInt32Array(1, 15, 0), PackedInt32Array(0, 15, 14), PackedInt32Array(15, 17, 16), PackedInt32Array(13, 12, 17), PackedInt32Array(17, 12, 16), PackedInt32Array(14, 15, 9), PackedInt32Array(9, 15, 18), PackedInt32Array(18, 15, 16)]
+vertices = PackedVector3Array(-72.472, 0.5, -74.6876, -72.472, 0.5, 74.8124, 77.028, 0.5, 74.8124, 77.028, 0.5, -74.6876)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 agent_height = 0.5
 agent_radius = 0.25
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qt7ar"]
-size = Vector2(20.97, 11.275)
+size = Vector2(150, 150)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21sta"]
 albedo_color = Color(0.114897, 0.114897, 0.114897, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_w7g3k"]
-size = Vector3(0.5, 0.5, 0.5)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_2chuy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_po5ks"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -35,32 +30,28 @@ sky_material = SubResource("ProceduralSkyMaterial_po5ks")
 
 [sub_resource type="Environment" id="Environment_nnr3k"]
 background_mode = 1
-background_color = Color(0.547785, 0.658701, 0.745764, 1)
+background_color = Color(0.266667, 0.227451, 0.196078, 1)
 sky = SubResource("Sky_au5yl")
+ambient_light_source = 2
+ambient_light_color = Color(0.688926, 0.561215, 0.460104, 1)
 
 [node name="World" type="Node3D"]
 
 [node name="Static" type="Node" parent="."]
+
+[node name="Geometry" type="Node" parent="Static"]
+
+[node name="Ground" parent="Static/Geometry" instance=ExtResource("1_7osoy")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Static"]
 navigation_mesh = SubResource("NavigationMesh_6jq54")
 
 [node name="PlaneMesh" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27804, 0, 0.0624147)
+visible = false
 mesh = SubResource("PlaneMesh_qt7ar")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_21sta")
-
-[node name="BoxMesh" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.731028, 0.25, -0.696817)
-mesh = SubResource("BoxMesh_w7g3k")
-skeleton = NodePath("")
-
-[node name="BoxMesh2" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75856, 0.25, 1.78207)
-visible = false
-mesh = SubResource("CapsuleMesh_2chuy")
-skeleton = NodePath("")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Static"]
 environment = SubResource("Environment_nnr3k")
@@ -73,18 +64,6 @@ shadow_enabled = true
 
 [node name="Aphids" type="Node" parent="Units"]
 
-[node name="Aphid" parent="Units/Aphids" instance=ExtResource("3_eh22j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.62044, -2.38419e-07, -1.07353)
-
-[node name="Aphid2" parent="Units/Aphids" instance=ExtResource("3_eh22j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.87474, -2.38419e-07, -1.07353)
-
-[node name="Aphid3" parent="Units/Aphids" instance=ExtResource("3_eh22j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19235, -2.38419e-07, -1.07353)
-
-[node name="Aphid4" parent="Units/Aphids" instance=ExtResource("3_eh22j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19235, -2.38419e-07, -2.63002)
-
 [node name="Nitwits" type="Node" parent="Units"]
 
 [node name="Gatherers" type="Node" parent="Units"]
@@ -92,7 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19235, -2.38419e-07, -2.63
 [node name="Structures" type="Node" parent="."]
 
 [node name="Anthill" parent="Structures" instance=ExtResource("7_f30w3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.3389, 0, -63.0179)
 
 [node name="Items" type="Node" parent="."]
 

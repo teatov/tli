@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://brjxxr7h0o0ay"]
+
+[ext_resource type="PackedScene" uid="uid://bvowy3qydkn6" path="res://assets/models/ground.glb" id="1_wapwq"]
+[ext_resource type="Material" uid="uid://c1owthx1hbtik" path="res://resources/materials/ground_mat.tres" id="2_pmgjw"]
+
+[node name="Ground" instance=ExtResource("1_wapwq")]
+
+[node name="ground" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_pmgjw")
