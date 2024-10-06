@@ -12,3 +12,7 @@ If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/
 ### For art
 - 2D art and texturework - Krita
 - 3D art - Blender
+
+### For audio
+- Nature sounds - my nearby forest
+- Other sounds - my mouth
