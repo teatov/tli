@@ -8,6 +8,7 @@ const DEFAULT_MAX_CARRYING = 3
 const DEFAULT_DROP_INTERVAL = 0.25
 const DEFAULT_PICKUP_INTERVAL = 0.5
 const DROP_SPREAD: float = 0.1
+const ANTHILL_DEPOSIT_RADIUS: float = 0.5
 
 enum GatherState {
 	PICKING_UP,
@@ -65,7 +66,12 @@ func go_gather(item: Honeydew) -> void:
 
 func go_deposit() -> void:
 	state = GatherState.DEPOSITING
-	target_set.emit(Vector3.ZERO)
+	var dir := anthill.global_position.direction_to(global_position)
+	target_set.emit(
+			anthill.global_position
+			+ dir
+			* ANTHILL_DEPOSIT_RADIUS
+	)
 
 
 func handle_gathering(stop: bool) -> void:

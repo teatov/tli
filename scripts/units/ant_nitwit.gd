@@ -67,10 +67,7 @@ func _on_gathering_target_set(pos: Vector3) -> void:
 	if state != AntNitwitState.GATHERING:
 		return
 
-	if pos != Vector3.ZERO:
-		nav_agent.set_target_position(pos)
-	else:
-		nav_agent.set_target_position(anthill.global_position)
+	nav_agent.set_target_position(pos)
 
 
 func _on_gathering_stop() -> void:
