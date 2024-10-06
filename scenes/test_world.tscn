@@ -129,7 +129,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
 
 [node name="AnthillInfo" parent="UI" instance=ExtResource("8_ohyy4")]
 
-[node name="Selector" type="Node3D" parent="."]
+[node name="Selector" type="Node" parent="."]
 script = ExtResource("4_5avpj")
 
 [node name="SelectionRect" type="Panel" parent="Selector"]

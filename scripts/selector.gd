@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 const MIN_DRAG_DISTANCE: float = 15
 const UNIT_SELECT_OFFSET: float = 0.25
