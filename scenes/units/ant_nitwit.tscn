@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://k11usj2shbtr"]
+[gd_scene load_steps=13 format=3 uid="uid://k11usj2shbtr"]
 
 [ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="1_1u65s"]
 [ext_resource type="Script" path="res://scripts/units/ant_nitwit.gd" id="2_f1bdv"]
 [ext_resource type="Texture2D" uid="uid://dehqm00kiljut" path="res://assets/textures/selection_unit_decal.png" id="3_hxm2m"]
 [ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="4_vrkmw"]
+[ext_resource type="PackedScene" uid="uid://fal1ond30jey" path="res://scenes/units/components/gathering.tscn" id="5_j8w6w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0iwx2"]
 albedo_color = Color(0.344076, 0.344076, 0.344076, 1)
@@ -74,3 +75,5 @@ neighbor_distance = 10.0
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="7"]
 aabb = AABB(-0.5, 0, -0.5, 1, 0.5, 1)
+
+[node name="Gathering" parent="." index="8" instance=ExtResource("5_j8w6w")]

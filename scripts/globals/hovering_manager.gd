@@ -7,6 +7,9 @@ var mouse_pos: Vector2 = Vector2.ZERO
 
 
 func _physics_process(_delta: float) -> void:
+	if SelectionManager.selecting:
+		return
+
 	var space_state := get_world_3d().direct_space_state
 	var from := camera.project_ray_origin(mouse_pos)
 	var to := from + camera.project_ray_normal(mouse_pos) * (camera.far - 1)

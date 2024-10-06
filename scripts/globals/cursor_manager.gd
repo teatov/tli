@@ -14,6 +14,8 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
+		if disable_confinement:
+			return
 		var button_event := event as InputEventMouseButton
 		if (
 				button_event.button_index == MOUSE_BUTTON_LEFT
@@ -28,9 +30,10 @@ func _input(event: InputEvent) -> void:
 		disable_confinement = not disable_confinement
 		if disable_confinement:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			Input.set_custom_mouse_cursor(null)
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CONFINED
-
+			_set_cursor(cursor_normal)
 
 
 func _set_cursor(image: Resource) -> void:
