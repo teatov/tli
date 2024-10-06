@@ -4,6 +4,10 @@ class_name Gathering
 signal target_set(pos: Vector3)
 signal stop_gathering
 
+const DEFAULT_MAX_CARRYING = 3
+const DEFAULT_DROP_INTERVAL = 0.25
+const DEFAULT_PICKUP_INTERVAL = 0.5
+
 enum GatherState {
 	PICKING_UP,
 	DEPOSITING,
@@ -12,11 +16,13 @@ enum GatherState {
 
 var nearby_items: Dictionary = {}
 var carrying_items: Array[Honeydew] = []
-var max_carrying: int = 3
+var max_carrying: int = DEFAULT_MAX_CARRYING
 var deposit_leftover: int = 0
 var state: GatherState = GatherState.STOP
 var target: Honeydew
 var anthill: Anthill
+var drop_interval: float = DEFAULT_DROP_INTERVAL
+var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
 
 
 func _ready() -> void:
@@ -35,6 +41,18 @@ func _process(_delta: float) -> void:
 
 	if target != null:
 		DebugDraw.circle(target.global_position)
+
+
+func initialize(
+		from: Anthill, 
+		max_carry: int = DEFAULT_MAX_CARRYING,
+		drop_interv: float = DEFAULT_DROP_INTERVAL,
+		pickup_interv: float = DEFAULT_PICKUP_INTERVAL,
+) -> void:
+	anthill = from
+	max_carrying = max_carry
+	drop_interval = drop_interv
+	pickup_interval = pickup_interv
 
 
 func go_gather(item: Honeydew) -> void:
@@ -80,7 +98,7 @@ func _pick_up() -> void:
 		carrying_items.append(target)
 		target.set_carried(true)
 
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(pickup_interval).timeout
 		if carrying_items.size() >= max_carrying:
 			go_deposit()
 			return
@@ -111,7 +129,7 @@ func _deposit() -> void:
 		_erase_honeydew(item)
 		item.queue_free()
 		anthill.deposit_honeydew(1)
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(drop_interval).timeout
 	
 	state = GatherState.PICKING_UP
 	var nearest := _find_nearest(nearby_items.values())
@@ -132,7 +150,7 @@ func _drop_everything() -> void:
 	while carrying_items.size() > 0:
 		var item := carrying_items.pop_back() as Honeydew
 		item.set_carried(false)
-		await get_tree().create_timer(0.25).timeout
+		await get_tree().create_timer(drop_interval).timeout
 
 
 func _find_nearest(items: Array) -> Honeydew:

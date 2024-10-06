@@ -8,9 +8,11 @@ var honeydew: int = 20
 var max_honeydew: int = DEFAULT_MAX_HONEYDEW
 
 var ant_nitwit := preload("res://scenes/units/ant_nitwit.tscn")
+var ant_gatherer := preload("res://scenes/units/ant_gatherer.tscn")
 
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var nitwits_holder: Node = $/root/World/Units/Nitwits
+@onready var gatherers_holder: Node = $/root/World/Units/Gatherers
 
 
 func _ready() -> void:
@@ -40,6 +42,13 @@ func spawn_nitwit() -> void:
 	if new_unit == null:
 		return
 	nitwits_holder.add_child(new_unit)
+
+
+func spawn_gatherer() -> void:
+	var new_unit := _create_unit(ant_gatherer, AntGatherer.get_cost())
+	if new_unit == null:
+		return
+	gatherers_holder.add_child(new_unit)
 
 
 func _click() -> void:

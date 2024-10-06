@@ -101,6 +101,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19235, -2.38419e-07, -2.63
 
 [node name="Nitwits" type="Node" parent="Units"]
 
+[node name="Gatherers" type="Node" parent="Units"]
+
 [node name="Structures" type="Node" parent="."]
 
 [node name="Anthill" parent="Structures" instance=ExtResource("7_f30w3")]

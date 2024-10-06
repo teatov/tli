@@ -5,6 +5,7 @@ var anthill: Anthill
 
 @onready var label: Label = $Label
 @onready var nitwit_button: Button = $NitwitButton
+@onready var gatherer_button: Button = $GathererButton
 @onready var add_one_button: Button = $AddOneButton
 @onready var add_five_button: Button = $AddFiveButton
 @onready var counter: HoneydewCounter = $HoneydewCounter
@@ -13,11 +14,13 @@ var anthill: Anthill
 func _ready() -> void:
 	assert(label != null, "label missing!")
 	assert(nitwit_button != null, "nitwit_button missing!")
+	assert(gatherer_button != null, "gatherer_button missing!")
 	assert(add_one_button != null, "add_one_button missing!")
 	assert(add_five_button != null, "add_five_button missing!")
 	assert(counter != null, "counter missing!")
 	super._ready()
 	nitwit_button.pressed.connect(_on_nitwit_button_pressed)
+	gatherer_button.pressed.connect(_on_gatherer_button_pressed)
 	add_one_button.pressed.connect(_on_add_one_button_pressed)
 	add_five_button.pressed.connect(_on_add_five_button_pressed)
 
@@ -43,6 +46,10 @@ func close() -> void:
 
 func _on_nitwit_button_pressed() -> void:
 	anthill.spawn_nitwit()
+
+
+func _on_gatherer_button_pressed() -> void:
+	anthill.spawn_gatherer()
 
 
 func _on_add_one_button_pressed() -> void:

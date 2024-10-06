@@ -34,26 +34,34 @@ text = "honeydew: 5"
 
 [node name="NitwitButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 240.0
-offset_top = 39.0
-offset_right = 358.0
-offset_bottom = 70.0
-text = "make nitwit: 5"
+offset_left = 233.0
+offset_top = 44.0
+offset_right = 295.0
+offset_bottom = 75.0
+text = "ntwt: 5"
+
+[node name="GathererButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 298.0
+offset_top = 42.0
+offset_right = 363.0
+offset_bottom = 73.0
+text = "gthrr: 15"
 
 [node name="AddOneButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 243.0
 offset_top = 8.0
-offset_right = 289.0
+offset_right = 270.0
 offset_bottom = 39.0
 text = "+1"
 
 [node name="AddFiveButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 304.0
-offset_top = 5.0
-offset_right = 350.0
-offset_bottom = 36.0
+offset_left = 274.0
+offset_top = 8.0
+offset_right = 301.0
+offset_bottom = 39.0
 text = "+5"
 
 [node name="HoneydewCounter" parent="." instance=ExtResource("3_8onrx")]
