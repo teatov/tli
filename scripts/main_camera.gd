@@ -1,4 +1,5 @@
 extends Camera3D
+class_name MainCamera
 
 enum CameraState {
 	FREE,
@@ -39,6 +40,8 @@ var state: CameraState = CameraState.FREE
 
 var window_out_of_focus: bool = false
 
+@onready var anthill: Anthill = $/root/World/Structures/Anthill
+
 
 func _process(delta: float) -> void:
 	_handle_heading_to(delta)
@@ -71,7 +74,7 @@ func _input(event: InputEvent) -> void:
 			zoom_raw = clamp(zoom_raw, 0, 1)
 
 	if event.is_action_pressed("reset_camera"):
-		head_to(Vector3.ZERO)
+		head_to(anthill.global_position)
 
 
 func _notification(what: int) -> void:
@@ -93,8 +96,8 @@ func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 
 func _handle_movement(delta: float) -> void:
 	if (
-			window_out_of_focus 
-			or state != CameraState.FREE 
+			window_out_of_focus
+			or state != CameraState.FREE
 			or CursorManager.disable_confinement
 			or SelectionManager.selecting
 	):
