@@ -31,6 +31,8 @@ transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTran
 radius = 0.25
 
 [node name="Aphid" instance=ExtResource("1_cchbm")]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("2_ohs5l")
 
 [node name="aphid" parent="." index="0"]

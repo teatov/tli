@@ -8,6 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_ruupa"]
 
 [node name="Anthill" type="CharacterBody3D"]
+collision_mask = 0
 script = ExtResource("1_8k02d")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

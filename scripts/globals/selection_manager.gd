@@ -33,6 +33,8 @@ func _ready() -> void:
 	frustrum_area.body_entered.connect(_on_frustrum_area_body_entered)
 	frustrum_area.body_exited.connect(_on_frustrum_area_body_exited)
 	frustrum_area.input_ray_pickable = false
+	frustrum_area.set_collision_mask_value(1, false)
+	frustrum_area.set_collision_mask_value(3, true)
 	rect_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rect_panel.add_theme_stylebox_override("panel", rect_style)
 	add_child(rect_panel)
