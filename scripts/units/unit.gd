@@ -13,6 +13,7 @@ var wandering_timer: float = 0
 var wandering_center: Vector3 = Vector3.ZERO
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
+@onready var ui_origin: Node3D = $UiOrigin
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
@@ -23,6 +24,7 @@ func _ready() -> void:
 	assert(nav_agent != null, "nav_agent missing!")
 	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
+	assert(ui_origin != null, "ui_origin missing!")
 	super._ready()
 
 	wandering_center = global_position
@@ -44,6 +46,10 @@ func _process(delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	_navigate()
+
+
+func _click() ->void:
+	UiManager.unit_info.open(self)
 
 
 func _navigate() -> void:

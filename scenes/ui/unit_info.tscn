@@ -1,0 +1,151 @@
+[gd_scene load_steps=12 format=3 uid="uid://dhtofjn8dnuw3"]
+
+[ext_resource type="Texture2D" uid="uid://cc40vkh4nc6pk" path="res://assets/textures/gui/think_bubble.png" id="1_hsifm"]
+[ext_resource type="Script" path="res://scripts/ui/unit_info.gd" id="2_b6c6l"]
+[ext_resource type="Texture2D" uid="uid://slraulfmk8c0" path="res://assets/textures/gui/pictograms.png" id="6_vrqjx"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrdqv"]
+texture = ExtResource("1_hsifm")
+modulate_color = Color(0.664997, 0.596536, 0.412061, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7modd"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(404.555, 93.7849, 67.5499, 53.8488)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jq3t"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(476.79, 88.6228, 77.4275, 53.8488)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_beuyo"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(572.197, 83.8424, 60.0876, 64.636)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8jta"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(654.844, 86.7453, 91.2445, 50.4017)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndwb1"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(405.682, 154.985, 69.6633, 48.5967)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fh2cu"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(493.617, 151.821, 88.0582, 58.802)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6lpn"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(605.33, 162.323, 47.3997, 44.5031)
+
+[node name="UnitInfo" type="Panel"]
+offset_right = 128.0
+offset_bottom = 128.0
+pivot_offset = Vector2(63, 130)
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxTexture_wrdqv")
+script = ExtResource("2_b6c6l")
+
+[node name="AntIdle" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -40.0
+offset_right = 41.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_7modd")
+
+[node name="AntMoving" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -41.0
+offset_right = 38.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_2jq3t")
+
+[node name="AntPickingUp" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -48.0
+offset_right = 31.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_beuyo")
+
+[node name="AntDepositing" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -38.0
+offset_right = 46.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_o8jta")
+
+[node name="AphidIdle" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -37.0
+offset_right = 37.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_ndwb1")
+
+[node name="AphidPanic" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -41.0
+offset_right = 45.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_fh2cu")
+
+[node name="AphidEat" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -24.0
+offset_right = 28.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_q6lpn")

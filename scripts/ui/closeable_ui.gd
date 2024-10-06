@@ -16,10 +16,7 @@ func _input(event: InputEvent) -> void:
 		var button_event := event as InputEventMouseButton
 		if not button_event.pressed:
 			return
-		if (
-				button_event.button_index == MOUSE_BUTTON_RIGHT
-				or button_event.button_index == MOUSE_BUTTON_LEFT
-		):
+		if button_event.button_index == MOUSE_BUTTON_LEFT:
 			close()
 
 	if event is InputEventMouseMotion:

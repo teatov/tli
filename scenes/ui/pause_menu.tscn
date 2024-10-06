@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://davys5ol18oyo"]
+[gd_scene load_steps=11 format=3 uid="uid://davys5ol18oyo"]
 
 [ext_resource type="StyleBox" uid="uid://do5c5v5kvgv0s" path="res://resources/styles/panel_small_style.tres" id="1_06xpe"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_kcif0"]
@@ -8,6 +8,10 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k086"]
 bg_color = Color(0, 0, 0, 0.25098)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k576p"]
+texture = ExtResource("2_e7opb")
+modulate_color = Color(0.664997, 0.596536, 0.412061, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_td4xc"]
 atlas = ExtResource("4_dmywd")
@@ -44,10 +48,11 @@ offset_right = 80.0
 offset_bottom = 55.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("1_06xpe")
+theme_override_styles/panel = SubResource("StyleBoxTexture_k576p")
 
 [node name="QuitButton" type="TextureButton" parent="Panel"]
 modulate = Color(0.843007, 0.282913, 0.299802, 1)
+layout_mode = 0
 offset_left = 38.0
 offset_top = 24.0
 offset_right = 117.0
@@ -75,6 +80,7 @@ texture = SubResource("AtlasTexture_td4xc")
 
 [node name="CancelButton" type="TextureButton" parent="Panel"]
 modulate = Color(0.81, 0.748035, 0.5913, 1)
+layout_mode = 0
 offset_left = 117.0
 offset_top = -25.0
 offset_right = 182.0

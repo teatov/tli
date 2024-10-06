@@ -77,3 +77,6 @@ neighbor_distance = 10.0
 aabb = AABB(-0.5, 0, -0.5, 1, 0.5, 1)
 
 [node name="Gathering" parent="." index="8" instance=ExtResource("5_j8w6w")]
+
+[node name="UiOrigin" type="Marker3D" parent="." index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58746, 0)
