@@ -24,4 +24,5 @@ func spawn_a_bunch(pos: Vector3, amount: int, spread: float) -> void:
 		var new_pos := pos
 		new_pos.x += randf_range(-spread, spread)
 		new_pos.z += randf_range(-spread, spread)
-		spawn_honeydew(new_pos)
+		var new_honeydew :=spawn_honeydew(new_pos)
+		honeydews.append(new_honeydew)
