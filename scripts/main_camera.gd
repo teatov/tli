@@ -19,11 +19,19 @@ const BOUNDARY: float = 150 / 2
 @export var zoom_in_fov: float = 25
 @export var zoom_in_angle: float = -0.1 * PI
 @export var zoom_in_speed: float = 5
+@export var zoom_in_dof_far_distance: float = 7
+@export var zoom_in_dof_far_transition: float = 5
+@export var zoom_in_dof_near_distance: float = 3.25
+@export var zoom_in_dof_near_transition: float = 1
 
 @export var zoom_out_distance: float = 90
 @export var zoom_out_fov: float = 30
 @export var zoom_out_angle: float = -0.25 * PI
 @export var zoom_out_speed: float = 35
+@export var zoom_out_dof_far_distance: float = 100
+@export var zoom_out_dof_far_transition: float = 40
+@export var zoom_out_dof_near_distance: float = 80
+@export var zoom_out_dof_near_transition: float = 20
 
 var target_position: Vector3 = Vector3.ZERO
 var mouse_position: Vector2 = Vector2()
@@ -42,9 +50,11 @@ var state: CameraState = CameraState.FREE
 var window_out_of_focus: bool = false
 
 @onready var anthill: Anthill = $/root/World/Structures/Anthill
+@onready var attrs: CameraAttributesPractical = attributes
 
 
 func _ready() -> void:
+	assert(attrs != null, "attrs missing!")
 	target_position = anthill.global_position
 
 
@@ -61,6 +71,8 @@ func _process(delta: float) -> void:
 	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, rotation.x)
 	var offset := offset_direction * distance
 	global_position = target_position + offset
+
+	_handle_dof()
 
 	DebugDraw.marker(target_position, 0.05)
 
@@ -97,6 +109,29 @@ func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 	heading_from_zoom = zoom_value
 	heading_to_zoom = zoom
 	state = CameraState.HEADING_TO
+
+
+func _handle_dof() -> void:
+	attrs.dof_blur_far_distance = lerp(
+			zoom_in_dof_far_distance,
+			zoom_out_dof_far_distance,
+			zoom_value,
+	)
+	attrs.dof_blur_far_transition = lerp(
+			zoom_in_dof_far_transition,
+			zoom_out_dof_far_transition,
+			zoom_value,
+	)
+	attrs.dof_blur_near_distance = lerp(
+			zoom_in_dof_near_distance,
+			zoom_out_dof_near_distance,
+			zoom_value,
+	)
+	attrs.dof_blur_near_transition = lerp(
+			zoom_in_dof_near_transition,
+			zoom_out_dof_near_transition,
+			zoom_value,
+	)
 
 
 func _handle_movement(delta: float) -> void:

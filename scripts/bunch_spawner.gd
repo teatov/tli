@@ -14,9 +14,14 @@ var aphid := preload("res://scenes/units/aphid.tscn")
 func _ready() -> void:
 	assert(aphids_holder != null, "aphids_holder missing!")
 	for i in amount:
+		var pos_offset := Vector3(
+				randf_range(-gizmo_extents, gizmo_extents),
+				0,
+				randf_range(-gizmo_extents, gizmo_extents),
+		)
 		match what:
 			WhatToSpawn.APHID:
-				_spawn(aphid, global_position, aphids_holder)
+				_spawn(aphid, global_position + pos_offset, aphids_holder)
 
 
 func _spawn(scene: PackedScene, where: Vector3, holder: Node) -> void:
