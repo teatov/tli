@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://w3ydggdgvyqn"]
+
+[ext_resource type="Script" path="res://scripts/ui/honeydew_counter.gd" id="1_en213"]
+
+[node name="HoneydewCounter" type="ReferenceRect"]
+offset_right = 77.0
+offset_bottom = 33.0
+script = ExtResource("1_en213")
