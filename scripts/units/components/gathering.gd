@@ -163,6 +163,7 @@ func _drop_everything() -> void:
 			randf_range(-DROP_SPREAD, DROP_SPREAD),
 		)
 		await item.start_moving(global_position + new_pos).moved
+		item.set_carried(false)
 		await get_tree().create_timer(drop_interval).timeout
 
 

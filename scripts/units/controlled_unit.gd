@@ -23,12 +23,13 @@ static func get_cost() -> int:
 func _init() -> void:
 	max_wander_distance = 2
 	min_wander_interval = 0.5
-	max_wander_interval = 30
+	max_wander_interval = 10
 
 
 func _ready() -> void:
 	assert(camera != null, "camera missing!")
 	assert(selection_sprite != null, "selection_sprite missing!")
+	nav_agent.navigation_finished.connect(_on_nav_agent_navigation_finished)
 
 	if spawn_pos != null and spawn_pos != Vector3.ZERO:
 		global_position = spawn_pos
@@ -97,3 +98,7 @@ func _click_raycast(mouse_pos: Vector2) -> Vector3:
 	var from := camera.global_position
 	var to := camera.project_ray_normal(mouse_pos)
 	return ground_plane.intersects_ray(from, to)
+
+
+func _on_nav_agent_navigation_finished() -> void:
+	wandering_center = nav_agent.get_final_position()
