@@ -6,6 +6,7 @@ var anthill: Anthill
 @onready var label: Label = $Panel/Label
 @onready var nitwit_button: Button = $Panel/NitwitButton
 @onready var add_one_button: Button = $Panel/AddOneButton
+@onready var add_five_button: Button = $Panel/AddFiveButton
 @onready var counter: HoneydewCounter = $Panel/HoneydewCounter
 
 
@@ -17,6 +18,7 @@ func _ready() -> void:
 	super._ready()
 	nitwit_button.pressed.connect(_on_nitwit_button_pressed)
 	add_one_button.pressed.connect(_on_add_one_button_pressed)
+	add_five_button.pressed.connect(_on_add_five_button_pressed)
 
 
 func _process(delta: float) -> void:
@@ -43,4 +45,8 @@ func _on_nitwit_button_pressed() -> void:
 
 
 func _on_add_one_button_pressed() -> void:
-	anthill.honeydew += 1
+	anthill.put_honeydew(1)
+
+
+func _on_add_five_button_pressed() -> void:
+	anthill.put_honeydew(5)

@@ -2,7 +2,7 @@ extends Interactable
 class_name Anthill
 
 const SPAWN_RADIUS: float = 1
-const DEFAULT_MAX_HONEYDEW: int = 20
+const DEFAULT_MAX_HONEYDEW: int = 120
 
 var honeydew: int = 20
 var max_honeydew: int = DEFAULT_MAX_HONEYDEW
@@ -33,6 +33,7 @@ func spawn_nitwit() -> void:
 
 
 func _click() -> void:
+	print('AAAAAAAAA')
 	UiManager.anthill_info.open(self)
 
 
