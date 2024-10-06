@@ -1,26 +1,21 @@
-extends FollowingUi
+extends FollowingUI
 class_name AnthillInfo
 
 var anthill: Anthill
 
-@onready var label: Label = $Label
-@onready var nitwit_button: Button = $NitwitButton
-@onready var gatherer_button: Button = $GathererButton
-@onready var add_one_button: Button = $AddOneButton
-@onready var add_five_button: Button = $AddFiveButton
+@onready var ant_buy_button: BaseButton = $AntBuyButton
+@onready var add_one_button: BaseButton = $AddOneButton
+@onready var add_five_button: BaseButton = $AddFiveButton
 @onready var counter: HoneydewCounter = $HoneydewCounter
 
 
 func _ready() -> void:
-	assert(label != null, "label missing!")
-	assert(nitwit_button != null, "nitwit_button missing!")
-	assert(gatherer_button != null, "gatherer_button missing!")
+	assert(ant_buy_button != null, "ant_buy_button missing!")
 	assert(add_one_button != null, "add_one_button missing!")
 	assert(add_five_button != null, "add_five_button missing!")
 	assert(counter != null, "counter missing!")
 	super._ready()
-	nitwit_button.pressed.connect(_on_nitwit_button_pressed)
-	gatherer_button.pressed.connect(_on_gatherer_button_pressed)
+	ant_buy_button.pressed.connect(_on_ant_buy_button_pressed)
 	add_one_button.pressed.connect(_on_add_one_button_pressed)
 	add_five_button.pressed.connect(_on_add_five_button_pressed)
 
@@ -29,7 +24,6 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	if anthill == null or not visible:
 		return
-	label.text = 'honeydew: ' + str(anthill.honeydew)
 	counter.update_counter(anthill.honeydew)
 
 
@@ -44,12 +38,8 @@ func close() -> void:
 	anthill = null
 
 
-func _on_nitwit_button_pressed() -> void:
-	anthill.spawn_nitwit()
-
-
-func _on_gatherer_button_pressed() -> void:
-	anthill.spawn_gatherer()
+func _on_ant_buy_button_pressed() -> void:
+	print('AAAAAA')
 
 
 func _on_add_one_button_pressed() -> void:

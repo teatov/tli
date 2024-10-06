@@ -92,7 +92,7 @@ func stop_all_gathering() -> void:
 func get_nth_pile_pos(n: int) -> Vector3:
 	return (
 			global_position
-			+ (Vector3.UP * 0.5)
+			+ (Vector3.UP * 0.45)
 			+ (Vector3.UP * 0.1 * n)
 	)
 

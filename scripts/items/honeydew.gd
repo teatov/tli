@@ -33,6 +33,8 @@ func _process(delta: float) -> void:
 			move_to,
 			(1 - moving_timer),
 	)
+	if carried:
+		hover_sprite.visible = false
 
 
 func set_carried(on: bool) -> void:
