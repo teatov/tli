@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=18 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
 [ext_resource type="PackedScene" uid="uid://cfixshlmwhpmi" path="res://scenes/units/test_unit.tscn" id="2_4bgm6"]
@@ -6,10 +6,11 @@
 [ext_resource type="Script" path="res://scripts/selector.gd" id="4_5avpj"]
 [ext_resource type="PackedScene" uid="uid://k11usj2shbtr" path="res://scenes/units/ant_nitwit.tscn" id="4_jcvdx"]
 [ext_resource type="Texture2D" uid="uid://bgbe5l2woe5b2" path="res://assets/textures/gui/selection_box.png" id="5_g1xtt"]
+[ext_resource type="PackedScene" uid="uid://clftjlaotf2g2" path="res://scenes/structures/Anthill.tscn" id="7_f30w3"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_6jq54"]
-vertices = PackedVector3Array(-1.45696, 0.5, -1.07509, -0.706959, 0.5, -1.32509, -0.706959, 0.5, -5.32509, -7.95696, 0.5, -5.32509, -7.95696, 0.5, -0.575085, -1.45696, 0.5, -0.575085, -0.206959, 0.5, -1.07509, 12.543, 0.5, -5.32509, -0.206959, 0.5, -0.325085, -0.706959, 0.5, -0.0750852, -0.706959, 0.5, 5.42491, 12.543, 0.5, 5.42491, -7.95696, 0.5, 5.42491)
-polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(0, 5, 4), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 7), PackedInt32Array(8, 6, 7), PackedInt32Array(9, 10, 5), PackedInt32Array(5, 10, 4), PackedInt32Array(4, 10, 12)]
+vertices = PackedVector3Array(-2.95696, 0.5, 1.42491, -0.95696, 0.5, -0.0750852, -1.45696, 0.5, -0.325085, -3.20696, 0.5, 0.924915, -7.95696, 0.5, 5.42491, -4.70696, 0.5, 2.17491, -4.70696, 0.5, 1.42491, -7.95696, 0.5, -5.32509, -1.45696, 0.5, -1.07509, -3.70696, 0.5, 5.42491, -3.70696, 0.5, 2.67491, -4.20696, 0.5, 0.924915, -0.70696, 0.5, -5.32509, -0.70696, 0.5, -1.32509, -2.95696, 0.5, 2.42491, -0.20696, 0.5, -0.325085, 12.543, 0.5, -5.32509, -0.20696, 0.5, -1.07509, 12.543, 0.5, 5.42491)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(8, 2, 3), PackedInt32Array(10, 9, 5), PackedInt32Array(5, 9, 4), PackedInt32Array(3, 11, 8), PackedInt32Array(8, 11, 12), PackedInt32Array(12, 13, 8), PackedInt32Array(6, 7, 11), PackedInt32Array(11, 7, 12), PackedInt32Array(9, 10, 14), PackedInt32Array(1, 15, 0), PackedInt32Array(0, 15, 14), PackedInt32Array(15, 17, 16), PackedInt32Array(13, 12, 17), PackedInt32Array(17, 12, 16), PackedInt32Array(14, 15, 9), PackedInt32Array(9, 15, 18), PackedInt32Array(18, 15, 16)]
 agent_height = 0.5
 agent_radius = 0.25
 
@@ -21,6 +22,8 @@ albedo_color = Color(0.114897, 0.114897, 0.114897, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_w7g3k"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2chuy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_po5ks"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -73,6 +76,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_21sta")
 [node name="BoxMesh" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.731028, 0.25, -0.696817)
 mesh = SubResource("BoxMesh_w7g3k")
+skeleton = NodePath("")
+
+[node name="BoxMesh2" type="MeshInstance3D" parent="Static/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75856, 0.25, 1.78207)
+visible = false
+mesh = SubResource("CapsuleMesh_2chuy")
 skeleton = NodePath("")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Static"]
@@ -141,3 +150,8 @@ input_ray_pickable = false
 
 [node name="FrustrumCollisionShape" type="CollisionShape3D" parent="Selector/FrustrumArea"]
 shape = SubResource("ConvexPolygonShape3D_n34fh")
+
+[node name="Structures" type="Node" parent="."]
+
+[node name="Anthill" parent="Structures" instance=ExtResource("7_f30w3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79455, 0, 1.78811)
