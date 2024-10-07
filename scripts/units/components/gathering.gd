@@ -123,6 +123,7 @@ func on_nav_agent_navigation_finished() -> void:
 
 
 func _go_pick_up(item: Honeydew) -> void:
+	state = GatherState.AWAITING
 	if anthill.space_left() <= 0:
 		return
 	if carrying_items.size() >= max_carrying:
@@ -150,6 +151,7 @@ func _get_nth_pile_pos(n: int) -> Vector3:
 func _pick_up() -> void:
 	var nearest := _find_nearest(nearby_items.values())
 	if target == null or target.carried:
+		state = GatherState.AWAITING
 		if nearest != null:
 			_go_pick_up(nearest)
 		elif carrying_items.size() > 0:
