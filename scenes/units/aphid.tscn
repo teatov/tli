@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwi5twmeq7b2a"]
+[gd_scene load_steps=12 format=3 uid="uid://cwi5twmeq7b2a"]
 
 [ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="1_cchbm"]
 [ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_ohs5l"]
 [ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_mat.tres" id="3_dcaja"]
-[ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="3_wmvub"]
+[ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="4_76tmp"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_akr28"]
 animation = &"idle"
@@ -30,6 +30,11 @@ transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTran
 [sub_resource type="SphereShape3D" id="SphereShape3D_0fs3n"]
 radius = 0.25
 
+[sub_resource type="QuadMesh" id="QuadMesh_jnwlp"]
+material = ExtResource("4_76tmp")
+center_offset = Vector3(0, 0.001, 0)
+orientation = 1
+
 [node name="Aphid" instance=ExtResource("1_cchbm")]
 collision_layer = 2
 collision_mask = 0
@@ -47,11 +52,10 @@ parameters/locomotion/blend_position = 0.00585774
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("SphereShape3D_0fs3n")
 
-[node name="HoverSprite" type="Sprite3D" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00236732)
-pixel_size = 0.006
-axis = 1
-texture = ExtResource("3_wmvub")
+[node name="HoverIndicator" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(0.813994, 0, 0, 0, 0.813994, 0, 0, 0, 0.813994, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_jnwlp")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="5"]
 path_desired_distance = 0.5

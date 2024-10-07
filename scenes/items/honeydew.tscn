@@ -1,29 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx544tb0so0b4"]
+[gd_scene load_steps=7 format=3 uid="uid://dx544tb0so0b4"]
 
 [ext_resource type="Script" path="res://scripts/items/honeydew.gd" id="1_6fg3d"]
-[ext_resource type="Texture2D" uid="uid://pbcyrj6uvp40" path="res://assets/textures/items/honeydew.png" id="1_a35ol"]
-[ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="2_vinjw"]
+[ext_resource type="Material" uid="uid://c33we3533cr8k" path="res://resources/materials/honeydew_mat.tres" id="2_fnxpb"]
+[ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="3_cofwb"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_6pru1"]
+material = ExtResource("2_fnxpb")
+size = Vector2(0.23, 0.23)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8lnyq"]
 radius = 0.1
+
+[sub_resource type="QuadMesh" id="QuadMesh_qwehm"]
+material = ExtResource("3_cofwb")
+center_offset = Vector3(0, 0.001, 0)
+orientation = 1
 
 [node name="Honeydew" type="CharacterBody3D"]
 collision_layer = 256
 collision_mask = 0
 script = ExtResource("1_6fg3d")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-pixel_size = 0.0009
-billboard = 1
-shaded = true
-alpha_cut = 1
-texture = ExtResource("1_a35ol")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.08549, 0, 0, 0, 1.08549, 0, 0, 0, 1.08549, 0, 0, 0)
+mesh = SubResource("QuadMesh_6pru1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_8lnyq")
 
-[node name="HoverSprite" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, -0.0180028, -0.00236732)
-pixel_size = 0.004
-axis = 1
-texture = ExtResource("2_vinjw")
+[node name="HoverIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.519898, 0, 0, 0, 0.519898, 0, 0, 0, 0.519898, 0, -0.0175649, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_qwehm")

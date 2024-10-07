@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://k11usj2shbtr"]
+[gd_scene load_steps=14 format=3 uid="uid://k11usj2shbtr"]
 
 [ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="1_1u65s"]
 [ext_resource type="Script" path="res://scripts/units/ant_nitwit.gd" id="2_f1bdv"]
-[ext_resource type="Texture2D" uid="uid://dehqm00kiljut" path="res://assets/textures/selection_unit_decal.png" id="3_hxm2m"]
-[ext_resource type="Texture2D" uid="uid://duf132faskeid" path="res://assets/textures/selection_unit_hover_decal.png" id="4_vrkmw"]
+[ext_resource type="Material" uid="uid://bghl8uypb17xy" path="res://resources/materials/indicators/select_indicator_mat.tres" id="3_pq5m5"]
+[ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="4_tsqc2"]
 [ext_resource type="PackedScene" uid="uid://fal1ond30jey" path="res://scenes/units/components/gathering.tscn" id="5_j8w6w"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_foq4x"]
@@ -29,6 +29,16 @@ transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTran
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e8dcp"]
 radius = 0.25
+
+[sub_resource type="QuadMesh" id="QuadMesh_r0l7j"]
+material = ExtResource("3_pq5m5")
+center_offset = Vector3(0, 0.001, 0)
+orientation = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_1jssl"]
+material = ExtResource("4_tsqc2")
+center_offset = Vector3(0, 0.001, 0)
+orientation = 1
 
 [node name="AntNitwit" instance=ExtResource("1_1u65s")]
 collision_layer = 4
@@ -88,17 +98,15 @@ parameters/locomotion/blend_position = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("SphereShape3D_e8dcp")
 
-[node name="SelectionSprite" type="Sprite3D" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00236732)
-pixel_size = 0.0055
-axis = 1
-texture = ExtResource("3_hxm2m")
+[node name="SelectionIndicator" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(0.699626, 0, 0, 0, 0.699626, 0, 0, 0, 0.699626, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_r0l7j")
 
-[node name="HoverSprite" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021804, 0.00953716, -0.00236732)
-pixel_size = 0.0085
-axis = 1
-texture = ExtResource("4_vrkmw")
+[node name="HoverIndicator" type="MeshInstance3D" parent="." index="5"]
+transform = Transform3D(1.08549, 0, 0, 0, 1.08549, 0, 0, 0, 1.08549, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_1jssl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="6"]
 path_desired_distance = 0.5

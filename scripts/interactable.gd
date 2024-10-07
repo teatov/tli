@@ -7,11 +7,11 @@ var hovered: bool = false
 var can_interact: bool = true
 var click_position: Vector2 = Vector2.ZERO
 
-@onready var hover_sprite: Sprite3D = $HoverSprite
+@onready var hover_indicator: VisualInstance3D = $HoverIndicator
 
 
 func _ready() -> void:
-	assert(hover_sprite != null, "hover_sprite missing!")
+	assert(hover_indicator != null, "hover_indicator missing!")
 
 
 func _process(_delta: float) -> void:
@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 	if not can_interact:
 		hovered = false
 		return
-	hover_sprite.visible = hovered
+	hover_indicator.visible = hovered
 
 
 func _input(event: InputEvent) -> void:

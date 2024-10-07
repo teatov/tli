@@ -94,7 +94,7 @@ func _animate(delta: float) -> void:
 			velocity.length() / MOVE_SPEED,
 			delta * 8
 	)
-	animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
+	# animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
 
 
 func _wander(delta: float) -> void:

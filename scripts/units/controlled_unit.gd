@@ -12,7 +12,7 @@ var moving_to_target: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
-@onready var selection_sprite: Sprite3D = $SelectionSprite
+@onready var selection_indicator: VisualInstance3D = $SelectionIndicator
 
 
 static func get_cost() -> int:
@@ -27,15 +27,15 @@ func _init() -> void:
 
 func _ready() -> void:
 	assert(camera != null, "camera missing!")
-	assert(selection_sprite != null, "selection_sprite missing!")
+	assert(selection_indicator != null, "selection_indicator missing!")
 	nav_agent.navigation_finished.connect(_on_nav_agent_navigation_finished)
 	super._ready()
 
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	selection_sprite.visible = selected
-	hover_sprite.visible = hovered or hovered_rect
+	selection_indicator.visible = selected
+	hover_indicator.visible = hovered or hovered_rect
 
 
 func _physics_process(delta: float) -> void:
