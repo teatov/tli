@@ -9,7 +9,7 @@ material = ExtResource("2_fnxpb")
 size = Vector2(0.23, 0.23)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8lnyq"]
-radius = 0.1
+radius = 0.3
 
 [sub_resource type="QuadMesh" id="QuadMesh_qwehm"]
 material = ExtResource("3_cofwb")
@@ -29,6 +29,6 @@ mesh = SubResource("QuadMesh_6pru1")
 shape = SubResource("SphereShape3D_8lnyq")
 
 [node name="HoverIndicator" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.519898, 0, 0, 0, 0.519898, 0, 0, 0, 0.519898, 0, -0.0175649, 0)
+transform = Transform3D(0.66646, 0, 0, 0, 0.66646, 0, 0, 0, 0.66646, 0, -0.0175649, 0)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_qwehm")
