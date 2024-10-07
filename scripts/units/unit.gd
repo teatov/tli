@@ -14,6 +14,7 @@ var wandering_center: Vector3 = Vector3.ZERO
 var spawn_pos: Vector3
 
 var locomotion_value: float = 0
+var showing_info: bool = false
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
@@ -54,7 +55,12 @@ func _physics_process(_delta: float) -> void:
 	_navigate()
 
 
+func toggle_info(on: bool) -> void:
+	showing_info = on
+
+
 func _click() ->void:
+	toggle_info(true)
 	UiManager.unit_info.open(self)
 
 

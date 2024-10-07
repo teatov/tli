@@ -29,6 +29,7 @@ var skeleton: Skeleton3D
 var drop_interval: float = DEFAULT_DROP_INTERVAL
 var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
 var item_bones: Array[int] = []
+var showing_after_set: bool = false
 
 @onready var gathering_center: Vector3 = global_position
 @onready var collision_shape: CollisionShape3D = $NearbyItemsSearch
@@ -53,6 +54,21 @@ func _process(_delta: float) -> void:
 		DebugDraw.circle(target.global_position)
 
 
+func _input(event: InputEvent) -> void:
+	if not visible:
+		return
+
+	if event is InputEventMouseButton and showing_after_set:
+		var button_event := event as InputEventMouseButton
+		if not button_event.pressed:
+			return
+		if (
+				button_event.button_index == MOUSE_BUTTON_LEFT
+				or button_event.button_index == MOUSE_BUTTON_RIGHT
+		):
+			showing_after_set = false
+
+
 func initialize(
 		from: Anthill,
 		skeleton_3d: Skeleton3D,
@@ -69,21 +85,27 @@ func initialize(
 	item_bones = bones
 
 
+func handle_gathering(stop: bool, showing_info: bool) -> void:
+	collision_shape.global_position = gathering_center
+	collision_shape.global_rotation = Vector3.ZERO
+	if stop:
+		state = GatherState.STOP
+
+	radius_indicator.visible = (
+			(state != GatherState.STOP and showing_info)
+			or showing_after_set
+	)
+
+
 func start_gathering(item: Honeydew) -> void:
 	gathering_center = item.global_position
+	showing_after_set = true
 	_go_gather(item)
 
 
 func stop_gathering() -> void:
 	state = GatherState.STOP
 	target = null
-
-
-func handle_gathering(stop: bool) -> void:
-	collision_shape.global_position = gathering_center
-	collision_shape.global_rotation = Vector3.ZERO
-	if stop:
-		state = GatherState.STOP
 
 
 func on_nav_agent_navigation_finished() -> void:
@@ -205,7 +227,6 @@ func _erase_honeydew(item: Honeydew) -> void:
 
 
 func _on_body_entered(item: Node3D) -> void:
-	print(item, ' entered')
 	if item is not Honeydew:
 		return
 
@@ -217,7 +238,6 @@ func _on_body_entered(item: Node3D) -> void:
 
 
 func _on_body_exited(item: Node3D) -> void:
-	print(item, ' exited')
 	if item is not Honeydew:
 		return
 

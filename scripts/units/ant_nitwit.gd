@@ -57,7 +57,7 @@ func _handle_wandering(delta: float) -> void:
 
 
 func _handle_gathering() -> void:
-	gathering.handle_gathering(state != AntNitwitState.GATHERING)
+	gathering.handle_gathering(state != AntNitwitState.GATHERING, showing_info)
 
 
 func _on_moving_ended() -> void:

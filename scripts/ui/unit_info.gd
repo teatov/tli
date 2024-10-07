@@ -44,9 +44,16 @@ func _process(delta: float) -> void:
 
 
 func open(who: Unit) -> void:
+	if unit != null:
+		close()
 	visible = true
 	unit = who
 	set_target(unit.ui_origin)
+
+
+func close() -> void:
+	unit.toggle_info(false)
+	super.close()
 
 
 func _set_image()->void:
