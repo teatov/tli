@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bw8cabkva3k4f"]
+[gd_scene load_steps=11 format=3 uid="uid://bw8cabkva3k4f"]
 
 [ext_resource type="PackedScene" uid="uid://c70vx0utm5knp" path="res://scenes/units/abstract/unit.tscn" id="1_ghhpv"]
 [ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_c6sy4"]
@@ -26,6 +26,9 @@ states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_lgt8u")
 states/locomotion/position = Vector2(333, 100)
 transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_17r08")]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_t1vrx"]
+radius = 0.3
+
 [node name="Aphid" instance=ExtResource("1_ghhpv")]
 script = ExtResource("2_c6sy4")
 
@@ -39,6 +42,9 @@ root_node = NodePath("../AphidModel")
 tree_root = SubResource("AnimationNodeStateMachine_38sa4")
 anim_player = NodePath("../AphidModel/AnimationPlayer")
 parameters/locomotion/blend_position = 0
+
+[node name="CollisionShape3D" parent="." index="2"]
+shape = SubResource("SphereShape3D_t1vrx")
 
 [node name="HoverIndicator" parent="." index="3"]
 transform = Transform3D(0.759866, 0, 0, 0, 0.759866, 0, 0, 0, 0.759866, 0, 0, 0)
