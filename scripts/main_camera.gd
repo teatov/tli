@@ -21,7 +21,7 @@ const BOUNDARY: float = 150 / 2
 @export var zoom_in_speed: float = 5
 @export var zoom_in_dof_far_distance: float = 7
 @export var zoom_in_dof_far_transition: float = 5
-@export var zoom_in_dof_near_distance: float = 3.25
+@export var zoom_in_dof_near_distance: float = 2
 @export var zoom_in_dof_near_transition: float = 1
 
 @export var zoom_out_distance: float = 90
@@ -190,22 +190,11 @@ func _handle_heading_to(delta: float) -> void:
 			heading_to_position,
 			eased_progress,
 	)
-	zoom_raw = quadratic_bezier(
+	zoom_raw = bezier_interpolate(
 			heading_from_zoom,
+			1,
 			1,
 			heading_to_zoom,
 			eased_progress,
 	)
 	zoom_value = zoom_raw
-
-	
-func quadratic_bezier(
-		p0: float,
-		p1: float,
-		p2: float,
-		t: float,
-) -> float:
-	var q0: float = lerp(p0, p1, t)
-	var q1: float = lerp(p1, p2, t)
-	var r: float = lerp(q0, q1, t)
-	return r
