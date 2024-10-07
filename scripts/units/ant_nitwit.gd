@@ -12,7 +12,7 @@ const ITEM_BONE_NAME = "Nitwit_item_"
 var state: AntNitwitState = AntNitwitState.WANDERING
 
 @onready var gathering: Gathering = $Gathering
-@onready var skeleton: Skeleton3D = $Armature/Skeleton3D
+@onready var skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
 
 
 static func get_cost() -> int:

@@ -13,7 +13,7 @@ const MAX_CARRY: int = 8
 var state: AntGathererState = AntGathererState.WANDERING
 
 @onready var gathering: Gathering = $Gathering
-@onready var skeleton: Skeleton3D = $Armature/Skeleton3D
+@onready var skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
 
 
 static func get_cost() -> int:

@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://c70vx0utm5knp"]
+
+[ext_resource type="Script" path="res://scripts/units/unit.gd" id="1_ulhs6"]
+[ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="2_uk1jy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c8txg"]
+radius = 0.25
+
+[sub_resource type="QuadMesh" id="QuadMesh_igohi"]
+material = ExtResource("2_uk1jy")
+center_offset = Vector3(0, 0.001, 0)
+orientation = 1
+
+[node name="Unit" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_ulhs6")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("SphereShape3D_c8txg")
+
+[node name="HoverIndicator" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("QuadMesh_igohi")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+path_height_offset = 0.5
+avoidance_enabled = true
+height = 0.5
+radius = 0.25
+neighbor_distance = 10.0
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-0.25, 0, -0.25, 0.5, 0.5, 0.5)
+
+[node name="UiOrigin" type="Marker3D" parent="."]

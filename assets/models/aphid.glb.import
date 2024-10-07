@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/aphid.glb-186659578d345ed14470f6b0f60d7fc2.sc
 
 [params]
 
-nodes/root_type="CharacterBody3D"
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="AphidModel"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

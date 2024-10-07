@@ -1,73 +1,47 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwi5twmeq7b2a"]
+[gd_scene load_steps=9 format=3 uid="uid://bw8cabkva3k4f"]
 
-[ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="1_cchbm"]
-[ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_ohs5l"]
-[ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_mat.tres" id="3_dcaja"]
-[ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="4_76tmp"]
+[ext_resource type="PackedScene" uid="uid://c70vx0utm5knp" path="res://scenes/units/abstract/unit.tscn" id="1_ghhpv"]
+[ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="2_vtmi4"]
+[ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_mat.tres" id="3_b828p"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_akr28"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f1f0e"]
 animation = &"idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qxrp5"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mfl87"]
 animation = &"walk"
 
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xy8wv"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_akr28")
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_lgt8u"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_f1f0e")
 blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_qxrp5")
+blend_point_1/node = SubResource("AnimationNodeAnimation_mfl87")
 blend_point_1/pos = 1.0
 min_space = 0.0
-sync = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hnsr3"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_17r08"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_uieo6"]
-states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_xy8wv")
-states/locomotion/position = Vector2(365, 100)
-transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_hnsr3")]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_38sa4"]
+states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_lgt8u")
+states/locomotion/position = Vector2(333, 100)
+transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_17r08")]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_0fs3n"]
-radius = 0.25
+[node name="Aphid" instance=ExtResource("1_ghhpv")]
 
-[sub_resource type="QuadMesh" id="QuadMesh_jnwlp"]
-material = ExtResource("4_76tmp")
-center_offset = Vector3(0, 0.001, 0)
-orientation = 1
+[node name="AphidModel" parent="." index="0" instance=ExtResource("2_vtmi4")]
 
-[node name="Aphid" instance=ExtResource("1_cchbm")]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("2_ohs5l")
+[node name="aphid" parent="AphidModel" index="0"]
+surface_material_override/0 = ExtResource("3_b828p")
 
-[node name="aphid" parent="." index="0"]
-surface_material_override/0 = ExtResource("3_dcaja")
+[node name="AnimationTree" parent="." index="1"]
+root_node = NodePath("../AphidModel")
+tree_root = SubResource("AnimationNodeStateMachine_38sa4")
+anim_player = NodePath("../AphidModel/AnimationPlayer")
+parameters/locomotion/blend_position = 0
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-tree_root = SubResource("AnimationNodeStateMachine_uieo6")
-anim_player = NodePath("../AnimationPlayer")
-parameters/locomotion/blend_position = 0.00585774
+[node name="HoverIndicator" parent="." index="3"]
+transform = Transform3D(0.759866, 0, 0, 0, 0.759866, 0, 0, 0, 0.759866, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-shape = SubResource("SphereShape3D_0fs3n")
+[node name="UiOrigin" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.531, 0)
 
-[node name="HoverIndicator" type="MeshInstance3D" parent="." index="4"]
-transform = Transform3D(0.813994, 0, 0, 0, 0.813994, 0, 0, 0, 0.813994, 0, 0, 0)
-cast_shadow = 0
-mesh = SubResource("QuadMesh_jnwlp")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="5"]
-path_desired_distance = 0.5
-target_desired_distance = 0.5
-path_height_offset = 0.5
-avoidance_enabled = true
-height = 0.5
-radius = 0.25
-neighbor_distance = 10.0
-
-[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="6"]
-aabb = AABB(-0.283093, 0, -0.300282, 0.566186, 0.5, 0.600564)
-
-[node name="UiOrigin" type="Marker3D" parent="." index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.531097, 0)
+[editable path="AphidModel"]

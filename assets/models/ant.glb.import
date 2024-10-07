@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/ant.glb-2bc83283752a3a739ab3e737bef4a96c.scn"
 
 [params]
 
-nodes/root_type="CharacterBody3D"
-nodes/root_name="TestUnit"
+nodes/root_type="Node3D"
+nodes/root_name="AntModel"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
