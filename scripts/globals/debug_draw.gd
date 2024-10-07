@@ -19,6 +19,7 @@ var text_to_draw: PackedStringArray = []
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 999
 	enabled = false
 	control.draw.connect(_on_control_draw)
