@@ -37,7 +37,7 @@ callback_mode_process = 1
 
 [node name="Gathering" parent="." index="8" instance=ExtResource("3_7b5q8")]
 
-[node name="NearbyItemsSearch" parent="Gathering" index="1"]
+[node name="NearbyItemsSearch" parent="Gathering" index="0"]
 shape = SubResource("SphereShape3D_f7l1n")
 
 [node name="GatheringRadius" parent="Gathering/NearbyItemsSearch" index="0"]

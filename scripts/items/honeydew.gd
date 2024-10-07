@@ -12,6 +12,8 @@ var move_to: Vector3
 var move_from: Vector3
 var moving_timer: float = 0
 
+var from_aphid: Aphid
+
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 
 
@@ -37,6 +39,16 @@ func _process(delta: float) -> void:
 	)
 	if carried:
 		hover_indicator.visible = false
+
+
+func set_aphid(from: Aphid) -> void:
+	from_aphid = from
+
+
+func remove_from_spawner() -> void:
+	if from_aphid == null:
+		return
+	from_aphid.erase_honeydew(self)
 
 
 func set_carried(on: bool) -> void:

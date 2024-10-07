@@ -25,6 +25,9 @@ var advance_anim_delta_accum: float = 0
 		$VisibleOnScreenNotifier3D
 )
 @onready var main_camera: MainCamera = $/root/World/MainCamera
+@onready var audio_player: AudioStreamPlayerPolyphonic = (
+		$AudioStreamPlayerPolyphonic
+)
 
 
 func _ready() -> void:
@@ -34,6 +37,7 @@ func _ready() -> void:
 	assert(ui_origin != null, "ui_origin missing!")
 	assert(main_camera != null, "main_camera missing!")
 	assert(anim_advance_indicator != null, "anim_advance_indicator missing!")
+	assert(audio_player != null, "audio_player missing!")
 	super._ready()
 
 	anim_advance_indicator.visible = false

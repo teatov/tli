@@ -4,7 +4,7 @@ class_name Anthill
 const SPAWN_RADIUS: float = 1
 const DEFAULT_MAX_HONEYDEW: int = 120
 
-var honeydew: int = 20
+var honeydew: int = 0
 var max_honeydew: int = DEFAULT_MAX_HONEYDEW
 
 var ant_nitwit := preload("res://scenes/units/ant_nitwit.tscn")
@@ -19,6 +19,8 @@ func _ready() -> void:
 	assert(ui_origin != null, "ui_origin missing!")
 	assert(nitwits_holder != null, "nitwits_holder missing!")
 	super._ready()
+	honeydew += AntNitwit.get_cost()
+	spawn_nitwit()
 
 
 func space_left() -> int:
@@ -38,9 +40,11 @@ func deposit_honeydew(amount: int) -> int:
 
 
 func spawn_nitwit() -> void:
+	print('spawn!')
 	var new_unit := _create_unit(ant_nitwit, AntNitwit.get_cost())
 	if new_unit == null:
 		return
+	print('add!')
 	nitwits_holder.add_child(new_unit)
 
 
@@ -57,6 +61,7 @@ func _click() -> void:
 
 func _create_unit(unit_scene: PackedScene, cost: int) -> ControlledUnit:
 	var new_honeydew_amount := honeydew - cost
+	print(new_honeydew_amount)
 	if new_honeydew_amount < 0:
 		return null
 	honeydew = new_honeydew_amount

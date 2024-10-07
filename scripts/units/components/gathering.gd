@@ -44,6 +44,7 @@ var showing_after_set: bool = false
 func _ready() -> void:
 	assert(collision_shape != null, "collision_shape missing!")
 	assert(radius_indicator != null, "radius_indicator missing!")
+	assert(audio_player != null, "audio_player missing!")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -189,6 +190,7 @@ func _deposit() -> void:
 		audio_player.play_polyphonic(SoundManager.swoosh())
 		await item.start_moving(anthill.global_position).moved
 		audio_player.play_polyphonic(SoundManager.pop())
+		item.remove_from_spawner()
 		_erase_honeydew(item)
 		item.queue_free()
 		anthill.deposit_honeydew(1)

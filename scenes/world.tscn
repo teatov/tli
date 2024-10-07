@@ -191,12 +191,11 @@ script = ExtResource("3_vkmt5")
 
 [node name="Honeydew" type="Node" parent="Bunches"]
 
-[node name="HoneydewBunch" type="Marker3D" parent="Bunches/Honeydew"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.4312, 0, -61.2736)
-gizmo_extents = 4.8
+[node name="BunchSpawner" type="Marker3D" parent="Bunches/Honeydew"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.2604, -7.62939e-06, -58.6667)
+gizmo_extents = 4.7
 script = ExtResource("3_vkmt5")
 what = 1
-amount = 50
 
 [node name="UI" type="Node" parent="."]
 
