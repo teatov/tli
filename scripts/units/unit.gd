@@ -25,8 +25,8 @@ var advance_anim_delta_accum: float = 0
 		$VisibleOnScreenNotifier3D
 )
 @onready var main_camera: MainCamera = $/root/World/MainCamera
-@onready var audio_player: AudioStreamPlayerPolyphonic = (
-		$AudioStreamPlayerPolyphonic
+@onready var audio_player: SoundEffectsPlayer = (
+		$SoundEffectsPlayer
 )
 
 

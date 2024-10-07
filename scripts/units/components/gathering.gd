@@ -36,8 +36,8 @@ var showing_after_set: bool = false
 @onready var radius_indicator: VisualInstance3D = (
 		$NearbyItemsSearch/GatheringRadius
 )
-@onready var audio_player: AudioStreamPlayerPolyphonic = (
-		$AudioStreamPlayerPolyphonic
+@onready var audio_player: SoundEffectsPlayer = (
+		$SoundEffectsPlayer
 )
 
 
@@ -160,11 +160,11 @@ func _pick_up() -> void:
 
 	carrying_items.append(target)
 	target.set_carried(true)
-	audio_player.play_polyphonic(SoundManager.swoosh())
+	audio_player.play_sound(SoundManager.swoosh())
 	await target.start_moving(
 			_get_nth_pile_pos(carrying_items.size() - 1)
 	).moved
-	audio_player.play_polyphonic(SoundManager.pop())
+	audio_player.play_sound(SoundManager.pop())
 
 	await get_tree().create_timer(pickup_interval).timeout
 	if carrying_items.size() >= max_carrying or nearest == null:
@@ -186,9 +186,9 @@ func _deposit() -> void:
 			return
 
 		var item := carrying_items.pop_back() as Honeydew
-		audio_player.play_polyphonic(SoundManager.swoosh())
+		audio_player.play_sound(SoundManager.swoosh())
 		await item.start_moving(anthill.global_position).moved
-		audio_player.play_polyphonic(SoundManager.tok())
+		audio_player.play_sound(SoundManager.tok())
 		item.remove_from_spawner()
 		_erase_honeydew(item)
 		item.queue_free()

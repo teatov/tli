@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/units/components/gathering.gd" id="1_ciwtf"]
 [ext_resource type="Material" uid="uid://jkh5iskawwry" path="res://resources/materials/indicators/gathering_radius_mat.tres" id="2_r26em"]
-[ext_resource type="Script" path="res://scripts/audio_stream_player_polyphonic.gd" id="4_alybx"]
+[ext_resource type="Script" path="res://scripts/sound_effects_player.gd" id="4_alybx"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_ks8es"]
 material = ExtResource("2_r26em")
@@ -22,5 +22,5 @@ cast_shadow = 0
 mesh = SubResource("QuadMesh_ks8es")
 skeleton = NodePath("../..")
 
-[node name="AudioStreamPlayerPolyphonic" type="AudioStreamPlayer3D" parent="."]
+[node name="SoundEffectsPlayer" type="AudioStreamPlayer3D" parent="."]
 script = ExtResource("4_alybx")

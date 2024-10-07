@@ -13,8 +13,8 @@ var ant_gatherer := preload("res://scenes/units/ant_gatherer.tscn")
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var nitwits_holder: Node = $/root/World/Units/Nitwits
 @onready var gatherers_holder: Node = $/root/World/Units/Gatherers
-@onready var audio_player: AudioStreamPlayerPolyphonic = (
-		$AudioStreamPlayerPolyphonic
+@onready var audio_player: SoundEffectsPlayer = (
+		$SoundEffectsPlayer
 )
 
 
@@ -80,5 +80,5 @@ func _create_unit(unit_scene: PackedScene, cost: int) -> ControlledUnit:
 					new_pos
 			)
 	)
-	audio_player.play_polyphonic(SoundManager.ding())
+	audio_player.play_sound(SoundManager.ding())
 	return new_unit
