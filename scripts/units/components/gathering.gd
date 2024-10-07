@@ -31,8 +31,6 @@ var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
 var item_bones: Array[int] = []
 var showing_after_set: bool = false
 
-var pickup_sound := preload("res://assets/audio/shwoosh.wav")
-
 @onready var gathering_center: Vector3 = global_position
 @onready var collision_shape: CollisionShape3D = $NearbyItemsSearch
 @onready var radius_indicator: VisualInstance3D = (
@@ -117,7 +115,10 @@ func on_nav_agent_navigation_finished() -> void:
 	if state == GatherState.PICKING_UP:
 		_pick_up()
 
-	if state == GatherState.DEPOSITING:
+	if (
+			state == GatherState.DEPOSITING
+			and global_position.distance_to(anthill.global_position) < 1
+	):
 		_deposit()
 
 
@@ -151,14 +152,17 @@ func _pick_up() -> void:
 	if target == null or target.carried:
 		if nearest != null:
 			_go_gather(nearest)
+		elif carrying_items.size() > 0:
+			_go_deposit()
 		return
 
 	carrying_items.append(target)
 	target.set_carried(true)
+	audio_player.play_polyphonic(SoundManager.swoosh())
 	await target.start_moving(
 			_get_nth_pile_pos(carrying_items.size() - 1)
 	).moved
-	audio_player.play_polyphonic(pickup_sound)
+	audio_player.play_polyphonic(SoundManager.pop())
 
 	await get_tree().create_timer(pickup_interval).timeout
 	if carrying_items.size() >= max_carrying or nearest == null:
@@ -182,13 +186,14 @@ func _deposit() -> void:
 			return
 
 		var item := carrying_items.pop_back() as Honeydew
+		audio_player.play_polyphonic(SoundManager.swoosh())
 		await item.start_moving(anthill.global_position).moved
+		audio_player.play_polyphonic(SoundManager.pop())
 		_erase_honeydew(item)
 		item.queue_free()
 		anthill.deposit_honeydew(1)
 		await get_tree().create_timer(drop_interval).timeout
 	
-	state = GatherState.PICKING_UP
 	var nearest := _find_nearest(nearby_items.values())
 	if nearest != null:
 		_go_gather(nearest)

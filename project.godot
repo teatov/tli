@@ -26,6 +26,7 @@ DebugManager="*res://scripts/globals/debug_manager.gd"
 UiManager="*res://scripts/globals/ui_manager.gd"
 HoveringManager="*res://scripts/globals/hovering_manager.gd"
 SelectionManager="*res://scripts/globals/selection_manager.gd"
+SoundManager="*res://scripts/globals/sound_manager.gd"
 
 [debug]
 
