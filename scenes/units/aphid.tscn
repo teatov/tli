@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bw8cabkva3k4f"]
+[gd_scene load_steps=10 format=3 uid="uid://bw8cabkva3k4f"]
 
 [ext_resource type="PackedScene" uid="uid://c70vx0utm5knp" path="res://scenes/units/abstract/unit.tscn" id="1_ghhpv"]
+[ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_c6sy4"]
 [ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="2_vtmi4"]
 [ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_mat.tres" id="3_b828p"]
 
@@ -26,6 +27,7 @@ states/locomotion/position = Vector2(333, 100)
 transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_17r08")]
 
 [node name="Aphid" instance=ExtResource("1_ghhpv")]
+script = ExtResource("2_c6sy4")
 
 [node name="AphidModel" parent="." index="0" instance=ExtResource("2_vtmi4")]
 
