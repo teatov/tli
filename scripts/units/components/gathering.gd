@@ -2,7 +2,7 @@ extends Area3D
 class_name Gathering
 
 signal target_set(pos: Vector3)
-signal stop_gathering
+signal stopped_gathering
 
 const DEFAULT_MAX_CARRYING = 3
 const DEFAULT_DROP_INTERVAL = 0.25
@@ -21,7 +21,6 @@ var state: GatherState = GatherState.STOP
 var nearby_items: Dictionary = {}
 var carrying_items: Array[Honeydew] = []
 var max_carrying: int = DEFAULT_MAX_CARRYING
-var deposit_leftover: int = 0
 
 var target: Honeydew
 var anthill: Anthill
@@ -31,8 +30,16 @@ var drop_interval: float = DEFAULT_DROP_INTERVAL
 var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
 var item_bones: Array[int] = []
 
+@onready var gathering_center: Vector3 = global_position
+@onready var collision_shape: CollisionShape3D = $NearbyItemsSearch
+@onready var radius_indicator: VisualInstance3D = (
+		$NearbyItemsSearch/GatheringRadius
+)
+
 
 func _ready() -> void:
+	assert(collision_shape != null, "collision_shape missing!")
+	assert(radius_indicator != null, "radius_indicator missing!")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -62,28 +69,19 @@ func initialize(
 	item_bones = bones
 
 
-func go_gather(item: Honeydew) -> void:
-	if anthill.space_left() <= 0:
-		return
-	if carrying_items.size() >= max_carrying:
-		go_deposit()
-		return
-	target = item
-	state = GatherState.PICKING_UP
-	target_set.emit(item.global_position)
+func start_gathering(item: Honeydew) -> void:
+	gathering_center = item.global_position
+	_go_gather(item)
 
 
-func go_deposit() -> void:
-	state = GatherState.DEPOSITING
-	var dir := anthill.global_position.direction_to(global_position)
-	target_set.emit(
-			anthill.global_position
-			+ dir
-			* ANTHILL_DEPOSIT_RADIUS
-	)
+func stop_gathering() -> void:
+	state = GatherState.STOP
+	target = null
 
 
 func handle_gathering(stop: bool) -> void:
+	collision_shape.global_position = gathering_center
+	collision_shape.global_rotation = Vector3.ZERO
 	if stop:
 		state = GatherState.STOP
 
@@ -96,13 +94,25 @@ func on_nav_agent_navigation_finished() -> void:
 		_deposit()
 
 
-func set_leftover(value: int) -> void:
-	deposit_leftover = value
+func _go_gather(item: Honeydew) -> void:
+	if anthill.space_left() <= 0:
+		return
+	if carrying_items.size() >= max_carrying:
+		_go_deposit()
+		return
+	target = item
+	state = GatherState.PICKING_UP
+	target_set.emit(item.global_position)
 
 
-func stop_all_gathering() -> void:
-	state = GatherState.STOP
-	target = null
+func _go_deposit() -> void:
+	state = GatherState.DEPOSITING
+	var dir := anthill.global_position.direction_to(global_position)
+	target_set.emit(
+			anthill.global_position
+			+ dir
+			* ANTHILL_DEPOSIT_RADIUS
+	)
 
 
 func _get_nth_pile_pos(n: int) -> Vector3:
@@ -119,15 +129,15 @@ func _pick_up() -> void:
 
 		await get_tree().create_timer(pickup_interval).timeout
 		if carrying_items.size() >= max_carrying:
-			go_deposit()
+			_go_deposit()
 			return
 
 	var nearest := _find_nearest(nearby_items.values())
 	if nearest != null:
-		go_gather(nearest)
+		_go_gather(nearest)
 		return
 
-	go_deposit()
+	_go_deposit()
 
 
 func _deposit() -> void:
@@ -139,13 +149,12 @@ func _deposit() -> void:
 		if anthill.space_left() <= 0:
 			print('DROP!')
 			_drop_everything()
-			stop_all_gathering()
-			stop_gathering.emit()
+			stop_gathering()
+			stopped_gathering.emit()
 			return
 
 		var item := carrying_items.pop_back() as Honeydew
 		await item.start_moving(anthill.global_position).moved
-		ItemsManager.erase_honeydew(item)
 		_erase_honeydew(item)
 		item.queue_free()
 		anthill.deposit_honeydew(1)
@@ -154,16 +163,11 @@ func _deposit() -> void:
 	state = GatherState.PICKING_UP
 	var nearest := _find_nearest(nearby_items.values())
 	if nearest != null:
-		go_gather(nearest)
-		return
-
-	var nearest_global := _find_nearest(ItemsManager.honeydews.values())
-	if nearest_global != null:
-		go_gather(nearest_global)
+		_go_gather(nearest)
 		return
 	
-	stop_all_gathering()
-	stop_gathering.emit()
+	stop_gathering()
+	stopped_gathering.emit()
 
 
 func _drop_everything() -> void:
@@ -201,6 +205,7 @@ func _erase_honeydew(item: Honeydew) -> void:
 
 
 func _on_body_entered(item: Node3D) -> void:
+	print(item, ' entered')
 	if item is not Honeydew:
 		return
 
@@ -212,6 +217,7 @@ func _on_body_entered(item: Node3D) -> void:
 
 
 func _on_body_exited(item: Node3D) -> void:
+	print(item, ' exited')
 	if item is not Honeydew:
 		return
 

@@ -31,7 +31,7 @@ func _ready() -> void:
 		item_bones.append(skeleton.find_bone(ITEM_BONE_NAME + str(i)))
 	gathering.initialize(anthill, skeleton, item_bones)
 	gathering.target_set.connect(_on_gathering_target_set)
-	gathering.stop_gathering.connect(_on_gathering_stop)
+	gathering.stopped_gathering.connect(_on_stopped_gathering)
 
 
 func _process(delta: float) -> void:
@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 func _interact(with: Interactable) -> void:
 	if with is Honeydew:
 		state = AntNitwitState.GATHERING
-		gathering.go_gather(with as Honeydew)
+		gathering.start_gathering(with as Honeydew)
 
 
 func _handle_wandering(delta: float) -> void:
@@ -66,7 +66,7 @@ func _on_moving_ended() -> void:
 
 func _on_moving_started() -> void:
 	if state == AntNitwitState.GATHERING:
-		gathering.stop_all_gathering()
+		gathering.stop_gathering()
 	state = AntNitwitState.MOVING
 
 
@@ -77,5 +77,5 @@ func _on_gathering_target_set(pos: Vector3) -> void:
 	nav_agent.set_target_position(pos)
 
 
-func _on_gathering_stop() -> void:
+func _on_stopped_gathering() -> void:
 	state = AntNitwitState.WANDERING

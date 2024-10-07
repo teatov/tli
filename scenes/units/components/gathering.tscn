@@ -16,6 +16,7 @@ script = ExtResource("1_ciwtf")
 
 [node name="NearbyItemsSearch" type="CollisionShape3D" parent="."]
 
-[node name="GatheringRadius" type="MeshInstance3D" parent="."]
+[node name="GatheringRadius" type="MeshInstance3D" parent="NearbyItemsSearch"]
 cast_shadow = 0
 mesh = SubResource("QuadMesh_ks8es")
+skeleton = NodePath("../..")
