@@ -31,10 +31,15 @@ var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
 var item_bones: Array[int] = []
 var showing_after_set: bool = false
 
+var pickup_sound := preload("res://assets/audio/shwoosh.wav")
+
 @onready var gathering_center: Vector3 = global_position
 @onready var collision_shape: CollisionShape3D = $NearbyItemsSearch
 @onready var radius_indicator: VisualInstance3D = (
 		$NearbyItemsSearch/GatheringRadius
+)
+@onready var audio_player: AudioStreamPlayerPolyphonic = (
+		$AudioStreamPlayerPolyphonic
 )
 
 
@@ -109,7 +114,7 @@ func stop_gathering() -> void:
 
 
 func on_nav_agent_navigation_finished() -> void:
-	if state == GatherState.PICKING_UP and target != null:
+	if state == GatherState.PICKING_UP:
 		_pick_up()
 
 	if state == GatherState.DEPOSITING:
@@ -142,24 +147,25 @@ func _get_nth_pile_pos(n: int) -> Vector3:
 
 
 func _pick_up() -> void:
-	if not target.carried:
-		carrying_items.append(target)
-		target.set_carried(true)
-		await target.start_moving(
-				_get_nth_pile_pos(carrying_items.size() - 1)
-		).moved
-
-		await get_tree().create_timer(pickup_interval).timeout
-		if carrying_items.size() >= max_carrying:
-			_go_deposit()
-			return
-
 	var nearest := _find_nearest(nearby_items.values())
-	if nearest != null:
-		_go_gather(nearest)
+	if target == null or target.carried:
+		if nearest != null:
+			_go_gather(nearest)
 		return
 
-	_go_deposit()
+	carrying_items.append(target)
+	target.set_carried(true)
+	await target.start_moving(
+			_get_nth_pile_pos(carrying_items.size() - 1)
+	).moved
+	audio_player.play_polyphonic(pickup_sound)
+
+	await get_tree().create_timer(pickup_interval).timeout
+	if carrying_items.size() >= max_carrying or nearest == null:
+		_go_deposit()
+		return
+
+	_go_gather(nearest)
 
 
 func _deposit() -> void:
