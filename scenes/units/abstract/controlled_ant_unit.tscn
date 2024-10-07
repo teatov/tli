@@ -55,6 +55,9 @@ bones/43/rotation = Quaternion(-0.841459, -1.31575e-07, 6.3826e-06, 0.540321)
 [node name="GathererMesh" parent="AntModel/Armature/Skeleton3D" index="0"]
 visible = false
 
+[node name="NitwitMesh" parent="AntModel/Armature/Skeleton3D" index="1"]
+visible = false
+
 [node name="AnimationTree" parent="." index="1"]
 root_node = NodePath("../AntModel")
 tree_root = SubResource("AnimationNodeStateMachine_v8drs")
