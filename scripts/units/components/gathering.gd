@@ -16,15 +16,20 @@ enum GatherState {
 	STOP,
 }
 
+var state: GatherState = GatherState.STOP
+
 var nearby_items: Dictionary = {}
 var carrying_items: Array[Honeydew] = []
 var max_carrying: int = DEFAULT_MAX_CARRYING
 var deposit_leftover: int = 0
-var state: GatherState = GatherState.STOP
+
 var target: Honeydew
 var anthill: Anthill
+var skeleton: Skeleton3D
+
 var drop_interval: float = DEFAULT_DROP_INTERVAL
 var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
+var item_bones: Array[int] = []
 
 
 func _ready() -> void:
@@ -35,7 +40,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	for i in range(carrying_items.size()):
 		var item := carrying_items[i]
-		item.global_position = get_nth_pile_pos(i)
+		item.global_position = _get_nth_pile_pos(i)
 
 	if target != null:
 		DebugDraw.circle(target.global_position)
@@ -43,6 +48,8 @@ func _process(_delta: float) -> void:
 
 func initialize(
 		from: Anthill,
+		skeleton_3d: Skeleton3D,
+		bones: Array[int],
 		max_carry: int = DEFAULT_MAX_CARRYING,
 		drop_interv: float = DEFAULT_DROP_INTERVAL,
 		pickup_interv: float = DEFAULT_PICKUP_INTERVAL,
@@ -51,6 +58,8 @@ func initialize(
 	max_carrying = max_carry
 	drop_interval = drop_interv
 	pickup_interval = pickup_interv
+	skeleton = skeleton_3d
+	item_bones = bones
 
 
 func go_gather(item: Honeydew) -> void:
@@ -95,12 +104,9 @@ func stop_all_gathering() -> void:
 	state = GatherState.STOP
 	target = null
 
-func get_nth_pile_pos(n: int) -> Vector3:
-	return (
-			global_position
-			+ (Vector3.UP * 0.45)
-			+ (Vector3.UP * 0.1 * n)
-	)
+
+func _get_nth_pile_pos(n: int) -> Vector3:
+	return skeleton.to_global(skeleton.get_bone_global_pose(item_bones[n]).origin)
 
 
 func _pick_up() -> void:
@@ -108,7 +114,7 @@ func _pick_up() -> void:
 		carrying_items.append(target)
 		target.set_carried(true)
 		await target.start_moving(
-				get_nth_pile_pos(carrying_items.size() - 1)
+				_get_nth_pile_pos(carrying_items.size() - 1)
 		).moved
 
 		await get_tree().create_timer(pickup_interval).timeout

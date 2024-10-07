@@ -33,8 +33,13 @@ animation/import_rest_as_RESET=true
 import_script/path=""
 _subresources={
 "materials": {
-"@MATERIAL:0": {
-"use_external/path": "res://resources/materials/ant_nitwit_material.tres"
+"ant_gatherer_mat": {
+"use_external/enabled": true,
+"use_external/path": "res://resources/materials/ant_gatherer_mat.tres"
+},
+"ant_nitwit_mat": {
+"use_external/enabled": true,
+"use_external/path": "res://resources/materials/ant_nitwit_mat.tres"
 }
 }
 }

@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=16 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="PackedScene" uid="uid://brjxxr7h0o0ay" path="res://scenes/static/ground.tscn" id="1_7osoy"]
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
+[ext_resource type="PackedScene" uid="uid://dx544tb0so0b4" path="res://scenes/items/honeydew.tscn" id="3_hea5m"]
 [ext_resource type="PackedScene" uid="uid://bk3ers4qaleu2" path="res://scenes/static/bunch_spawner.tscn" id="3_q7xu0"]
 [ext_resource type="PackedScene" uid="uid://c70rhvk2okkcu" path="res://scenes/ui/buy_ants.tscn" id="4_irvxk"]
 [ext_resource type="PackedScene" uid="uid://dhtofjn8dnuw3" path="res://scenes/ui/unit_info.tscn" id="5_asam3"]
@@ -65,6 +66,78 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.3389, 0, -63.0179)
 
 [node name="Items" type="Node" parent="."]
+
+[node name="Honeydew" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1609, 0.0949052, -61.5021)
+
+[node name="Honeydew2" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.6777, 0.094905, -61.1786)
+
+[node name="Honeydew3" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.1395, 0.094905, -62.1842)
+
+[node name="Honeydew4" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.8621, 0.094905, -61.3258)
+
+[node name="Honeydew5" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.4127, 0.094905, -60.3237)
+
+[node name="Honeydew6" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.9151, 0.094905, -60.5565)
+
+[node name="Honeydew7" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.2039, 0.0949052, -61.6999)
+
+[node name="Honeydew8" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.7207, 0.094905, -61.3764)
+
+[node name="Honeydew9" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.1826, 0.094905, -62.382)
+
+[node name="Honeydew10" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.9051, 0.094905, -61.5236)
+
+[node name="Honeydew11" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.4557, 0.094905, -60.5214)
+
+[node name="Honeydew12" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.9581, 0.094905, -60.7543)
+
+[node name="Honeydew13" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5179, 0.0949052, -64.0861)
+
+[node name="Honeydew14" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.0347, 0.094905, -63.7626)
+
+[node name="Honeydew15" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.4965, 0.094905, -64.7682)
+
+[node name="Honeydew16" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.2191, 0.094905, -63.9098)
+
+[node name="Honeydew17" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.7697, 0.094905, -62.9077)
+
+[node name="Honeydew18" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.2721, 0.094905, -63.1405)
+
+[node name="Honeydew19" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.561, 0.0949052, -64.2839)
+
+[node name="Honeydew20" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.0778, 0.094905, -63.9604)
+
+[node name="Honeydew21" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.5396, 0.094905, -64.966)
+
+[node name="Honeydew22" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.2622, 0.094905, -64.1076)
+
+[node name="Honeydew23" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.8128, 0.094905, -63.1055)
+
+[node name="Honeydew24" parent="Items" instance=ExtResource("3_hea5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.3151, 0.094905, -63.3383)
 
 [node name="Bunches" type="Node" parent="."]
 

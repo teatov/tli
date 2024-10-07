@@ -7,9 +7,13 @@ enum AntGathererState {
 	GATHERING,
 }
 
+const ITEM_BONE_NAME = "Gatherer_item_"
+const MAX_CARRY: int = 8
+
 var state: AntGathererState = AntGathererState.WANDERING
 
 @onready var gathering: Gathering = $Gathering
+@onready var skeleton: Skeleton3D = $Armature/Skeleton3D
 
 
 static func get_cost() -> int:
@@ -18,11 +22,15 @@ static func get_cost() -> int:
 
 func _ready() -> void:
 	assert(gathering != null, "gathering missing!")
+	assert(skeleton != null, "skeleton missing!")
 	super._ready()
 	moving_started.connect(_on_moving_started)
 	moving_ended.connect(_on_moving_ended)
 	nav_agent.navigation_finished.connect(gathering.on_nav_agent_navigation_finished)
-	gathering.initialize(anthill, 8, 0.4, 1)
+	var item_bones: Array[int] = []
+	for i in MAX_CARRY:
+		item_bones.append(skeleton.find_bone(ITEM_BONE_NAME + str(i)))
+	gathering.initialize(anthill, skeleton, item_bones, MAX_CARRY, 0.4, 1)
 	gathering.target_set.connect(_on_gathering_target_set)
 	gathering.stop_gathering.connect(_on_gathering_stop)
 
