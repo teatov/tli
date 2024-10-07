@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://ceru75se7ifkb"]
+[gd_scene load_steps=15 format=3 uid="uid://ceru75se7ifkb"]
 
 [ext_resource type="PackedScene" uid="uid://brjxxr7h0o0ay" path="res://scenes/static/ground.tscn" id="1_7osoy"]
 [ext_resource type="Script" path="res://scripts/main_camera.gd" id="1_gnxhh"]
-[ext_resource type="PackedScene" uid="uid://dx544tb0so0b4" path="res://scenes/items/honeydew.tscn" id="3_hea5m"]
-[ext_resource type="PackedScene" uid="uid://bk3ers4qaleu2" path="res://scenes/static/bunch_spawner.tscn" id="3_q7xu0"]
+[ext_resource type="Script" path="res://scripts/bunch_spawner.gd" id="3_vkmt5"]
 [ext_resource type="PackedScene" uid="uid://c70rhvk2okkcu" path="res://scenes/ui/buy_ants.tscn" id="4_irvxk"]
 [ext_resource type="PackedScene" uid="uid://dhtofjn8dnuw3" path="res://scenes/ui/unit_info.tscn" id="5_asam3"]
 [ext_resource type="PackedScene" uid="uid://davys5ol18oyo" path="res://scenes/ui/pause_menu.tscn" id="5_ljrsn"]
@@ -67,176 +66,137 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.3389, 0, -63.0179)
 
 [node name="Items" type="Node" parent="."]
 
-[node name="Honeydew" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1609, 0.0949052, -61.5021)
-
-[node name="Honeydew2" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.6777, 0.094905, -61.1786)
-
-[node name="Honeydew3" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.1395, 0.094905, -62.1842)
-
-[node name="Honeydew4" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.8621, 0.094905, -61.3258)
-
-[node name="Honeydew5" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.4127, 0.094905, -60.3237)
-
-[node name="Honeydew6" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.9151, 0.094905, -60.5565)
-
-[node name="Honeydew7" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.2039, 0.0949052, -61.6999)
-
-[node name="Honeydew8" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.7207, 0.094905, -61.3764)
-
-[node name="Honeydew9" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.1826, 0.094905, -62.382)
-
-[node name="Honeydew10" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.9051, 0.094905, -61.5236)
-
-[node name="Honeydew11" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.4557, 0.094905, -60.5214)
-
-[node name="Honeydew12" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.9581, 0.094905, -60.7543)
-
-[node name="Honeydew13" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.5179, 0.0949052, -64.0861)
-
-[node name="Honeydew14" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.5821, 0.094905, -64.3186)
-
-[node name="Honeydew15" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.0439, 0.094905, -65.3242)
-
-[node name="Honeydew16" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.7665, 0.094905, -64.4658)
-
-[node name="Honeydew17" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.3171, 0.094905, -63.4637)
-
-[node name="Honeydew18" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.8195, 0.094905, -63.6965)
-
-[node name="Honeydew19" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.1084, 0.0949052, -64.8399)
-
-[node name="Honeydew20" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.6252, 0.094905, -64.5164)
-
-[node name="Honeydew21" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.087, 0.094905, -65.522)
-
-[node name="Honeydew22" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.8096, 0.094905, -64.6636)
-
-[node name="Honeydew23" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.3602, 0.094905, -63.6615)
-
-[node name="Honeydew24" parent="Items" instance=ExtResource("3_hea5m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.8625, 0.094905, -63.8943)
+[node name="Honeydew" type="Node" parent="Items"]
 
 [node name="Bunches" type="Node" parent="."]
 
-[node name="AphidsBunch" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="Aphids" type="Node" parent="Bunches"]
+
+[node name="AphidsBunch" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.716, 0, -56.9208)
 gizmo_extents = 2.71
+script = ExtResource("3_vkmt5")
 amount = 3
 
-[node name="AphidsBunch2" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch2" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0519, -1.90735e-06, -58.8914)
 gizmo_extents = 1.38
+script = ExtResource("3_vkmt5")
 amount = 2
 
-[node name="AphidsBunch3" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch3" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.61883, -1.90735e-06, -56.5091)
 gizmo_extents = 7.96
+script = ExtResource("3_vkmt5")
 
-[node name="AphidsBunch4" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch4" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9648, -1.90735e-06, -56.633)
 gizmo_extents = 2.9
+script = ExtResource("3_vkmt5")
 amount = 3
 
-[node name="AphidsBunch5" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch5" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.7378, -1.90735e-06, -19.6778)
 gizmo_extents = 10.0
+script = ExtResource("3_vkmt5")
 amount = 8
 
-[node name="AphidsBunch6" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch6" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.8955, -2.86102e-06, 1.05166)
 gizmo_extents = 1.15
+script = ExtResource("3_vkmt5")
 amount = 2
 
-[node name="AphidsBunch7" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch7" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9318, 9.53674e-07, -10.1347)
 gizmo_extents = 4.35
+script = ExtResource("3_vkmt5")
 amount = 3
 
-[node name="AphidsBunch8" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch8" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.994, 9.53674e-07, -41.5218)
 gizmo_extents = 4.35
+script = ExtResource("3_vkmt5")
 amount = 2
 
-[node name="AphidsBunch9" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch9" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.0157, 9.53674e-07, -13.4608)
 gizmo_extents = 5.74
+script = ExtResource("3_vkmt5")
 amount = 2
 
-[node name="AphidsBunch10" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch10" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.632, 9.53674e-07, -7.0495)
 gizmo_extents = 5.74
+script = ExtResource("3_vkmt5")
 amount = 2
 
-[node name="AphidsBunch11" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch11" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70586, 9.53674e-07, 7.39888)
 gizmo_extents = 2.39
+script = ExtResource("3_vkmt5")
 amount = 4
 
-[node name="AphidsBunch12" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch12" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.3237, 2.86102e-06, 13.9106)
 gizmo_extents = 2.39
+script = ExtResource("3_vkmt5")
 amount = 2
 
-[node name="AphidsBunch13" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch13" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.2669, 2.86102e-06, 37.6487)
 gizmo_extents = 8.47
+script = ExtResource("3_vkmt5")
 amount = 8
 
-[node name="AphidsBunch14" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch14" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.4441, 2.86102e-06, 65.3472)
 gizmo_extents = 4.8
+script = ExtResource("3_vkmt5")
 
-[node name="AphidsBunch15" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch15" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03778, 2.86102e-06, 62.3291)
 gizmo_extents = 4.8
+script = ExtResource("3_vkmt5")
 amount = 4
 
-[node name="AphidsBunch16" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch16" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.1906, 3.8147e-06, 30.336)
 gizmo_extents = 4.8
+script = ExtResource("3_vkmt5")
 amount = 3
 
-[node name="AphidsBunch17" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch17" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3633, 1.90735e-06, 45.8938)
 gizmo_extents = 10.0
+script = ExtResource("3_vkmt5")
 amount = 15
 
-[node name="AphidsBunch18" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch18" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.9824, 1.90735e-06, 18.079)
 gizmo_extents = 5.75
+script = ExtResource("3_vkmt5")
 amount = 4
 
-[node name="AphidsBunch19" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch19" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.9313, 1.90735e-06, 29.1094)
 gizmo_extents = 5.75
+script = ExtResource("3_vkmt5")
 amount = 3
 
-[node name="AphidsBunch20" parent="Bunches" instance=ExtResource("3_q7xu0")]
+[node name="AphidsBunch20" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.3303, 1.90735e-06, 59.7978)
 gizmo_extents = 3.85
+script = ExtResource("3_vkmt5")
+
+[node name="Honeydew" type="Node" parent="Bunches"]
+
+[node name="HoneydewBunch" type="Marker3D" parent="Bunches/Honeydew"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.4312, 0, -61.2736)
+gizmo_extents = 4.8
+script = ExtResource("3_vkmt5")
+what = 1
+amount = 50
 
 [node name="UI" type="Node" parent="."]
 

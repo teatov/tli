@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bk3ers4qaleu2"]
-
-[ext_resource type="Script" path="res://scripts/bunch_spawner.gd" id="1_kccg7"]
-
-[node name="BunchSpawner" type="Marker3D"]
-gizmo_extents = 1.0
-script = ExtResource("1_kccg7")
