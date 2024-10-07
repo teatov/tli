@@ -13,6 +13,8 @@ var wandering_timer: float = 0
 var wandering_center: Vector3 = Vector3.ZERO
 var spawn_pos: Vector3
 
+var locomotion_value: float = 0
+
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -87,10 +89,12 @@ func _animate(delta: float) -> void:
 		)
 		# look_at(global_position + velocity, Vector3.UP, true)
 
-	animation_tree.set(
-			"parameters/locomotion/blend_position", 
+	locomotion_value = move_toward(
+			locomotion_value, 
 			velocity.length() / MOVE_SPEED,
+			delta * 8
 	)
+	animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
 
 
 func _wander(delta: float) -> void:
