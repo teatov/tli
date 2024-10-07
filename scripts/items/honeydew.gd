@@ -5,6 +5,7 @@ signal moved
 
 const HEIGHT_OFFSET: float = 0.1
 const MOVE_SPEED: float = 8
+const MOVE_ARC_HEIGHT: float = 0.5
 
 var carried: bool = false
 var move_to: Vector3
@@ -28,8 +29,9 @@ func _process(delta: float) -> void:
 			moved.emit()
 		return
 	moving_timer -= delta * MOVE_SPEED
-	global_position = lerp(
-			move_from,
+	global_position = move_from.bezier_interpolate(
+			move_from + Vector3.UP * MOVE_ARC_HEIGHT,
+			move_to + Vector3.UP * MOVE_ARC_HEIGHT,
 			move_to,
 			(1 - moving_timer),
 	)
