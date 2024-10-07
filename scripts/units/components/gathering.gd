@@ -188,7 +188,7 @@ func _deposit() -> void:
 		var item := carrying_items.pop_back() as Honeydew
 		audio_player.play_polyphonic(SoundManager.swoosh())
 		await item.start_moving(anthill.global_position).moved
-		audio_player.play_polyphonic(SoundManager.pop())
+		audio_player.play_polyphonic(SoundManager.tok())
 		item.remove_from_spawner()
 		_erase_honeydew(item)
 		item.queue_free()

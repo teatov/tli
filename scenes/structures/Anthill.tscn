@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://clftjlaotf2g2"]
+[gd_scene load_steps=7 format=3 uid="uid://clftjlaotf2g2"]
 
 [ext_resource type="Script" path="res://scripts/anthill.gd" id="1_8k02d"]
 [ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="2_44p2d"]
+[ext_resource type="Script" path="res://scripts/audio_stream_player_polyphonic.gd" id="3_vp3nf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_x8apu"]
 
@@ -33,3 +34,7 @@ mesh = SubResource("QuadMesh_2gykr")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
 radius = 0.57
+
+[node name="AudioStreamPlayerPolyphonic" type="AudioStreamPlayer3D" parent="."]
+unit_size = 20.0
+script = ExtResource("3_vp3nf")
