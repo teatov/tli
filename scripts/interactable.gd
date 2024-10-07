@@ -4,6 +4,7 @@ class_name Interactable
 const MIN_DRAG_DISTANCE: float = 15
 
 var hovered: bool = false
+var mouse_over: bool = false
 var can_interact: bool = true
 var click_position: Vector2 = Vector2.ZERO
 
@@ -12,10 +13,12 @@ var click_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	assert(hover_indicator != null, "hover_indicator missing!")
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
 
 func _process(_delta: float) -> void:
-	hovered = HoveringManager.hovered_node == self
+	hovered = HoveringManager.hovered_node == self and mouse_over
 	if not can_interact:
 		hovered = false
 		return
@@ -42,3 +45,11 @@ func _input(event: InputEvent) -> void:
 
 func _click() -> void:
 	print(self, ' clicked!')
+
+
+func _on_mouse_entered() -> void:
+	mouse_over = true
+
+
+func _on_mouse_exited() -> void:
+	mouse_over = false
