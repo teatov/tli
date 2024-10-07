@@ -20,6 +20,7 @@ var advance_anim_delta_accum: float = 0
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var anim_advance_indicator: VisualInstance3D = $AnimAdvanceIndicator
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
 )
@@ -32,8 +33,10 @@ func _ready() -> void:
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 	assert(ui_origin != null, "ui_origin missing!")
 	assert(main_camera != null, "main_camera missing!")
+	assert(anim_advance_indicator != null, "anim_advance_indicator missing!")
 	super._ready()
 
+	anim_advance_indicator.visible = false
 	if spawn_pos != null and spawn_pos != Vector3.ZERO:
 		global_position = spawn_pos
 
@@ -107,9 +110,8 @@ func _animate(delta: float) -> void:
 		SelectionManager.advance_anim_step
 	)
 	var frame := Engine.get_frames_drawn()
-	var ass: MeshInstance3D = $MeshInstance3D
 	var advance := (frame + get_instance_id()) % advance_anim_step == 0
-	ass.visible = advance and DebugManager.enabled
+	anim_advance_indicator.visible = advance and DebugManager.enabled
 	if advance:
 		animation_tree.advance(advance_anim_delta_accum)
 		advance_anim_delta_accum = 0
