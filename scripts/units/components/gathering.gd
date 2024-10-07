@@ -51,7 +51,7 @@ func _process(_delta: float) -> void:
 		item.global_position = _get_nth_pile_pos(i)
 
 	if target != null:
-		DebugDraw.circle(target.global_position)
+		DebugManager.circle(target.global_position)
 
 
 func _input(event: InputEvent) -> void:

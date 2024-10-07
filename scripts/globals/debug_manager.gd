@@ -15,7 +15,7 @@ var markers_to_draw: Array[Dictionary] = []
 var circles_to_draw: Array[Dictionary] = []
 var text_to_draw: PackedStringArray = []
 
-@onready var camera: Camera3D = get_viewport().get_camera_3d()
+@onready var main_camera: MainCamera = $/root/World/MainCamera
 
 
 func _ready() -> void:
@@ -38,6 +38,8 @@ func _process(_delta: float) -> void:
 
 	text('fps: ' + str(Performance.get_monitor(Performance.TIME_FPS)))
 	text('draw calls: ' + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
+	text('camera anim step: ' + str(main_camera.advance_anim_step))
+	text('select anim step: ' + str(SelectionManager.advance_anim_step))
 
 
 func _input(event: InputEvent) -> void:
@@ -80,7 +82,7 @@ func circle(pos: Vector3, color: Color = DEFAULT_COLOR) -> void:
 
 
 func _unproject(pos: Vector3) -> Vector2:
-	return camera.unproject_position(pos)
+	return main_camera.unproject_position(pos)
 
 
 func _draw_text() -> void:

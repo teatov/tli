@@ -10,7 +10,6 @@ center_offset = Vector3(0, 0.001, 0)
 orientation = 1
 
 [node name="ControlledUnit" instance=ExtResource("1_iivmb")]
-collision_layer = 4
 script = ExtResource("2_ruawn")
 
 [node name="SelectionIndicator" type="MeshInstance3D" parent="." index="6"]

@@ -27,7 +27,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	filter.cutoff_hz = lerp(
+	filter.cutoff_hz = lerpf(
 			ZOOMED_IN_CUTOFF, 
 			ZOOMED_OUT_CUTOFF, 
 			main_camera.zoom_value,

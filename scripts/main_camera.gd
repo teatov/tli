@@ -15,6 +15,8 @@ const EDGE_THRESHOLD: float = 10
 const HEADING_SPEED: float = 0.75
 const BOUNDARY: float = 150 / 2
 
+const ANIM_MAX_STEP = 10
+
 @export var zoom_in_distance: float = 5
 @export var zoom_in_fov: float = 25
 @export var zoom_in_angle: float = -0.1 * PI
@@ -38,6 +40,7 @@ var mouse_position: Vector2 = Vector2()
 ## 0 = zoomed in. 1 = zoomed out.
 var zoom_value: float = ZOOM_VALUE_DEFAULT
 var zoom_raw: float = zoom_value
+var advance_anim_step: int = 1
 
 var heading_to_position: Vector3 = Vector3.ZERO
 var heading_to_zoom: float = 0
@@ -60,21 +63,22 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_handle_heading_to(delta)
-	zoom_value = lerp(zoom_value, zoom_raw, delta * ZOOM_DAMP)
+	zoom_value = lerpf(zoom_value, zoom_raw, delta * ZOOM_DAMP)
 
 	_handle_movement(delta)
 
-	fov = lerp(zoom_in_fov, zoom_out_fov, zoom_value)
-	rotation.x = lerp(zoom_in_angle, zoom_out_angle, zoom_value)
-	var distance: float = lerp(zoom_in_distance, zoom_out_distance, zoom_value)
+	fov = lerpf(zoom_in_fov, zoom_out_fov, zoom_value)
+	rotation.x = lerpf(zoom_in_angle, zoom_out_angle, zoom_value)
+	var distance: float = lerpf(zoom_in_distance, zoom_out_distance, zoom_value)
 
 	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, rotation.x)
 	var offset := offset_direction * distance
 	global_position = target_position + offset
 
 	_handle_dof()
+	_handle_advance_anim_step()
 
-	DebugDraw.marker(target_position, 0.05)
+	DebugManager.marker(target_position, 0.05)
 
 
 func _input(event: InputEvent) -> void:
@@ -88,7 +92,7 @@ func _input(event: InputEvent) -> void:
 				zoom_raw -= ZOOM_SPEED
 			elif button_event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				zoom_raw += ZOOM_SPEED
-			zoom_raw = clamp(zoom_raw, 0, 1)
+			zoom_raw = clampf(zoom_raw, 0, 1)
 
 	if event.is_action_pressed("reset_camera"):
 		head_to(anthill.global_position)
@@ -111,23 +115,35 @@ func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 	state = CameraState.HEADING_TO
 
 
+func _handle_advance_anim_step() -> void:
+	var remapped_unclamped := remap(
+			zoom_value,
+			ZOOM_VALUE_DEFAULT,
+			1,
+			0,
+			1,
+	)
+	var clamped := clampf(remapped_unclamped, 0, 1)
+	advance_anim_step = roundi(lerpf(1, ANIM_MAX_STEP, clamped))
+
+
 func _handle_dof() -> void:
-	attrs.dof_blur_far_distance = lerp(
+	attrs.dof_blur_far_distance = lerpf(
 			zoom_in_dof_far_distance,
 			zoom_out_dof_far_distance,
 			zoom_value,
 	)
-	attrs.dof_blur_far_transition = lerp(
+	attrs.dof_blur_far_transition = lerpf(
 			zoom_in_dof_far_transition,
 			zoom_out_dof_far_transition,
 			zoom_value,
 	)
-	attrs.dof_blur_near_distance = lerp(
+	attrs.dof_blur_near_distance = lerpf(
 			zoom_in_dof_near_distance,
 			zoom_out_dof_near_distance,
 			zoom_value,
 	)
-	attrs.dof_blur_near_transition = lerp(
+	attrs.dof_blur_near_transition = lerpf(
 			zoom_in_dof_near_transition,
 			zoom_out_dof_near_transition,
 			zoom_value,
@@ -168,11 +184,11 @@ func _handle_movement(delta: float) -> void:
 			.rotated(Vector3.UP, rotation.y)
 	)
 
-	var speed: float = lerp(zoom_in_speed, zoom_out_speed, zoom_value)
+	var speed: float = lerpf(zoom_in_speed, zoom_out_speed, zoom_value)
 	var velocity := direction * speed
 	target_position += velocity * delta
-	target_position.x = clamp(target_position.x, -BOUNDARY, BOUNDARY)
-	target_position.z = clamp(target_position.z, -BOUNDARY, BOUNDARY)
+	target_position.x = clampf(target_position.x, -BOUNDARY, BOUNDARY)
+	target_position.z = clampf(target_position.z, -BOUNDARY, BOUNDARY)
 
 
 func _handle_heading_to(delta: float) -> void:

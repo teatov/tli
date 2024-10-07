@@ -3,6 +3,10 @@ extends Node
 const MIN_DRAG_DISTANCE: float = 15
 const UNIT_SELECT_OFFSET: float = 0.25
 
+const ANIM_MAX_STEP = 30
+const MIN_VISIBLE_UNITS = 25
+const MAX_VISIBLE_UNITS = 120
+
 var frustrum_polygon: ConvexPolygonShape3D = ConvexPolygonShape3D.new()
 var frustrum_polygon_points: PackedVector3Array = [
 		Vector3.ZERO,
@@ -17,6 +21,7 @@ var visible_units: Dictionary = {}
 var mouse_pressed: bool = false
 var selecting: bool = false
 var selection_rect: Rect2 = Rect2()
+var advance_anim_step: int = 1
 
 var rect_style := preload("res://resources/styles/selection_rect.tres")
 
@@ -34,7 +39,7 @@ func _ready() -> void:
 	frustrum_area.body_exited.connect(_on_frustrum_area_body_exited)
 	frustrum_area.input_ray_pickable = false
 	frustrum_area.set_collision_mask_value(1, false)
-	frustrum_area.set_collision_mask_value(3, true)
+	frustrum_area.set_collision_mask_value(2, true)
 	rect_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rect_panel.add_theme_stylebox_override("panel", rect_style)
 	add_child(rect_panel)
@@ -51,6 +56,7 @@ func _process(_delta: float) -> void:
 	_handle_frustrum_shape()
 	_handle_selection_box()
 	_handle_unit_selection()
+	_handle_advance_anim_step()
 
 
 func _input(event: InputEvent) -> void:
@@ -69,6 +75,18 @@ func _input(event: InputEvent) -> void:
 			var mouse_pos := (event as InputEventMouseMotion).position
 			selection_rect.size = mouse_pos - selection_rect.position
 		
+
+func _handle_advance_anim_step() -> void:
+	var remapped_unclamped := remap(
+			visible_units.size(),
+			MIN_VISIBLE_UNITS,
+			MAX_VISIBLE_UNITS,
+			0,
+			1,
+	)
+	var clamped := clampf(remapped_unclamped, 0, 1)
+	advance_anim_step = roundi(lerpf(1, ANIM_MAX_STEP, clamped))
+
 
 func _handle_frustrum_shape() -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -110,27 +128,30 @@ func _handle_unit_selection() -> void:
 func _set_selection_state(hover: bool) -> void:
 	var rect_abs := selection_rect.abs()
 
-	for unit: ControlledUnit in visible_units.values():
+	for unit: Unit in visible_units.values():
+		if unit is not ControlledUnit:
+			continue
+		var controlled_unit := unit as ControlledUnit
 		var point := camera.unproject_position(
 				unit.global_position
 				+ (Vector3.UP * UNIT_SELECT_OFFSET)
 		)
 		if hover:
-			unit.set_hovered_rect(rect_abs.has_point(point))
+			controlled_unit.set_hovered_rect(rect_abs.has_point(point))
 		else:
-			unit.set_selected(rect_abs.has_point(point))
-			unit.set_hovered_rect(false)
+			controlled_unit.set_selected(rect_abs.has_point(point))
+			controlled_unit.set_hovered_rect(false)
 
 
 func _on_frustrum_area_body_entered(unit: Node3D) -> void:
-	if unit is not ControlledUnit:
+	if unit is not Unit:
 		return
 
 	var unit_id := unit.get_instance_id()
 	if visible_units.keys().has(unit_id):
 		return
 	
-	visible_units[unit_id] = unit as ControlledUnit
+	visible_units[unit_id] = unit as Unit
 
 
 func _on_frustrum_area_body_exited(unit: Node3D) -> void:

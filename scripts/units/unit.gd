@@ -4,8 +4,6 @@ class_name Unit
 const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
-const ANIM_FRAME_MAX = 20
-
 var max_wander_distance: float = 5
 var min_wander_interval: float = 0.25
 var max_wander_interval: float = 5
@@ -17,7 +15,6 @@ var spawn_pos: Vector3
 
 var locomotion_value: float = 0
 var showing_info: bool = false
-var advance_anim_on_nth_frame: int = 1
 var advance_anim_delta_accum: float = 0
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
@@ -104,10 +101,16 @@ func _animate(delta: float) -> void:
 	animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
 
 	advance_anim_delta_accum += delta
-	advance_anim_on_nth_frame = floori(
-			lerp(1, ANIM_FRAME_MAX, main_camera.zoom_value) as float
+
+	var advance_anim_step := maxi(
+		main_camera.advance_anim_step,
+		SelectionManager.advance_anim_step
 	)
-	if Engine.get_frames_drawn() % advance_anim_on_nth_frame == 0:
+	var frame := Engine.get_frames_drawn()
+	var ass: MeshInstance3D = $MeshInstance3D
+	var advance := (frame + get_instance_id()) % advance_anim_step == 0
+	ass.visible = advance and DebugManager.enabled
+	if advance:
 		animation_tree.advance(advance_anim_delta_accum)
 		advance_anim_delta_accum = 0
 	

@@ -22,7 +22,7 @@ config/icon="res://icon.svg"
 
 CursorManager="*res://scripts/globals/cursor_manager.gd"
 FullscreenManager="*res://scripts/globals/fullscreen_manager.gd"
-DebugDraw="*res://scripts/globals/debug_draw.gd"
+DebugManager="*res://scripts/globals/debug_manager.gd"
 UiManager="*res://scripts/globals/ui_manager.gd"
 HoveringManager="*res://scripts/globals/hovering_manager.gd"
 SelectionManager="*res://scripts/globals/selection_manager.gd"
@@ -86,5 +86,5 @@ toggle_camera_navigation={
 
 3d_physics/layer_1="default"
 3d_physics/layer_2="units"
-3d_physics/layer_3="controlled_units"
+3d_physics/layer_3="Layer 3"
 3d_physics/layer_9="items"
