@@ -1,8 +1,7 @@
 extends Area3D
 class_name Gathering
 
-signal target_set(pos: Vector3)
-signal stopped_gathering
+signal navigate_to(pos: Vector3)
 
 const DEFAULT_MAX_CARRYING = 3
 const DEFAULT_DROP_INTERVAL = 0.25
@@ -11,6 +10,7 @@ const DROP_SPREAD: float = 0.1
 const ANTHILL_DEPOSIT_RADIUS: float = 0.5
 
 enum GatherState {
+	AWAITING,
 	PICKING_UP,
 	DEPOSITING,
 	STOP,
@@ -89,11 +89,9 @@ func initialize(
 	item_bones = bones
 
 
-func handle_gathering(stop: bool, showing_info: bool) -> void:
+func handle_gathering(showing_info: bool) -> void:
 	collision_shape.global_position = gathering_center
 	collision_shape.global_rotation = Vector3.ZERO
-	if stop:
-		state = GatherState.STOP
 
 	radius_indicator.visible = (
 			(state != GatherState.STOP and showing_info)
@@ -104,7 +102,8 @@ func handle_gathering(stop: bool, showing_info: bool) -> void:
 func start_gathering(item: Honeydew) -> void:
 	gathering_center = item.global_position
 	showing_after_set = true
-	_go_gather(item)
+	state = GatherState.AWAITING
+	_go_pick_up(item)
 
 
 func stop_gathering() -> void:
@@ -123,7 +122,7 @@ func on_nav_agent_navigation_finished() -> void:
 		_deposit()
 
 
-func _go_gather(item: Honeydew) -> void:
+func _go_pick_up(item: Honeydew) -> void:
 	if anthill.space_left() <= 0:
 		return
 	if carrying_items.size() >= max_carrying:
@@ -131,13 +130,13 @@ func _go_gather(item: Honeydew) -> void:
 		return
 	target = item
 	state = GatherState.PICKING_UP
-	target_set.emit(item.global_position)
+	navigate_to.emit(item.global_position)
 
 
 func _go_deposit() -> void:
 	state = GatherState.DEPOSITING
 	var dir := anthill.global_position.direction_to(global_position)
-	target_set.emit(
+	navigate_to.emit(
 			anthill.global_position
 			+ dir
 			* ANTHILL_DEPOSIT_RADIUS
@@ -152,7 +151,7 @@ func _pick_up() -> void:
 	var nearest := _find_nearest(nearby_items.values())
 	if target == null or target.carried:
 		if nearest != null:
-			_go_gather(nearest)
+			_go_pick_up(nearest)
 		elif carrying_items.size() > 0:
 			_go_deposit()
 		return
@@ -170,7 +169,7 @@ func _pick_up() -> void:
 		_go_deposit()
 		return
 
-	_go_gather(nearest)
+	_go_pick_up(nearest)
 
 
 func _deposit() -> void:
@@ -180,10 +179,8 @@ func _deposit() -> void:
 			return
 
 		if anthill.space_left() <= 0:
-			print('DROP!')
-			_drop_everything()
-			stop_gathering()
-			stopped_gathering.emit()
+			state = GatherState.AWAITING
+			await _drop_everything()
 			return
 
 		var item := carrying_items.pop_back() as Honeydew
@@ -198,11 +195,11 @@ func _deposit() -> void:
 	
 	var nearest := _find_nearest(nearby_items.values())
 	if nearest != null:
-		_go_gather(nearest)
+		_go_pick_up(nearest)
 		return
 	
-	stop_gathering()
-	stopped_gathering.emit()
+	state = GatherState.AWAITING
+	navigate_to.emit(gathering_center)
 
 
 func _drop_everything() -> void:
@@ -248,6 +245,8 @@ func _on_body_entered(item: Node3D) -> void:
 		return
 	
 	nearby_items[item_id] = item as Honeydew
+	if state == GatherState.AWAITING and anthill.space_left() > 0:
+		_go_pick_up(item as Honeydew)
 
 
 func _on_body_exited(item: Node3D) -> void:

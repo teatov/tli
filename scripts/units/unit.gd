@@ -70,8 +70,8 @@ func toggle_info(on: bool) -> void:
 
 
 func _click() -> void:
-	toggle_info(true)
 	UiManager.unit_info.open(self)
+	toggle_info(true)
 
 
 func _navigate() -> void:

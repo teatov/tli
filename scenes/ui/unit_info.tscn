@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhtofjn8dnuw3"]
+[gd_scene load_steps=13 format=3 uid="uid://dhtofjn8dnuw3"]
 
 [ext_resource type="Texture2D" uid="uid://cc40vkh4nc6pk" path="res://assets/textures/gui/think_bubble.png" id="1_hsifm"]
 [ext_resource type="Script" path="res://scripts/ui/unit_info.gd" id="2_b6c6l"]
@@ -20,9 +20,13 @@ region = Rect2(476.79, 88.6228, 77.4275, 53.8488)
 atlas = ExtResource("6_vrqjx")
 region = Rect2(572.197, 83.8424, 60.0876, 64.636)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o8jta"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t4ki"]
 atlas = ExtResource("6_vrqjx")
-region = Rect2(654.844, 86.7453, 91.2445, 50.4017)
+region = Rect2(656.569, 88.7656, 91.2443, 48.374)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcquw"]
+atlas = ExtResource("6_vrqjx")
+region = Rect2(758.514, 84.6555, 89.4846, 61.9183)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ndwb1"]
 atlas = ExtResource("6_vrqjx")
@@ -98,13 +102,28 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -38.0
-offset_right = 46.0
-offset_bottom = 12.0
+offset_left = -47.0
+offset_top = -37.0
+offset_right = 44.0
+offset_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_o8jta")
+texture = SubResource("AtlasTexture_0t4ki")
+
+[node name="AntAwaiting" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -42.0
+offset_right = 45.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_mcquw")
 
 [node name="AphidIdle" type="TextureRect" parent="."]
 layout_mode = 1

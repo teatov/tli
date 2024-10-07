@@ -30,3 +30,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15587, 0)
 transform = Transform3D(1.62268, 0, 0, 0, 1.62268, 0, 0, 0, 1.62268, 0, 0, 0)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_2gykr")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+radius = 0.57

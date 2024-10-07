@@ -30,13 +30,12 @@ func _ready() -> void:
 	for i in gathering.DEFAULT_MAX_CARRYING:
 		item_bones.append(skeleton.find_bone(ITEM_BONE_NAME + str(i)))
 	gathering.initialize(anthill, skeleton, item_bones)
-	gathering.target_set.connect(_on_gathering_target_set)
-	gathering.stopped_gathering.connect(_on_stopped_gathering)
+	gathering.navigate_to.connect(_on_gathering_navigate_to)
 
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if moving_to_target:
+	if is_relocating:
 		state = AntNitwitState.MOVING
 
 	_handle_wandering(delta)
@@ -57,7 +56,7 @@ func _handle_wandering(delta: float) -> void:
 
 
 func _handle_gathering() -> void:
-	gathering.handle_gathering(state != AntNitwitState.GATHERING, showing_info)
+	gathering.handle_gathering(showing_info)
 
 
 func _on_moving_ended() -> void:
@@ -70,12 +69,10 @@ func _on_moving_started() -> void:
 	state = AntNitwitState.MOVING
 
 
-func _on_gathering_target_set(pos: Vector3) -> void:
+func _on_gathering_navigate_to(pos: Vector3) -> void:
+	print('_on_gathering_navigate_to')
 	if state != AntNitwitState.GATHERING:
 		return
+	print('_on_gathering_navigate_to 2')
 
-	nav_agent.set_target_position(pos)
-
-
-func _on_stopped_gathering() -> void:
-	state = AntNitwitState.WANDERING
+	navigate(pos)

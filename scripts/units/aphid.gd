@@ -65,7 +65,6 @@ func _handle_honeydew_spawn(delta: float) -> void:
 	holder.add_child(new_honeydew)
 	new_honeydew.global_position = global_position + new_pos
 	_put_honeydew(new_honeydew)
-	audio_player.play_polyphonic(SoundManager.pop())
 
 	_set_spawn_timer()
 

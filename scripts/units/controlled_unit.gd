@@ -8,7 +8,7 @@ var anthill: Anthill
 
 var hovered_rect: bool = false
 var selected: bool = false
-var moving_to_target: bool = false
+var is_relocating: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var camera: Camera3D = get_viewport().get_camera_3d()
@@ -40,8 +40,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
-	if moving_to_target and nav_agent.is_navigation_finished():
-		moving_to_target = false
+	if is_relocating and nav_agent.is_navigation_finished():
+		is_relocating = false
 		moving_ended.emit()
 
 
@@ -59,7 +59,6 @@ func _input(event: InputEvent) -> void:
 			if HoveringManager.hovered_node is Interactable:
 				_interact(HoveringManager.hovered_node as Interactable)
 			else:
-				moving_to_target = true
 				moving_started.emit()
 				_set_target_click(button_event.position)
 
@@ -78,6 +77,11 @@ func set_selected(on: bool) -> void:
 	selected = on
 
 
+func navigate(to: Vector3, relocating: bool = false) -> void:
+	is_relocating = relocating
+	nav_agent.set_target_position(to)
+
+
 func _interact(with: Interactable) -> void:
 	print(self, ' interacting with ', with)
 
@@ -87,7 +91,7 @@ func _set_target_click(mouse_pos: Vector2) -> void:
 	if click_pos == null:
 		return
 		
-	nav_agent.set_target_position(click_pos)
+	navigate(click_pos, true)
 
 
 func _click_raycast(mouse_pos: Vector2) -> Vector3:

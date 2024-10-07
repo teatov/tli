@@ -7,6 +7,7 @@ enum InfoState {
 	ANT_MOVING,
 	ANT_PICKING_UP,
 	ANT_DEPOSITING,
+	ANT_AWAITING,
 	APHID_IDLE,
 	APHID_PANIC,
 	APHID_EAT,
@@ -19,6 +20,7 @@ var state: InfoState = InfoState.NONE
 @onready var ant_moving: Control = $AntMoving
 @onready var ant_picking_up: Control = $AntPickingUp
 @onready var ant_depositing: Control = $AntDepositing
+@onready var ant_awaiting: Control = $AntAwaiting
 @onready var aphid_idle: Control = $AphidIdle
 @onready var aphid_panic: Control = $AphidPanic
 @onready var aphid_eat: Control = $AphidEat
@@ -29,6 +31,7 @@ func _ready() -> void:
 	assert(ant_moving != null, "ant_moving missing!")
 	assert(ant_picking_up != null, "ant_picking_up missing!")
 	assert(ant_depositing != null, "ant_depositing missing!")
+	assert(ant_awaiting != null, "ant_awaiting missing!")
 	assert(aphid_idle != null, "aphid_idle missing!")
 	assert(aphid_panic != null, "aphid_panic missing!")
 	assert(aphid_eat != null, "aphid_eat missing!")
@@ -56,8 +59,8 @@ func close() -> void:
 	super.close()
 
 
-func _set_image()->void:
-	for child:Control in get_children():
+func _set_image() -> void:
+	for child: Control in get_children():
 		child.visible = false
 
 	match state:
@@ -69,6 +72,8 @@ func _set_image()->void:
 			ant_picking_up.visible = true
 		InfoState.ANT_DEPOSITING:
 			ant_depositing.visible = true
+		InfoState.ANT_AWAITING:
+			ant_awaiting.visible = true
 		InfoState.APHID_IDLE:
 			aphid_idle.visible = true
 		InfoState.APHID_PANIC:
@@ -90,13 +95,7 @@ func _get_state() -> void:
 			AntNitwit.AntNitwitState.MOVING:
 				state = InfoState.ANT_MOVING
 			AntNitwit.AntNitwitState.GATHERING:
-				match (unit as AntNitwit).gathering.state:
-					Gathering.GatherState.PICKING_UP:
-						state = InfoState.ANT_PICKING_UP
-					Gathering.GatherState.DEPOSITING:
-						state = InfoState.ANT_DEPOSITING
-					Gathering.GatherState.STOP:
-						state = InfoState.NONE
+				_get_gathering_state((unit as AntNitwit).gathering.state)
 	
 	if unit is AntGatherer:
 		match (unit as AntGatherer).state:
@@ -105,10 +104,16 @@ func _get_state() -> void:
 			AntGatherer.AntGathererState.MOVING:
 				state = InfoState.ANT_MOVING
 			AntGatherer.AntGathererState.GATHERING:
-				match (unit as AntGatherer).gathering.state:
-					Gathering.GatherState.PICKING_UP:
-						state = InfoState.ANT_PICKING_UP
-					Gathering.GatherState.DEPOSITING:
-						state = InfoState.ANT_DEPOSITING
-					Gathering.GatherState.STOP:
-						state = InfoState.NONE
+				_get_gathering_state((unit as AntGatherer).gathering.state)
+
+
+func _get_gathering_state(gather_state: Gathering.GatherState) -> void:
+	match gather_state:
+		Gathering.GatherState.PICKING_UP:
+			state = InfoState.ANT_PICKING_UP
+		Gathering.GatherState.DEPOSITING:
+			state = InfoState.ANT_DEPOSITING
+		Gathering.GatherState.AWAITING:
+			state = InfoState.ANT_AWAITING
+		Gathering.GatherState.STOP:
+			state = InfoState.NONE
