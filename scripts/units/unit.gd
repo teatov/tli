@@ -78,11 +78,6 @@ func _navigate() -> void:
 
 func _animate(delta: float) -> void:
 	if not is_on_screen:
-		if velocity.length() > 0.1:
-			var velocity_normalized := velocity.normalized()
-			global_rotation.y = atan2(
-					-velocity_normalized.x, -velocity_normalized.z
-			) + PI
 		return
 
 	if velocity.length() > 0.01:
@@ -101,6 +96,7 @@ func _animate(delta: float) -> void:
 			delta * 8
 	)
 	animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
+	animation_tree.advance(delta)
 
 
 func _wander(delta: float) -> void:

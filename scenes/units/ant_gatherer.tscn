@@ -51,6 +51,9 @@ bones/43/scale = Vector3(1, 1, 1)
 [node name="GathererMesh" parent="AntModel/Armature/Skeleton3D" index="0"]
 visible = true
 
+[node name="AnimationTree" parent="." index="1"]
+callback_mode_process = 1
+
 [node name="Gathering" parent="." index="8" instance=ExtResource("3_7b5q8")]
 
 [node name="NearbyItemsSearch" parent="Gathering" index="0"]
