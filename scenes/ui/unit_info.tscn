@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrdqv"]
 texture = ExtResource("1_hsifm")
-modulate_color = Color(0.664997, 0.596536, 0.412061, 1)
+modulate_color = Color(0.917647, 0.807843, 0.647059, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7modd"]
 atlas = ExtResource("6_vrqjx")
@@ -42,6 +42,7 @@ offset_bottom = 128.0
 pivot_offset = Vector2(63, 130)
 size_flags_horizontal = 4
 size_flags_vertical = 8
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_wrdqv")
 script = ExtResource("2_b6c6l")
 

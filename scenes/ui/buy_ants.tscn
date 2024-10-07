@@ -57,7 +57,7 @@ offset_bottom = 58.0
 texture = SubResource("AtlasTexture_t7i0n")
 
 [node name="BuyNitwitButton" type="TextureButton" parent="."]
-modulate = Color(0.81, 0.748035, 0.5913, 1)
+modulate = Color(0.827451, 0.717647, 0.564706, 1)
 layout_mode = 0
 offset_left = 13.0
 offset_top = 16.0
@@ -92,7 +92,7 @@ offset_right = 220.0
 offset_bottom = 71.0
 
 [node name="BuyGathererButton" type="TextureButton" parent="."]
-modulate = Color(0.81, 0.748035, 0.5913, 1)
+modulate = Color(0.827451, 0.717647, 0.564706, 1)
 layout_mode = 0
 offset_left = 15.0
 offset_top = 77.0

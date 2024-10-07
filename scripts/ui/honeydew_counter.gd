@@ -12,6 +12,7 @@ var max_count: int = 0
 var count_per_row: int = 0
 var rect_size: float = RECT_SIZE
 
+var counter_0 := preload("res://assets/textures/gui/honeydew_0.png")
 var counter_1 := preload("res://assets/textures/gui/honeydew_1.png")
 var counter_2 := preload("res://assets/textures/gui/honeydew_2.png")
 var counter_3 := preload("res://assets/textures/gui/honeydew_3.png")
@@ -52,9 +53,7 @@ func update_counter(new_count: int) -> void:
 		var rect := rects[i]
 		var amount := i * SPRITES_PER_RECT
 		if amount >= new_count:
-			rect.texture = counter_5
-			rect.modulate = Color.BLACK
-			rect.modulate.a = 0.1
+			rect.texture = counter_0
 			continue
 		rect.modulate = Color.WHITE
 		if amount < whole:
@@ -70,8 +69,6 @@ func update_counter(new_count: int) -> void:
 				rect.texture = counter_3
 			4:
 				rect.texture = counter_4
-			_:
-				rect.texture = counter_5
 
 
 func _create_rect(col: int, row: int) -> TextureRect:

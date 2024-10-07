@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://davys5ol18oyo"]
+[gd_scene load_steps=12 format=3 uid="uid://davys5ol18oyo"]
 
 [ext_resource type="StyleBox" uid="uid://do5c5v5kvgv0s" path="res://resources/styles/panel_small_style.tres" id="1_06xpe"]
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_kcif0"]
+[ext_resource type="Texture2D" uid="uid://dguw83ogihbta" path="res://assets/textures/gui/window_tiny_bg.png" id="2_cg76y"]
 [ext_resource type="Texture2D" uid="uid://bh01xbmjanku0" path="res://assets/textures/gui/button_bg.png" id="2_e7opb"]
 [ext_resource type="Texture2D" uid="uid://jv8twhntt6x3" path="res://assets/textures/gui/button_hover_bg.png" id="3_fx7y7"]
 [ext_resource type="Texture2D" uid="uid://slraulfmk8c0" path="res://assets/textures/gui/pictograms.png" id="4_dmywd"]
@@ -10,8 +11,8 @@
 bg_color = Color(0, 0, 0, 0.25098)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k576p"]
-texture = ExtResource("2_e7opb")
-modulate_color = Color(0.664997, 0.596536, 0.412061, 1)
+texture = ExtResource("2_cg76y")
+modulate_color = Color(0.917647, 0.807843, 0.647059, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_td4xc"]
 atlas = ExtResource("4_dmywd")
@@ -79,7 +80,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_td4xc")
 
 [node name="CancelButton" type="TextureButton" parent="Panel"]
-modulate = Color(0.81, 0.748035, 0.5913, 1)
+modulate = Color(0.827451, 0.717647, 0.564706, 1)
 layout_mode = 0
 offset_left = 117.0
 offset_top = -25.0
