@@ -4,6 +4,8 @@ class_name Unit
 const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
+const ANIM_FRAME_MAX = 20
+
 var max_wander_distance: float = 5
 var min_wander_interval: float = 0.25
 var max_wander_interval: float = 5
@@ -15,6 +17,8 @@ var spawn_pos: Vector3
 
 var locomotion_value: float = 0
 var showing_info: bool = false
+var advance_anim_on_nth_frame: int = 1
+var advance_anim_delta_accum: float = 0
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
@@ -22,6 +26,7 @@ var showing_info: bool = false
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
 )
+@onready var main_camera: MainCamera = $/root/World/MainCamera
 
 
 func _ready() -> void:
@@ -29,6 +34,7 @@ func _ready() -> void:
 	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 	assert(ui_origin != null, "ui_origin missing!")
+	assert(main_camera != null, "main_camera missing!")
 	super._ready()
 
 	if spawn_pos != null and spawn_pos != Vector3.ZERO:
@@ -59,7 +65,7 @@ func toggle_info(on: bool) -> void:
 	showing_info = on
 
 
-func _click() ->void:
+func _click() -> void:
 	toggle_info(true)
 	UiManager.unit_info.open(self)
 
@@ -91,13 +97,20 @@ func _animate(delta: float) -> void:
 		# look_at(global_position + velocity, Vector3.UP, true)
 
 	locomotion_value = move_toward(
-			locomotion_value, 
+			locomotion_value,
 			velocity.length() / MOVE_SPEED,
 			delta * 8
 	)
 	animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
-	animation_tree.advance(delta)
 
+	advance_anim_delta_accum += delta
+	advance_anim_on_nth_frame = floori(
+			lerp(1, ANIM_FRAME_MAX, main_camera.zoom_value) as float
+	)
+	if Engine.get_frames_drawn() % advance_anim_on_nth_frame == 0:
+		animation_tree.advance(advance_anim_delta_accum)
+		advance_anim_delta_accum = 0
+	
 
 func _wander(delta: float) -> void:
 	wandering_timer -= delta
