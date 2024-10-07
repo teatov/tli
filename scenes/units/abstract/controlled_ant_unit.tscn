@@ -24,7 +24,7 @@ states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_0mwos")
 states/locomotion/position = Vector2(334, 100)
 transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_pwnkm")]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_wq0od"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8admi"]
 height = 0.5
 
 [node name="ControlledAntUnit" instance=ExtResource("1_66kao")]
@@ -65,7 +65,7 @@ anim_player = NodePath("../AntModel/AnimationPlayer")
 parameters/locomotion/blend_position = 0
 
 [node name="CollisionShape3D" parent="." index="2"]
-shape = SubResource("CylinderShape3D_wq0od")
+shape = SubResource("CylinderShape3D_8admi")
 
 [node name="HoverIndicator" parent="." index="3"]
 transform = Transform3D(1.3376, 0, 0, 0, 1.3376, 0, 0, 0, 1.3376, 0, 0, 0)

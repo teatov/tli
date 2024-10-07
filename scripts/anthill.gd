@@ -25,7 +25,7 @@ func _ready() -> void:
 	assert(audio_player != null, "audio_player missing!")
 	super._ready()
 	honeydew += AntNitwit.get_cost()
-	spawn_nitwit()
+	spawn_nitwit(false)
 
 
 func space_left() -> int:
@@ -44,9 +44,9 @@ func deposit_honeydew(amount: int) -> int:
 	return leftover
 
 
-func spawn_nitwit() -> void:
+func spawn_nitwit(ding: bool = true) -> void:
 	print('spawn!')
-	var new_unit := _create_unit(ant_nitwit, AntNitwit.get_cost())
+	var new_unit := _create_unit(ant_nitwit, AntNitwit.get_cost(), ding)
 	if new_unit == null:
 		return
 	print('add!')
@@ -64,7 +64,7 @@ func _click() -> void:
 	UiManager.anthill_info.open(self)
 
 
-func _create_unit(unit_scene: PackedScene, cost: int) -> ControlledUnit:
+func _create_unit(unit_scene: PackedScene, cost: int, ding: bool = true) -> ControlledUnit:
 	var new_honeydew_amount := honeydew - cost
 	print(new_honeydew_amount)
 	if new_honeydew_amount < 0:
@@ -80,5 +80,6 @@ func _create_unit(unit_scene: PackedScene, cost: int) -> ControlledUnit:
 					new_pos
 			)
 	)
-	audio_player.play_sound(SoundManager.ding())
+	if ding:
+		audio_player.play_sound(SoundManager.ding())
 	return new_unit
