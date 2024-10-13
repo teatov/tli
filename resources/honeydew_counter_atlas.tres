@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bascwflq4ut2p"]
+
+[ext_resource type="Texture2D" uid="uid://cbl67su2x66tp" path="res://assets/textures/gui/honeydew_count.png" id="1_n2h3f"]
+
+[resource]
+atlas = ExtResource("1_n2h3f")
+region = Rect2(0, 0, 128, 128)

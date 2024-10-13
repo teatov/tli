@@ -2,7 +2,7 @@
 
 [ext_resource type="StyleBox" uid="uid://do5c5v5kvgv0s" path="res://resources/styles/panel_small_style.tres" id="1_tod8w"]
 [ext_resource type="Script" path="res://scripts/ui/anthill_info.gd" id="2_aj5vl"]
-[ext_resource type="PackedScene" uid="uid://w3ydggdgvyqn" path="res://scenes/ui/honeydew_counter.tscn" id="3_8onrx"]
+[ext_resource type="Script" path="res://scripts/ui/honeydew_counter.gd" id="3_kibtv"]
 [ext_resource type="Texture2D" uid="uid://bh01xbmjanku0" path="res://assets/textures/gui/button_bg.png" id="4_b8264"]
 [ext_resource type="Texture2D" uid="uid://slraulfmk8c0" path="res://assets/textures/gui/pictograms.png" id="4_dw0d6"]
 [ext_resource type="Texture2D" uid="uid://jv8twhntt6x3" path="res://assets/textures/gui/button_hover_bg.png" id="5_f3si0"]
@@ -44,12 +44,14 @@ offset_right = 242.0
 offset_bottom = 76.0
 text = "max"
 
-[node name="HoneydewCounter" parent="." instance=ExtResource("3_8onrx")]
+[node name="HoneydewCounter" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 22.0
 offset_right = 232.0
 offset_bottom = 55.0
+mouse_filter = 2
+script = ExtResource("3_kibtv")
 
 [node name="AntBuyButton" type="TextureButton" parent="."]
 self_modulate = Color(0.827451, 0.717647, 0.564706, 1)

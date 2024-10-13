@@ -6,13 +6,14 @@ const RANDOM_OFFSET: float = 5
 const GAP: float = 1
 const SPRITES_PER_RECT: int = 5
 
-@export var _atlas: AtlasTexture
 
 var _rects: Array[TextureRect] = []
 
 var _max_count: int = 0
 var _count_per_row: int = 0
 var _rect_size: float = RECT_SIZE
+
+var _atlas: AtlasTexture = preload("res://resources/honeydew_counter_atlas.tres")
 
 
 func _ready() -> void:

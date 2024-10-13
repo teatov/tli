@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bh01xbmjanku0" path="res://assets/textures/gui/button_bg.png" id="2_shpjn"]
 [ext_resource type="Texture2D" uid="uid://jv8twhntt6x3" path="res://assets/textures/gui/button_hover_bg.png" id="3_bwnfl"]
 [ext_resource type="Texture2D" uid="uid://slraulfmk8c0" path="res://assets/textures/gui/pictograms.png" id="4_s7jbe"]
-[ext_resource type="PackedScene" uid="uid://w3ydggdgvyqn" path="res://scenes/ui/honeydew_counter.tscn" id="5_5hx6c"]
+[ext_resource type="Script" path="res://scripts/ui/honeydew_counter.gd" id="6_k6iup"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7i0n"]
 atlas = ExtResource("4_s7jbe")
@@ -84,12 +84,14 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_du04k")
 
-[node name="NitwitPriceCounter" parent="." instance=ExtResource("5_5hx6c")]
+[node name="NitwitPriceCounter" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_left = 136.0
 offset_top = 27.0
 offset_right = 220.0
 offset_bottom = 71.0
+mouse_filter = 2
+script = ExtResource("6_k6iup")
 
 [node name="BuyGathererButton" type="TextureButton" parent="."]
 self_modulate = Color(0.827451, 0.717647, 0.564706, 1)
@@ -119,19 +121,23 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_eg31t")
 
-[node name="GathererPriceCounter" parent="." instance=ExtResource("5_5hx6c")]
+[node name="GathererPriceCounter" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_left = 135.0
 offset_top = 87.0
 offset_right = 219.0
 offset_bottom = 131.0
+mouse_filter = 2
+script = ExtResource("6_k6iup")
 
-[node name="HoneydewCounter" parent="." instance=ExtResource("5_5hx6c")]
+[node name="HoneydewCounter" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 150.0
 offset_right = 235.0
 offset_bottom = 183.0
+mouse_filter = 2
+script = ExtResource("6_k6iup")
 
 [node name="NitwitPanel" type="Panel" parent="."]
 layout_mode = 0
