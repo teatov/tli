@@ -1,8 +1,10 @@
 extends CharacterBody3D
 class_name Interactable
-## A base interactable object that can be hovered over and clicked on
+## A base interactable object that can be hovered over and clicked on.
 
-const MIN_DRAG_DISTANCE: float = 15
+## When releasing the mouse button, how many pixels away from the click.
+## position the cursor has to be for it to be considered a click and not drag.
+const MAX_CLICK_RELEASE_DISTANCE: float = 15
 
 var _hovered: bool = false
 var _mouse_over: bool = false
@@ -19,10 +21,10 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	_hovered = HoveringManager.hovered_node == self and _mouse_over
 	if not _can_interact:
 		_hovered = false
 		return
+	_hovered = HoveringManager.hovered_node == self and _mouse_over
 	hover_indicator.visible = _hovered
 
 
@@ -39,7 +41,7 @@ func _input(event: InputEvent) -> void:
 		else:
 			if (
 					(button_event.position - _click_start_position).length()
-					< MIN_DRAG_DISTANCE
+					< MAX_CLICK_RELEASE_DISTANCE
 			):
 				_click()
 

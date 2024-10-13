@@ -1,21 +1,24 @@
 extends Interactable
 class_name Unit
 
-const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
+const LOCOMOTION_CHANGE_SPEED: float = 8
+
+var _move_speed: float = 3
 
 var _max_wander_distance: float = 5
 var _min_wander_interval: float = 0.25
 var _max_wander_interval: float = 5
 
-var _is_on_screen: bool = false
-var _wandering_timer: float = 0
 var _wandering_center: Vector3 = Vector3.ZERO
+var _wandering_timer: float = 0
+
 var _spawn_pos: Vector3
 
 var _locomotion_value: float = 0
-var _showing_info: bool = false
 var _advance_anim_delta_accum: float = 0
+
+var _showing_info: bool = false
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
@@ -41,11 +44,13 @@ func _ready() -> void:
 	anim_advance_indicator.visible = false
 	if _spawn_pos != null and _spawn_pos != Vector3.ZERO:
 		global_position = _spawn_pos
-
 	_wandering_center = global_position
-	nav_agent.max_speed = MOVE_SPEED
+
+	nav_agent.max_speed = _move_speed
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
+
 	set_max_slides(2)
+
 	visibility_notifier.screen_entered.connect(
 			_on_visibility_notifier_screen_entered,
 	)
@@ -56,23 +61,19 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	_animate(delta)
+	_handle_animation(delta)
+	_showing_info = UiManager.unit_info.unit == self
 
 
 func _physics_process(_delta: float) -> void:
-	_navigate()
-
-
-func toggle_info(on: bool) -> void:
-	_showing_info = on
+	_handle_navigation()
 
 
 func _click() -> void:
 	UiManager.unit_info.open(self)
-	toggle_info(true)
 
 
-func _navigate() -> void:
+func _handle_navigation() -> void:
 	if nav_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
 		return
@@ -80,12 +81,12 @@ func _navigate() -> void:
 	var next_pos := nav_agent.get_next_path_position()
 
 	var direction := global_position.direction_to(next_pos)
-	var new_velocity := direction * MOVE_SPEED
+	var new_velocity := direction * _move_speed
 	nav_agent.set_velocity(new_velocity)
 
 
-func _animate(delta: float) -> void:
-	if not _is_on_screen:
+func _handle_animation(delta: float) -> void:
+	if not visibility_notifier.is_on_screen():
 		return
 
 	if velocity.length() > 0.01:
@@ -100,8 +101,8 @@ func _animate(delta: float) -> void:
 
 	_locomotion_value = move_toward(
 			_locomotion_value,
-			velocity.length() / MOVE_SPEED,
-			delta * 8
+			velocity.length() / _move_speed,
+			delta * LOCOMOTION_CHANGE_SPEED
 	)
 	animation_tree.set("parameters/locomotion/blend_position", _locomotion_value)
 
@@ -113,10 +114,12 @@ func _animate(delta: float) -> void:
 	)
 	var frame := Engine.get_frames_drawn()
 	var advance := (frame + get_instance_id()) % advance_anim_step == 0
-	anim_advance_indicator.visible = advance and DebugManager.enabled
+
 	if advance:
 		animation_tree.advance(_advance_anim_delta_accum)
 		_advance_anim_delta_accum = 0
+		
+	anim_advance_indicator.visible = advance and DebugManager.enabled
 	
 
 func _wander(delta: float) -> void:
@@ -138,10 +141,8 @@ func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
 
 
 func _on_visibility_notifier_screen_entered() -> void:
-	_is_on_screen = true
 	SelectionManager.add_unit_to_visible(self)
 
 
 func _on_visibility_notifier_screen_exited() -> void:
-	_is_on_screen = false
 	SelectionManager.remove_unit_from_visible(self)
