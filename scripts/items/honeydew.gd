@@ -1,11 +1,11 @@
 extends Interactable
 class_name Honeydew
 
-signal moved
+signal tween_finished
 
 const HEIGHT_OFFSET: float = 0.1
-const MOVE_SPEED: float = 8
-const MOVE_ARC_HEIGHT: float = 0.5
+const TWEEN_SPEED: float = 8
+const TWEEN_ARC_HEIGHT: float = 0.5
 
 var carried: bool = false
 
@@ -29,12 +29,12 @@ func _process(delta: float) -> void:
 	if _moving_timer <= 0:
 		if _move_to != Vector3.ZERO:
 			_move_to = Vector3.ZERO
-			moved.emit()
+			tween_finished.emit()
 		return
-	_moving_timer -= delta * MOVE_SPEED
+	_moving_timer -= delta * TWEEN_SPEED
 	global_position = _move_from.bezier_interpolate(
-			_move_from + Vector3.UP * MOVE_ARC_HEIGHT,
-			_move_to + Vector3.UP * MOVE_ARC_HEIGHT,
+			_move_from + Vector3.UP * TWEEN_ARC_HEIGHT,
+			_move_to + Vector3.UP * TWEEN_ARC_HEIGHT,
 			_move_to,
 			(1 - _moving_timer),
 	)
@@ -58,7 +58,7 @@ func set_carried(on: bool) -> void:
 	collision_shape.disabled = carried
 
 
-func start_moving(to: Vector3) -> Honeydew:
+func start_tweening(to: Vector3) -> Honeydew:
 	_moving_timer = 1
 	_move_from = global_position
 	_move_to = to

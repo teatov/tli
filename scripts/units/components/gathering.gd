@@ -142,9 +142,9 @@ func _pick_up() -> void:
 	_carrying_items.append(_target)
 	_target.set_carried(true)
 	audio_player.play_sound(SoundManager.swoosh())
-	await _target.start_moving(
+	await _target.start_tweening(
 			_get_nth_pile_pos(_carrying_items.size() - 1)
-	).moved
+	).tween_finished
 	audio_player.play_sound(SoundManager.pop())
 
 	await get_tree().create_timer(_pickup_interval).timeout
@@ -168,7 +168,7 @@ func _deposit() -> void:
 		var item := _carrying_items.pop_back() as Honeydew
 		audio_player.play_sound(SoundManager.swoosh())
 
-		await item.start_moving(_unit.anthill.global_position).moved
+		await item.start_tweening(_unit.anthill.global_position).tween_finished
 
 		audio_player.play_sound(SoundManager.tok())
 		item.remove_from_spawner()
