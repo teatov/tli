@@ -1,7 +1,7 @@
 extends Unit
 class_name Aphid
 
-enum AphidState {
+enum State {
 	WANDERING,
 }
 
@@ -10,7 +10,7 @@ const HONEYDEW_INTERVAL_MAX: float = 60
 const HONEYDEW_SPAWN_SPREAD: float = 0.5
 const HONEYDEWS_MAX: int = 5
 
-var state: AphidState = AphidState.WANDERING
+var state: State = State.WANDERING
 var honeydew_spawn_timer: float = 0
 var spawned_honeydews: Dictionary = {}
 
@@ -37,7 +37,7 @@ func erase_honeydew(item: Honeydew) -> void:
 
 
 func _handle_wandering(delta: float) -> void:
-	if state != AphidState.WANDERING:
+	if state != State.WANDERING:
 		return
 	
 	_wander(delta)
@@ -50,8 +50,7 @@ func _handle_honeydew_spawn(delta: float) -> void:
 	if honeydew_spawn_timer >= 0:
 		honeydew_spawn_timer -= delta
 		return
-	 
-	audio_player.play_sound(SoundManager.pop())
+	
 	var new_honeydew := honeydew_scene.instantiate() as Honeydew
 	new_honeydew.set_aphid(self)
 

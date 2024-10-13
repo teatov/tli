@@ -9,14 +9,14 @@ const DEFAULT_PICKUP_INTERVAL = 0.5
 const DROP_SPREAD: float = 0.1
 const ANTHILL_DEPOSIT_RADIUS: float = 0.5
 
-enum GatherState {
+enum State {
 	AWAITING,
 	PICKING_UP,
 	DEPOSITING,
 	STOP,
 }
 
-var state: GatherState = GatherState.STOP
+var state: State = State.STOP
 
 var nearby_items: Dictionary = {}
 var carrying_items: Array[Honeydew] = []
@@ -94,7 +94,7 @@ func handle_gathering(showing_info: bool) -> void:
 	collision_shape.global_rotation = Vector3.ZERO
 
 	radius_indicator.visible = (
-			(state != GatherState.STOP and showing_info)
+			(state != State.STOP and showing_info)
 			or showing_after_set
 	)
 
@@ -102,40 +102,40 @@ func handle_gathering(showing_info: bool) -> void:
 func start_gathering(item: Honeydew) -> void:
 	gathering_center = item.global_position
 	showing_after_set = true
-	state = GatherState.AWAITING
+	state = State.AWAITING
 	_go_pick_up(item)
 
 
 func stop_gathering() -> void:
-	state = GatherState.STOP
+	state = State.STOP
 	target = null
 
 
 func on_nav_agent_navigation_finished() -> void:
-	if state == GatherState.PICKING_UP:
+	if state == State.PICKING_UP:
 		_pick_up()
 
 	if (
-			state == GatherState.DEPOSITING
+			state == State.DEPOSITING
 			and global_position.distance_to(anthill.global_position) < 1
 	):
 		_deposit()
 
 
 func _go_pick_up(item: Honeydew) -> void:
-	state = GatherState.AWAITING
+	state = State.AWAITING
 	if anthill.space_left() <= 0:
 		return
 	if carrying_items.size() >= max_carrying:
 		_go_deposit()
 		return
 	target = item
-	state = GatherState.PICKING_UP
+	state = State.PICKING_UP
 	navigate_to.emit(item.global_position)
 
 
 func _go_deposit() -> void:
-	state = GatherState.DEPOSITING
+	state = State.DEPOSITING
 	var dir := anthill.global_position.direction_to(global_position)
 	navigate_to.emit(
 			anthill.global_position
@@ -151,7 +151,7 @@ func _get_nth_pile_pos(n: int) -> Vector3:
 func _pick_up() -> void:
 	var nearest := _find_nearest(nearby_items.values())
 	if target == null or target.carried:
-		state = GatherState.AWAITING
+		state = State.AWAITING
 		if nearest != null:
 			_go_pick_up(nearest)
 		elif carrying_items.size() > 0:
@@ -177,11 +177,11 @@ func _pick_up() -> void:
 func _deposit() -> void:
 	await get_tree().create_timer(0.5).timeout
 	while carrying_items.size() > 0:
-		if state != GatherState.DEPOSITING:
+		if state != State.DEPOSITING:
 			return
 
 		if anthill.space_left() <= 0:
-			state = GatherState.AWAITING
+			state = State.AWAITING
 			await _drop_everything()
 			return
 
@@ -200,7 +200,7 @@ func _deposit() -> void:
 		_go_pick_up(nearest)
 		return
 	
-	state = GatherState.AWAITING
+	state = State.AWAITING
 	navigate_to.emit(gathering_center)
 
 
@@ -247,7 +247,7 @@ func _on_body_entered(item: Node3D) -> void:
 		return
 	
 	nearby_items[item_id] = item as Honeydew
-	if state == GatherState.AWAITING and anthill.space_left() > 0:
+	if state == State.AWAITING and anthill.space_left() > 0:
 		_go_pick_up(item as Honeydew)
 
 

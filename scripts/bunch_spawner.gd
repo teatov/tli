@@ -19,19 +19,22 @@ func _ready() -> void:
 				0,
 				randf_range(-gizmo_extents, gizmo_extents),
 		)
+		
+		var scene: PackedScene
+		var holder: Node
 		match what:
 			WhatToSpawn.APHID:
-				_spawn(
-						aphid,
-						global_position + pos_offset,
-						StaticNodesManager.aphids_holder
-				)
+				scene = aphid
+				holder = StaticNodesManager.aphids_holder
 			WhatToSpawn.HONEYDEW:
-				_spawn(
-						honeydew,
-						global_position + pos_offset,
-						StaticNodesManager.honeydew_holder
-				)
+				scene = honeydew
+				holder = StaticNodesManager.honeydew_holder
+
+		_spawn(
+				scene,
+				global_position + pos_offset,
+				holder,
+		)
 
 
 func _spawn(scene: PackedScene, where: Vector3, holder: Node) -> void:

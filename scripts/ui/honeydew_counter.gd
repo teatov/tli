@@ -17,7 +17,7 @@ var rect_size: float = RECT_SIZE
 
 func _ready() -> void:
 	assert(atlas != null, "atlas missing!")
-	count_per_row = floor(size.x / (rect_size + GAP))
+	count_per_row = floori(size.x / (rect_size + GAP))
 
 
 func initialize(
@@ -34,7 +34,7 @@ func initialize(
 
 	for i in (ceil(init_max_count / SPRITES_PER_RECT) as int):
 		var col: int = i % count_per_row
-		var row: int = floor(i / count_per_row)
+		var row: int = floori(i / count_per_row)
 		var rect := _create_rect(col, row)
 		rects.append(rect)
 	

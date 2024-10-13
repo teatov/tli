@@ -1,7 +1,7 @@
 extends ControlledUnit
 class_name AntNitwit
 
-enum AntNitwitState {
+enum State {
 	WANDERING,
 	MOVING,
 	GATHERING,
@@ -9,7 +9,7 @@ enum AntNitwitState {
 
 const ITEM_BONE_NAME = "Nitwit_item_"
 
-var state: AntNitwitState = AntNitwitState.WANDERING
+var state: State = State.WANDERING
 
 @onready var gathering: Gathering = $Gathering
 @onready var skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
@@ -36,7 +36,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	if is_relocating:
-		state = AntNitwitState.MOVING
+		state = State.MOVING
 
 	_handle_wandering(delta)
 	_handle_gathering()
@@ -44,12 +44,12 @@ func _process(delta: float) -> void:
 
 func _interact(with: Interactable) -> void:
 	if with is Honeydew:
-		state = AntNitwitState.GATHERING
+		state = State.GATHERING
 		gathering.start_gathering(with as Honeydew)
 
 
 func _handle_wandering(delta: float) -> void:
-	if state != AntNitwitState.WANDERING:
+	if state != State.WANDERING:
 		return
 	
 	_wander(delta)
@@ -60,18 +60,18 @@ func _handle_gathering() -> void:
 
 
 func _on_moving_ended() -> void:
-	state = AntNitwitState.WANDERING
+	state = State.WANDERING
 
 
 func _on_moving_started() -> void:
-	if state == AntNitwitState.GATHERING:
+	if state == State.GATHERING:
 		gathering.stop_gathering()
-	state = AntNitwitState.MOVING
+	state = State.MOVING
 
 
 func _on_gathering_navigate_to(pos: Vector3) -> void:
 	print('_on_gathering_navigate_to')
-	if state != AntNitwitState.GATHERING:
+	if state != State.GATHERING:
 		return
 	print('_on_gathering_navigate_to 2')
 

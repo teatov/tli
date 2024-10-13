@@ -1,7 +1,7 @@
 extends Camera3D
 class_name MainCamera
 
-enum CameraState {
+enum State {
 	FREE,
 	HEADING_TO,
 }
@@ -48,7 +48,7 @@ var heading_from_position: Vector3 = Vector3.ZERO
 var heading_from_zoom: float = 0
 var heading_progress: float = 0
 
-var state: CameraState = CameraState.FREE
+var state: State = State.FREE
 
 var window_out_of_focus: bool = false
 
@@ -120,7 +120,7 @@ func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 	heading_progress = 0
 	heading_from_zoom = zoom_value
 	heading_to_zoom = zoom
-	state = CameraState.HEADING_TO
+	state = State.HEADING_TO
 
 
 func _handle_advance_anim_step() -> void:
@@ -161,7 +161,7 @@ func _handle_dof() -> void:
 func _handle_movement(delta: float) -> void:
 	if (
 			window_out_of_focus
-			or state != CameraState.FREE
+			or state != State.FREE
 			or CursorManager.disable_confinement
 			or SelectionManager.selecting
 	):
@@ -208,12 +208,12 @@ func _handle_movement(delta: float) -> void:
 
 
 func _handle_heading_to(delta: float) -> void:
-	if state != CameraState.HEADING_TO:
+	if state != State.HEADING_TO:
 		return
 
 	if heading_progress >= 1:
 		target_position = heading_to_position
-		state = CameraState.FREE
+		state = State.FREE
 	
 	heading_progress += HEADING_SPEED * delta
 	var eased_progress := ease(heading_progress, -3)

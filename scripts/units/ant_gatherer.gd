@@ -1,7 +1,7 @@
 extends ControlledUnit
 class_name AntGatherer
 
-enum AntGathererState {
+enum State {
 	WANDERING,
 	MOVING,
 	GATHERING,
@@ -10,7 +10,7 @@ enum AntGathererState {
 const ITEM_BONE_NAME = "Gatherer_item_"
 const MAX_CARRY: int = 8
 
-var state: AntGathererState = AntGathererState.WANDERING
+var state: State = State.WANDERING
 
 @onready var gathering: Gathering = $Gathering
 @onready var skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
@@ -37,7 +37,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	if is_relocating:
-		state = AntGathererState.MOVING
+		state = State.MOVING
 
 	_handle_wandering(delta)
 	_handle_gathering()
@@ -45,12 +45,12 @@ func _process(delta: float) -> void:
 
 func _interact(with: Interactable) -> void:
 	if with is Honeydew:
-		state = AntGathererState.GATHERING
+		state = State.GATHERING
 		gathering.start_gathering(with as Honeydew)
 
 
 func _handle_wandering(delta: float) -> void:
-	if state != AntGathererState.WANDERING:
+	if state != State.WANDERING:
 		return
 	
 	_wander(delta)
@@ -61,17 +61,17 @@ func _handle_gathering() -> void:
 
 
 func _on_moving_ended() -> void:
-	state = AntGathererState.WANDERING
+	state = State.WANDERING
 
 
 func _on_moving_started() -> void:
-	if state == AntGathererState.GATHERING:
+	if state == State.GATHERING:
 		gathering.stop_gathering()
-	state = AntGathererState.MOVING
+	state = State.MOVING
 
 
 func _on_gathering_navigate_to(pos: Vector3) -> void:
-	if state != AntGathererState.GATHERING:
+	if state != State.GATHERING:
 		return
 
 	navigate(pos)

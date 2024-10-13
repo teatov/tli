@@ -23,6 +23,7 @@ func _ready() -> void:
 	assert(buy_gatherer_button != null, "buy_gatherer_button missing!")
 	assert(gatherer_price_counter != null, "gatherer_price_counter missing!")
 	assert(gatherer_info != null, "gatherer_info missing!")
+	assert(counter != null, "counter missing!")
 	super._ready()
 	buy_nitwit_button.pressed.connect(_on_buy_nitwit_button_pressed)
 	nitwit_info.visible = false
