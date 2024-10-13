@@ -6,18 +6,18 @@ const RANDOM_OFFSET: float = 5
 const GAP: float = 1
 const SPRITES_PER_RECT: int = 5
 
-@export var atlas: AtlasTexture
+@export var _atlas: AtlasTexture
 
-var rects: Array[TextureRect] = []
+var _rects: Array[TextureRect] = []
 
-var max_count: int = 0
-var count_per_row: int = 0
-var rect_size: float = RECT_SIZE
+var _max_count: int = 0
+var _count_per_row: int = 0
+var _rect_size: float = RECT_SIZE
 
 
 func _ready() -> void:
-	assert(atlas != null, "atlas missing!")
-	count_per_row = floori(size.x / (rect_size + GAP))
+	assert(_atlas != null, "_atlas missing!")
+	_count_per_row = floori(size.x / (_rect_size + GAP))
 
 
 func initialize(
@@ -25,18 +25,18 @@ func initialize(
 		init_max_count: int,
 		r_size: float = RECT_SIZE,
 ) -> void:
-	max_count = init_max_count
-	rect_size = r_size
-	rects.clear()
+	_max_count = init_max_count
+	_rect_size = r_size
+	_rects.clear()
 	for rect in get_children():
 		remove_child(rect)
 		rect.queue_free()
 
 	for i in (ceil(init_max_count / SPRITES_PER_RECT) as int):
-		var col: int = i % count_per_row
-		var row: int = floori(i / count_per_row)
+		var col: int = i % _count_per_row
+		var row: int = floori(i / _count_per_row)
 		var rect := _create_rect(col, row)
-		rects.append(rect)
+		_rects.append(rect)
 	
 	update_counter(init_count)
 
@@ -45,8 +45,8 @@ func update_counter(new_count: int) -> void:
 	var remainder := new_count % SPRITES_PER_RECT
 	var whole := new_count - remainder
 	
-	for i in range(rects.size()):
-		var rect := rects[i]
+	for i in range(_rects.size()):
+		var rect := _rects[i]
 		var amount := i * SPRITES_PER_RECT
 		var count: int = 0
 		if amount >= new_count:
@@ -56,23 +56,23 @@ func update_counter(new_count: int) -> void:
 		else:
 			count = remainder
 		
-		(rect.texture as AtlasTexture).region.position.x = count * atlas.region.size.x
+		(rect.texture as AtlasTexture).region.position.x = count * _atlas.region.size.x
 
 
 func _create_rect(col: int, row: int) -> TextureRect:
 	var rect := TextureRect.new()
 	add_child(rect)
-	rect.texture = atlas.duplicate()
+	rect.texture = _atlas.duplicate()
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.position.x = (
 			col
-			* (rect_size + GAP)
+			* (_rect_size + GAP)
 			+ randf_range(-RANDOM_OFFSET, RANDOM_OFFSET)
 	)
 	rect.position.y = (
 			row
-			* (rect_size + GAP)
+			* (_rect_size + GAP)
 			+ randf_range(-RANDOM_OFFSET, RANDOM_OFFSET)
 	)
-	rect.size = Vector2(rect_size, rect_size)
+	rect.size = Vector2(_rect_size, _rect_size)
 	return rect

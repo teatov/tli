@@ -4,12 +4,12 @@ class_name ControlledUnit
 signal moving_started
 signal moving_ended
 
-var anthill: Anthill
+var _anthill: Anthill
 
-var hovered_rect: bool = false
-var selected: bool = false
-var is_relocating: bool = false
-var ground_plane: Plane = Plane(Vector3.UP, 0)
+var _hovered_rect: bool = false
+var _selected: bool = false
+var _is_relocating: bool = false
+var _ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var selection_indicator: VisualInstance3D = $SelectionIndicator
 
@@ -19,9 +19,9 @@ static func get_cost() -> int:
 
 
 func _init() -> void:
-	max_wander_distance = 2
-	min_wander_interval = 0.5
-	max_wander_interval = 10
+	_max_wander_distance = 2
+	_min_wander_interval = 0.5
+	_max_wander_interval = 10
 
 
 func _ready() -> void:
@@ -32,23 +32,23 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	selection_indicator.visible = selected
-	hover_indicator.visible = hovered or hovered_rect
+	selection_indicator.visible = _selected
+	hover_indicator.visible = _hovered or _hovered_rect
 
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
-	if is_relocating and nav_agent.is_navigation_finished():
-		is_relocating = false
+	if _is_relocating and nav_agent.is_navigation_finished():
+		_is_relocating = false
 		moving_ended.emit()
 
 
 func _input(event: InputEvent) -> void:
 	super._input(event)
-	if not is_on_screen:
+	if not _is_on_screen:
 		return
 
-	if event is InputEventMouseButton and selected:
+	if event is InputEventMouseButton and _selected:
 		var button_event := event as InputEventMouseButton
 		if (
 				button_event.button_index == MOUSE_BUTTON_RIGHT
@@ -62,21 +62,21 @@ func _input(event: InputEvent) -> void:
 
 
 func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
-	anthill = from
-	spawn_pos = pos
+	_anthill = from
+	_spawn_pos = pos
 	return self
 
 
 func set_hovered_rect(on: bool) -> void:
-	hovered_rect = on
+	_hovered_rect = on
 
 
 func set_selected(on: bool) -> void:
-	selected = on
+	_selected = on
 
 
 func navigate(to: Vector3, relocating: bool = false) -> void:
-	is_relocating = relocating
+	_is_relocating = relocating
 	nav_agent.set_target_position(to)
 
 
@@ -95,8 +95,8 @@ func _set_target_click(mouse_pos: Vector2) -> void:
 func _click_raycast(mouse_pos: Vector2) -> Vector3:
 	var from := StaticNodesManager.main_camera.global_position
 	var to := StaticNodesManager.main_camera.project_ray_normal(mouse_pos)
-	return ground_plane.intersects_ray(from, to)
+	return _ground_plane.intersects_ray(from, to)
 
 
 func _on_nav_agent_navigation_finished() -> void:
-	wandering_center = nav_agent.get_final_position()
+	_wandering_center = nav_agent.get_final_position()

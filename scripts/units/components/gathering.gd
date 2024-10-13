@@ -18,18 +18,18 @@ enum State {
 
 var state: State = State.STOP
 
-var nearby_items: Dictionary = {}
-var carrying_items: Array[Honeydew] = []
-var max_carrying: int = DEFAULT_MAX_CARRYING
+var _nearby_items: Dictionary = {}
+var _carrying_items: Array[Honeydew] = []
+var _max_carrying: int = DEFAULT_MAX_CARRYING
 
-var target: Honeydew
-var anthill: Anthill
-var skeleton: Skeleton3D
+var _target: Honeydew
+var _anthill: Anthill
+var _skeleton: Skeleton3D
 
-var drop_interval: float = DEFAULT_DROP_INTERVAL
-var pickup_interval: float = DEFAULT_PICKUP_INTERVAL
-var item_bones: Array[int] = []
-var showing_after_set: bool = false
+var _drop_interval: float = DEFAULT_DROP_INTERVAL
+var _pickup_interval: float = DEFAULT_PICKUP_INTERVAL
+var _item_bones: Array[int] = []
+var _showing_after_set: bool = false
 
 @onready var gathering_center: Vector3 = global_position
 @onready var collision_shape: CollisionShape3D = $NearbyItemsSearch
@@ -50,19 +50,19 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	for i in range(carrying_items.size()):
-		var item := carrying_items[i]
+	for i in range(_carrying_items.size()):
+		var item := _carrying_items[i]
 		item.global_position = _get_nth_pile_pos(i)
 
-	if target != null:
-		DebugManager.circle(target.global_position)
+	if _target != null:
+		DebugManager.circle(_target.global_position)
 
 
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return
 
-	if event is InputEventMouseButton and showing_after_set:
+	if event is InputEventMouseButton and _showing_after_set:
 		var button_event := event as InputEventMouseButton
 		if not button_event.pressed:
 			return
@@ -70,7 +70,7 @@ func _input(event: InputEvent) -> void:
 				button_event.button_index == MOUSE_BUTTON_LEFT
 				or button_event.button_index == MOUSE_BUTTON_RIGHT
 		):
-			showing_after_set = false
+			_showing_after_set = false
 
 
 func initialize(
@@ -81,12 +81,12 @@ func initialize(
 		drop_interv: float = DEFAULT_DROP_INTERVAL,
 		pickup_interv: float = DEFAULT_PICKUP_INTERVAL,
 ) -> void:
-	anthill = from
-	max_carrying = max_carry
-	drop_interval = drop_interv
-	pickup_interval = pickup_interv
-	skeleton = skeleton_3d
-	item_bones = bones
+	_anthill = from
+	_max_carrying = max_carry
+	_drop_interval = drop_interv
+	_pickup_interval = pickup_interv
+	_skeleton = skeleton_3d
+	_item_bones = bones
 
 
 func handle_gathering(showing_info: bool) -> void:
@@ -95,20 +95,20 @@ func handle_gathering(showing_info: bool) -> void:
 
 	radius_indicator.visible = (
 			(state != State.STOP and showing_info)
-			or showing_after_set
+			or _showing_after_set
 	)
 
 
 func start_gathering(item: Honeydew) -> void:
 	gathering_center = item.global_position
-	showing_after_set = true
+	_showing_after_set = true
 	state = State.AWAITING
 	_go_pick_up(item)
 
 
 func stop_gathering() -> void:
 	state = State.STOP
-	target = null
+	_target = null
 
 
 func on_nav_agent_navigation_finished() -> void:
@@ -117,57 +117,57 @@ func on_nav_agent_navigation_finished() -> void:
 
 	if (
 			state == State.DEPOSITING
-			and global_position.distance_to(anthill.global_position) < 1
+			and global_position.distance_to(_anthill.global_position) < 1
 	):
 		_deposit()
 
 
 func _go_pick_up(item: Honeydew) -> void:
 	state = State.AWAITING
-	if anthill.space_left() <= 0:
+	if _anthill.space_left() <= 0:
 		return
-	if carrying_items.size() >= max_carrying:
+	if _carrying_items.size() >= _max_carrying:
 		_go_deposit()
 		return
-	target = item
+	_target = item
 	state = State.PICKING_UP
 	navigate_to.emit(item.global_position)
 
 
 func _go_deposit() -> void:
 	state = State.DEPOSITING
-	var dir := anthill.global_position.direction_to(global_position)
+	var dir := _anthill.global_position.direction_to(global_position)
 	navigate_to.emit(
-			anthill.global_position
+			_anthill.global_position
 			+ dir
 			* ANTHILL_DEPOSIT_RADIUS
 	)
 
 
 func _get_nth_pile_pos(n: int) -> Vector3:
-	return skeleton.to_global(skeleton.get_bone_global_pose(item_bones[n]).origin)
+	return _skeleton.to_global(_skeleton.get_bone_global_pose(_item_bones[n]).origin)
 
 
 func _pick_up() -> void:
-	var nearest := _find_nearest(nearby_items.values())
-	if target == null or target.carried:
+	var nearest := _find_nearest(_nearby_items.values())
+	if _target == null or _target.carried:
 		state = State.AWAITING
 		if nearest != null:
 			_go_pick_up(nearest)
-		elif carrying_items.size() > 0:
+		elif _carrying_items.size() > 0:
 			_go_deposit()
 		return
 
-	carrying_items.append(target)
-	target.set_carried(true)
+	_carrying_items.append(_target)
+	_target.set_carried(true)
 	audio_player.play_sound(SoundManager.swoosh())
-	await target.start_moving(
-			_get_nth_pile_pos(carrying_items.size() - 1)
+	await _target.start_moving(
+			_get_nth_pile_pos(_carrying_items.size() - 1)
 	).moved
 	audio_player.play_sound(SoundManager.pop())
 
-	await get_tree().create_timer(pickup_interval).timeout
-	if carrying_items.size() >= max_carrying or nearest == null:
+	await get_tree().create_timer(_pickup_interval).timeout
+	if _carrying_items.size() >= _max_carrying or nearest == null:
 		_go_deposit()
 		return
 
@@ -176,26 +176,26 @@ func _pick_up() -> void:
 
 func _deposit() -> void:
 	await get_tree().create_timer(0.5).timeout
-	while carrying_items.size() > 0:
+	while _carrying_items.size() > 0:
 		if state != State.DEPOSITING:
 			return
 
-		if anthill.space_left() <= 0:
+		if _anthill.space_left() <= 0:
 			state = State.AWAITING
 			await _drop_everything()
 			return
 
-		var item := carrying_items.pop_back() as Honeydew
+		var item := _carrying_items.pop_back() as Honeydew
 		audio_player.play_sound(SoundManager.swoosh())
-		await item.start_moving(anthill.global_position).moved
+		await item.start_moving(_anthill.global_position).moved
 		audio_player.play_sound(SoundManager.tok())
 		item.remove_from_spawner()
 		_erase_honeydew(item)
 		item.queue_free()
-		anthill.deposit_honeydew(1)
-		await get_tree().create_timer(drop_interval).timeout
+		_anthill.deposit_honeydew(1)
+		await get_tree().create_timer(_drop_interval).timeout
 	
-	var nearest := _find_nearest(nearby_items.values())
+	var nearest := _find_nearest(_nearby_items.values())
 	if nearest != null:
 		_go_pick_up(nearest)
 		return
@@ -205,8 +205,8 @@ func _deposit() -> void:
 
 
 func _drop_everything() -> void:
-	while carrying_items.size() > 0:
-		var item := carrying_items.pop_back() as Honeydew
+	while _carrying_items.size() > 0:
+		var item := _carrying_items.pop_back() as Honeydew
 		var new_pos := Vector3(
 			randf_range(-DROP_SPREAD, DROP_SPREAD),
 			Honeydew.HEIGHT_OFFSET,
@@ -214,7 +214,7 @@ func _drop_everything() -> void:
 		)
 		await item.start_moving(global_position + new_pos).moved
 		item.set_carried(false)
-		await get_tree().create_timer(drop_interval).timeout
+		await get_tree().create_timer(_drop_interval).timeout
 
 
 func _find_nearest(items: Array) -> Honeydew:
@@ -232,10 +232,10 @@ func _find_nearest(items: Array) -> Honeydew:
 
 func _erase_honeydew(item: Honeydew) -> void:
 	var item_id := item.get_instance_id()
-	if not nearby_items.keys().has(item_id):
+	if not _nearby_items.keys().has(item_id):
 		return
 	
-	nearby_items.erase(item_id)
+	_nearby_items.erase(item_id)
 
 
 func _on_body_entered(item: Node3D) -> void:
@@ -243,11 +243,11 @@ func _on_body_entered(item: Node3D) -> void:
 		return
 
 	var item_id := item.get_instance_id()
-	if nearby_items.keys().has(item_id):
+	if _nearby_items.keys().has(item_id):
 		return
 	
-	nearby_items[item_id] = item as Honeydew
-	if state == State.AWAITING and anthill.space_left() > 0:
+	_nearby_items[item_id] = item as Honeydew
+	if state == State.AWAITING and _anthill.space_left() > 0:
 		_go_pick_up(item as Honeydew)
 
 

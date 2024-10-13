@@ -7,14 +7,14 @@ enum WhatToSpawn {
 	HONEYDEW,
 }
 
-@export var what: WhatToSpawn = WhatToSpawn.APHID
-@export var amount: int = 5
+@export var _what: WhatToSpawn = WhatToSpawn.APHID
+@export var _amount: int = 5
 
-var aphid := preload("res://scenes/units/aphid.tscn")
-var honeydew := preload("res://scenes/items/honeydew.tscn")
+var _aphid_scene := preload("res://scenes/units/aphid.tscn")
+var _honeydew_scene := preload("res://scenes/items/honeydew.tscn")
 
 func _ready() -> void:
-	for i in amount:
+	for i in _amount:
 		var pos_offset := Vector3(
 				randf_range(-gizmo_extents, gizmo_extents),
 				0,
@@ -23,12 +23,12 @@ func _ready() -> void:
 		
 		var scene: PackedScene
 		var holder: Node
-		match what:
+		match _what:
 			WhatToSpawn.APHID:
-				scene = aphid
+				scene = _aphid_scene
 				holder = StaticNodesManager.aphids_holder
 			WhatToSpawn.HONEYDEW:
-				scene = honeydew
+				scene = _honeydew_scene
 				holder = StaticNodesManager.honeydew_holder
 
 		_spawn(

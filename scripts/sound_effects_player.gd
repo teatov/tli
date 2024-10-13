@@ -2,13 +2,13 @@ extends AudioStreamPlayer3D
 class_name SoundEffectsPlayer
 ## Wrapper of AudioStreamPlayer3D that has AudioStreamPlaybackPolyphonic
 
-var playback: AudioStreamPlaybackPolyphonic
+var _playback: AudioStreamPlaybackPolyphonic
 
 
 func _ready() -> void:
 	stream = AudioStreamPolyphonic.new()
 	play()
-	playback = get_stream_playback()
+	_playback = get_stream_playback()
 
 
 func play_sound(
@@ -17,7 +17,7 @@ func play_sound(
 		new_volume_db: float = 0,
 		new_pitch_scale: float = 1.0,
 ) -> void:
-	playback.play_stream(
+	_playback.play_stream(
 			new_stream,
 			from_offset,
 			new_volume_db,

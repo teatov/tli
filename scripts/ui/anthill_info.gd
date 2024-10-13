@@ -1,7 +1,7 @@
 extends FollowingUI
 class_name AnthillInfo
 
-var anthill: Anthill
+var _anthill: Anthill
 
 @onready var ant_buy_button: BaseButton = $AntBuyButton
 @onready var add_one_button: BaseButton = $AddOneButton
@@ -25,9 +25,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if anthill == null or not visible:
+	if _anthill == null or not visible:
 		return
-	counter.update_counter(anthill.honeydew)
+	counter.update_counter(_anthill.honeydew)
 	add_one_button.disabled = not DebugManager.enabled
 	add_one_button.visible = DebugManager.enabled
 	add_five_button.disabled = not DebugManager.enabled
@@ -38,28 +38,28 @@ func _process(delta: float) -> void:
 
 func open(at: Anthill) -> void:
 	visible = true
-	anthill = at
-	set_target(anthill.ui_origin)
-	counter.initialize(anthill.honeydew, anthill.max_honeydew)
+	_anthill = at
+	set_target(_anthill.ui_origin)
+	counter.initialize(_anthill.honeydew, _anthill.max_honeydew)
 
 
 func close() -> void:
 	super.close()
-	anthill = null
+	_anthill = null
 
 
 func _on_ant_buy_button_pressed() -> void:
-	UiManager.buy_ants.open(anthill)
+	UiManager.buy_ants.open(_anthill)
 	close()
 
 
 func _on_add_one_button_pressed() -> void:
-	anthill.deposit_honeydew(1)
+	_anthill.deposit_honeydew(1)
 
 
 func _on_add_five_button_pressed() -> void:
-	anthill.deposit_honeydew(5)
+	_anthill.deposit_honeydew(5)
 
 
 func _on_add_max_button_pressed() -> void:
-	anthill.deposit_honeydew(anthill.max_honeydew)
+	_anthill.deposit_honeydew(_anthill.max_honeydew)

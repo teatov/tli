@@ -1,7 +1,7 @@
 extends Node
 ## Holds all the sound effects for quick use
 
-var pop_streams: Array[AudioStream] = [
+var _pop_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/pop_1.wav"),
 	preload("res://assets/audio/units/pop_2.wav"),
 	preload("res://assets/audio/units/pop_3.wav"),
@@ -11,7 +11,7 @@ var pop_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/pop_7.wav"),
 ]
 
-var swoosh_streams: Array[AudioStream] = [
+var _swoosh_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/swoosh_1.wav"),
 	preload("res://assets/audio/units/swoosh_2.wav"),
 	preload("res://assets/audio/units/swoosh_3.wav"),
@@ -21,14 +21,14 @@ var swoosh_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/swoosh_7.wav"),
 ]
 
-var ding_streams: Array[AudioStream] = [
+var _ding_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/ding_1.wav"),
 	preload("res://assets/audio/units/ding_2.wav"),
 	preload("res://assets/audio/units/ding_3.wav"),
 	preload("res://assets/audio/units/ding_4.wav"),
 ]
 
-var tok_streams: Array[AudioStream] = [
+var _tok_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/tok_1.wav"),
 	preload("res://assets/audio/units/tok_2.wav"),
 	preload("res://assets/audio/units/tok_3.wav"),
@@ -39,16 +39,16 @@ var tok_streams: Array[AudioStream] = [
 
 
 func pop() -> AudioStream:
-	return pop_streams.pick_random()
+	return _pop_streams.pick_random()
 
 
 func swoosh() -> AudioStream:
-	return swoosh_streams.pick_random()
+	return _swoosh_streams.pick_random()
 
 
 func ding() -> AudioStream:
-	return ding_streams.pick_random()
+	return _ding_streams.pick_random()
 
 
 func tok() -> AudioStream:
-	return tok_streams.pick_random()
+	return _tok_streams.pick_random()

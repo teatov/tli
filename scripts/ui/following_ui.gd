@@ -3,15 +3,15 @@ class_name FollowingUI
 
 const EDGE_MARGIN = 10
 
-var target: Node3D
+var _target: Node3D
 
 
 func _process(_delta: float) -> void:
-	if not visible or target == null:
+	if not visible or _target == null:
 		return
 
 	var pos := StaticNodesManager.main_camera.unproject_position(
-			target.global_position
+			_target.global_position
 	)
 	var corner_1 := Vector2.ONE * EDGE_MARGIN
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -23,9 +23,9 @@ func _process(_delta: float) -> void:
 
 
 func set_target(to: Node3D) -> void:
-	target = to
+	_target = to
 
 
 func close() -> void:
 	super.close()
-	target = null
+	_target = null

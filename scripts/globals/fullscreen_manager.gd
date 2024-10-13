@@ -1,7 +1,7 @@
 extends Node
 ## Handles fullscreen toggling
 
-var is_fullscreen: bool = false
+var _is_fullscreen: bool = false
 
 
 func _ready() -> void:
@@ -14,8 +14,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _toggle_fullscreen() -> void:
-	is_fullscreen = not is_fullscreen
-	if is_fullscreen:
+	_is_fullscreen = not _is_fullscreen
+	if _is_fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

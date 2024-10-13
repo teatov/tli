@@ -7,8 +7,8 @@ const DEFAULT_MAX_HONEYDEW: int = 120
 var honeydew: int = 0
 var max_honeydew: int = DEFAULT_MAX_HONEYDEW
 
-var ant_nitwit := preload("res://scenes/units/ant_nitwit.tscn")
-var ant_gatherer := preload("res://scenes/units/ant_gatherer.tscn")
+var _nitwit_scene := preload("res://scenes/units/ant_nitwit.tscn")
+var _gatherer_scene := preload("res://scenes/units/ant_gatherer.tscn")
 
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var audio_player: SoundEffectsPlayer = (
@@ -42,7 +42,7 @@ func deposit_honeydew(amount: int) -> int:
 
 func spawn_nitwit(ding: bool = true) -> void:
 	print('spawn!')
-	var new_unit := _create_unit(ant_nitwit, AntNitwit.get_cost(), ding)
+	var new_unit := _create_unit(_nitwit_scene, AntNitwit.get_cost(), ding)
 	if new_unit == null:
 		return
 	print('add!')
@@ -50,7 +50,7 @@ func spawn_nitwit(ding: bool = true) -> void:
 
 
 func spawn_gatherer() -> void:
-	var new_unit := _create_unit(ant_gatherer, AntGatherer.get_cost())
+	var new_unit := _create_unit(_gatherer_scene, AntGatherer.get_cost())
 	if new_unit == null:
 		return
 	StaticNodesManager.gatherers_holder.add_child(new_unit)

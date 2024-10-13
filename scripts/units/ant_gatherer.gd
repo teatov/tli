@@ -27,14 +27,14 @@ func _ready() -> void:
 	nav_agent.navigation_finished.connect(gathering.on_nav_agent_navigation_finished)
 	var item_bones: Array[int] = []
 	for i in MAX_CARRY:
-		item_bones.append(skeleton.find_bone(ITEM_BONE_NAME + str(i)))
-	gathering.initialize(anthill, skeleton, item_bones, MAX_CARRY, 0.4, 1)
+		item_bones.append(_skeleton.find_bone(ITEM_BONE_NAME + str(i)))
+	gathering.initialize(_anthill, _skeleton, item_bones, MAX_CARRY, 0.4, 1)
 	gathering.navigate_to.connect(_on_gathering_navigate_to)
 
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if is_relocating:
+	if _is_relocating:
 		state = State.MOVING
 
 	_handle_wandering(delta)
@@ -55,7 +55,7 @@ func _handle_wandering(delta: float) -> void:
 
 
 func _handle_gathering() -> void:
-	gathering.handle_gathering(showing_info)
+	gathering.handle_gathering(_showing_info)
 
 
 func _on_moving_ended() -> void:

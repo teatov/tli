@@ -8,8 +8,11 @@ const ANIM_MAX_STEP = 30
 const MIN_VISIBLE_UNITS = 25
 const MAX_VISIBLE_UNITS = 120
 
-var frustrum_polygon: ConvexPolygonShape3D = ConvexPolygonShape3D.new()
-var frustrum_polygon_points: PackedVector3Array = [
+var selecting: bool = false
+var advance_anim_step: int = 1
+
+var _frustrum_polygon: ConvexPolygonShape3D = ConvexPolygonShape3D.new()
+var _frustrum_polygon_points: PackedVector3Array = [
 		Vector3.ZERO,
 		Vector3.UP,
 		Vector3.RIGHT,
@@ -17,14 +20,12 @@ var frustrum_polygon_points: PackedVector3Array = [
 		Vector3.ONE,
 ]
 
-var visible_units: Dictionary = {}
+var _visible_units: Dictionary = {}
 
-var mouse_pressed: bool = false
-var selecting: bool = false
-var selection_rect: Rect2 = Rect2()
-var advance_anim_step: int = 1
+var _mouse_pressed: bool = false
+var _selection_rect: Rect2 = Rect2()
 
-var rect_style := preload("res://resources/styles/selection_rect.tres")
+var _rect_style := preload("res://resources/styles/selection_rect.tres")
 
 @onready var camera: Camera3D = StaticNodesManager.main_camera
 @onready var frustrum_area: Area3D = Area3D.new()
@@ -33,8 +34,8 @@ var rect_style := preload("res://resources/styles/selection_rect.tres")
 
 
 func _ready() -> void:
-	frustrum_polygon.points = frustrum_polygon_points
-	frustrum_collision_shape.shape = frustrum_polygon
+	_frustrum_polygon.points = _frustrum_polygon_points
+	frustrum_collision_shape.shape = _frustrum_polygon
 	rect_panel.visible = false
 	frustrum_area.body_entered.connect(_on_frustrum_area_body_entered)
 	frustrum_area.body_exited.connect(_on_frustrum_area_body_exited)
@@ -42,7 +43,7 @@ func _ready() -> void:
 	frustrum_area.set_collision_mask_value(1, false)
 	frustrum_area.set_collision_mask_value(2, true)
 	rect_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	rect_panel.add_theme_stylebox_override("panel", rect_style)
+	rect_panel.add_theme_stylebox_override("panel", _rect_style)
 	add_child(rect_panel)
 	add_child(frustrum_area)
 	frustrum_area.add_child(frustrum_collision_shape)
@@ -50,8 +51,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	selecting = (
-			mouse_pressed
-			and selection_rect.size.length() >= MIN_DRAG_DISTANCE
+			_mouse_pressed
+			and _selection_rect.size.length() >= MIN_DRAG_DISTANCE
 	)
 
 	_handle_frustrum_shape()
@@ -64,22 +65,22 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var button_event := event as InputEventMouseButton
 		if button_event.button_index == MOUSE_BUTTON_LEFT:
-			mouse_pressed = button_event.pressed
-			if mouse_pressed:
-				selection_rect.position = button_event.position
-				selection_rect.size = Vector2.ZERO
+			_mouse_pressed = button_event.pressed
+			if _mouse_pressed:
+				_selection_rect.position = button_event.position
+				_selection_rect.size = Vector2.ZERO
 			elif selecting:
 				_set_selection_state(false)
 	
 	if event is InputEventMouseMotion:
-		if mouse_pressed:
+		if _mouse_pressed:
 			var mouse_pos := (event as InputEventMouseMotion).position
-			selection_rect.size = mouse_pos - selection_rect.position
+			_selection_rect.size = mouse_pos - _selection_rect.position
 		
 
 func _handle_advance_anim_step() -> void:
 	var remapped_unclamped := remap(
-			visible_units.size(),
+			_visible_units.size(),
 			MIN_VISIBLE_UNITS,
 			MAX_VISIBLE_UNITS,
 			0,
@@ -99,13 +100,13 @@ func _handle_frustrum_shape() -> void:
 	var corner_3 := camera.project_position(Vector2(0, viewport_size.y), far)
 	var corner_4 := camera.project_position(viewport_size, far)
 
-	frustrum_polygon_points[0] = origin
-	frustrum_polygon_points[1] = corner_1
-	frustrum_polygon_points[2] = corner_2
-	frustrum_polygon_points[3] = corner_3
-	frustrum_polygon_points[4] = corner_4
+	_frustrum_polygon_points[0] = origin
+	_frustrum_polygon_points[1] = corner_1
+	_frustrum_polygon_points[2] = corner_2
+	_frustrum_polygon_points[3] = corner_3
+	_frustrum_polygon_points[4] = corner_4
 
-	frustrum_polygon.points = frustrum_polygon_points
+	_frustrum_polygon.points = _frustrum_polygon_points
 
 
 func _handle_selection_box() -> void:
@@ -113,7 +114,7 @@ func _handle_selection_box() -> void:
 	if not selecting:
 		return
 	
-	var rect_abs := selection_rect.abs()
+	var rect_abs := _selection_rect.abs()
 
 	rect_panel.position = rect_abs.position
 	rect_panel.size = rect_abs.size
@@ -127,9 +128,9 @@ func _handle_unit_selection() -> void:
 
 
 func _set_selection_state(hover: bool) -> void:
-	var rect_abs := selection_rect.abs()
+	var rect_abs := _selection_rect.abs()
 
-	for unit: Unit in visible_units.values():
+	for unit: Unit in _visible_units.values():
 		if unit is not ControlledUnit:
 			continue
 		var controlled_unit := unit as ControlledUnit
@@ -149,15 +150,15 @@ func _on_frustrum_area_body_entered(unit: Node3D) -> void:
 		return
 
 	var unit_id := unit.get_instance_id()
-	if visible_units.keys().has(unit_id):
+	if _visible_units.keys().has(unit_id):
 		return
 	
-	visible_units[unit_id] = unit as Unit
+	_visible_units[unit_id] = unit as Unit
 
 
 func _on_frustrum_area_body_exited(unit: Node3D) -> void:
 	var unit_id := unit.get_instance_id()
-	if not visible_units.keys().has(unit_id):
+	if not _visible_units.keys().has(unit_id):
 		return
 	
-	visible_units.erase(unit_id)
+	_visible_units.erase(unit_id)

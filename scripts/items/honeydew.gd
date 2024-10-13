@@ -8,11 +8,12 @@ const MOVE_SPEED: float = 8
 const MOVE_ARC_HEIGHT: float = 0.5
 
 var carried: bool = false
-var move_to: Vector3
-var move_from: Vector3
-var moving_timer: float = 0
 
-var from_aphid: Aphid
+var _move_to: Vector3
+var _move_from: Vector3
+var _moving_timer: float = 0
+
+var _from_aphid: Aphid
 
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 
@@ -25,40 +26,40 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if moving_timer <= 0:
-		if move_to != Vector3.ZERO:
-			move_to = Vector3.ZERO
+	if _moving_timer <= 0:
+		if _move_to != Vector3.ZERO:
+			_move_to = Vector3.ZERO
 			moved.emit()
 		return
-	moving_timer -= delta * MOVE_SPEED
-	global_position = move_from.bezier_interpolate(
-			move_from + Vector3.UP * MOVE_ARC_HEIGHT,
-			move_to + Vector3.UP * MOVE_ARC_HEIGHT,
-			move_to,
-			(1 - moving_timer),
+	_moving_timer -= delta * MOVE_SPEED
+	global_position = _move_from.bezier_interpolate(
+			_move_from + Vector3.UP * MOVE_ARC_HEIGHT,
+			_move_to + Vector3.UP * MOVE_ARC_HEIGHT,
+			_move_to,
+			(1 - _moving_timer),
 	)
 	if carried:
 		hover_indicator.visible = false
 
 
 func set_aphid(from: Aphid) -> void:
-	from_aphid = from
+	_from_aphid = from
 
 
 func remove_from_spawner() -> void:
-	if from_aphid == null:
+	if _from_aphid == null:
 		return
-	from_aphid.erase_honeydew(self)
+	_from_aphid.erase_honeydew(self)
 
 
 func set_carried(on: bool) -> void:
 	carried = on
-	can_interact = not carried
+	_can_interact = not carried
 	collision_shape.disabled = carried
 
 
 func start_moving(to: Vector3) -> Honeydew:
-	moving_timer = 1
-	move_from = global_position
-	move_to = to
+	_moving_timer = 1
+	_move_from = global_position
+	_move_to = to
 	return self

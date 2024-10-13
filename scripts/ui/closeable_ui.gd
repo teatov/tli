@@ -1,7 +1,7 @@
 extends Control
 class_name CloseableUI
 
-var is_mouse_over: bool = false
+var _is_mouse_over: bool = false
 
 
 func _ready() -> void:
@@ -12,7 +12,7 @@ func _input(event: InputEvent) -> void:
 	if not visible:
 		return
 
-	if event is InputEventMouseButton and not is_mouse_over:
+	if event is InputEventMouseButton and not _is_mouse_over:
 		var button_event := event as InputEventMouseButton
 		if not button_event.pressed:
 			return
@@ -21,7 +21,7 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		var motion_event := event as InputEventMouseMotion
-		is_mouse_over = (
+		_is_mouse_over = (
 				Rect2(global_position, size)
 				.has_point(motion_event.position)
 		)

@@ -15,9 +15,9 @@ enum State {
 
 const ANIMATION_SPEED: float = 0.25
 
-var unit: Unit
-var state: State = State.NONE
-var anim_time: float = 0
+var _unit: Unit
+var _state: State = State.NONE
+var _anim_time: float = 0
 
 @onready var texture_rect: TextureRect = $TextureRect
 @onready var atlas: AtlasTexture = texture_rect.texture as AtlasTexture
@@ -30,67 +30,67 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if unit == null or not visible:
+	if _unit == null or not visible:
 		return
 
-	anim_time += delta
+	_anim_time += delta
 	
 	_get_state()
 	_handle_pictogram()
 
 
 func open(who: Unit) -> void:
-	if unit != null:
+	if _unit != null:
 		close()
 	visible = true
-	unit = who
-	set_target(unit.ui_origin)
+	_unit = who
+	set_target(_unit.ui_origin)
 
 
 func close() -> void:
-	unit.toggle_info(false)
+	_unit.toggle_info(false)
 	super.close()
 
 
 func _handle_pictogram() -> void:
-	texture_rect.visible = state != State.NONE
-	atlas.region.position.y = (state - 1) * atlas.region.size.y
+	texture_rect.visible = _state != State.NONE
+	atlas.region.position.y = (_state - 1) * atlas.region.size.y
 	atlas.region.position.x = floorf(
-			wrapf(anim_time / ANIMATION_SPEED, 0, 4)
+			wrapf(_anim_time / ANIMATION_SPEED, 0, 4)
 	) * atlas.region.size.x
 	
 func _get_state() -> void:
-	if unit is Aphid:
-		match (unit as Aphid).state:
+	if _unit is Aphid:
+		match (_unit as Aphid).state:
 			Aphid.State.WANDERING:
-				state = State.APHID_IDLE
+				_state = State.APHID_IDLE
 	
-	if unit is AntNitwit:
-		match (unit as AntNitwit).state:
+	if _unit is AntNitwit:
+		match (_unit as AntNitwit).state:
 			AntNitwit.State.WANDERING:
-				state = State.ANT_IDLE
+				_state = State.ANT_IDLE
 			AntNitwit.State.MOVING:
-				state = State.ANT_MOVING
+				_state = State.ANT_MOVING
 			AntNitwit.State.GATHERING:
-				_get_gathering_state((unit as AntNitwit).gathering.state)
-	
-	if unit is AntGatherer:
-		match (unit as AntGatherer).state:
+				_get_gathering_state((_unit as AntNitwit).gathering.state)
+
+	if _unit is AntGatherer:
+		match (_unit as AntGatherer).state:
 			AntGatherer.State.WANDERING:
-				state = State.ANT_IDLE
+				_state = State.ANT_IDLE
 			AntGatherer.State.MOVING:
-				state = State.ANT_MOVING
+				_state = State.ANT_MOVING
 			AntGatherer.State.GATHERING:
-				_get_gathering_state((unit as AntGatherer).gathering.state)
+				_get_gathering_state((_unit as AntGatherer).gathering.state)
 
 
 func _get_gathering_state(gather_state: Gathering.State) -> void:
 	match gather_state:
 		Gathering.State.PICKING_UP:
-			state = State.ANT_PICKING_UP
+			_state = State.ANT_PICKING_UP
 		Gathering.State.DEPOSITING:
-			state = State.ANT_DEPOSITING
+			_state = State.ANT_DEPOSITING
 		Gathering.State.AWAITING:
-			state = State.ANT_AWAITING
+			_state = State.ANT_AWAITING
 		Gathering.State.STOP:
-			state = State.NONE
+			_state = State.NONE

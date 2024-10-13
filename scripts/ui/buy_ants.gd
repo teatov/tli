@@ -3,7 +3,7 @@ class_name BuyAnts
 
 const COUNTER_SIZE:float = 32
 
-var anthill: Anthill
+var _anthill: Anthill
 
 @onready var buy_nitwit_button: BaseButton = $BuyNitwitButton
 @onready var nitwit_price_counter: HoneydewCounter = $NitwitPriceCounter
@@ -33,16 +33,16 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if anthill == null or not visible:
+	if _anthill == null or not visible:
 		return
-	counter.update_counter(anthill.honeydew)
+	counter.update_counter(_anthill.honeydew)
 	nitwit_info.visible = buy_nitwit_button.is_hovered()
 	gatherer_info.visible = buy_gatherer_button.is_hovered()
 
 
 func open(at: Anthill) -> void:
 	visible = true
-	anthill = at
+	_anthill = at
 	nitwit_price_counter.initialize(
 			AntNitwit.get_cost(), 
 			AntNitwit.get_cost(), 
@@ -53,16 +53,16 @@ func open(at: Anthill) -> void:
 			AntGatherer.get_cost(),
 			COUNTER_SIZE,
 	)
-	set_target(anthill.ui_origin)
-	counter.initialize(anthill.honeydew, anthill.max_honeydew)
+	set_target(_anthill.ui_origin)
+	counter.initialize(_anthill.honeydew, _anthill.max_honeydew)
 
 
 func close() -> void:
 	super.close()
-	anthill = null
+	_anthill = null
 
 func _on_buy_nitwit_button_pressed() -> void:
-	anthill.spawn_nitwit()
+	_anthill.spawn_nitwit()
 
 func _on_buy_gatherer_button_pressed() -> void:
-	anthill.spawn_gatherer()
+	_anthill.spawn_gatherer()

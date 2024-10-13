@@ -4,18 +4,18 @@ class_name Unit
 const MOVE_SPEED: float = 3
 const TURN_SPEED: float = 10
 
-var max_wander_distance: float = 5
-var min_wander_interval: float = 0.25
-var max_wander_interval: float = 5
+var _max_wander_distance: float = 5
+var _min_wander_interval: float = 0.25
+var _max_wander_interval: float = 5
 
-var is_on_screen: bool = false
-var wandering_timer: float = 0
-var wandering_center: Vector3 = Vector3.ZERO
-var spawn_pos: Vector3
+var _is_on_screen: bool = false
+var _wandering_timer: float = 0
+var _wandering_center: Vector3 = Vector3.ZERO
+var _spawn_pos: Vector3
 
-var locomotion_value: float = 0
-var showing_info: bool = false
-var advance_anim_delta_accum: float = 0
+var _locomotion_value: float = 0
+var _showing_info: bool = false
+var _advance_anim_delta_accum: float = 0
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
@@ -39,10 +39,10 @@ func _ready() -> void:
 	super._ready()
 
 	anim_advance_indicator.visible = false
-	if spawn_pos != null and spawn_pos != Vector3.ZERO:
-		global_position = spawn_pos
+	if _spawn_pos != null and _spawn_pos != Vector3.ZERO:
+		global_position = _spawn_pos
 
-	wandering_center = global_position
+	_wandering_center = global_position
 	nav_agent.max_speed = MOVE_SPEED
 	nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
 	set_max_slides(2)
@@ -64,7 +64,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func toggle_info(on: bool) -> void:
-	showing_info = on
+	_showing_info = on
 
 
 func _click() -> void:
@@ -85,7 +85,7 @@ func _navigate() -> void:
 
 
 func _animate(delta: float) -> void:
-	if not is_on_screen:
+	if not _is_on_screen:
 		return
 
 	if velocity.length() > 0.01:
@@ -98,14 +98,14 @@ func _animate(delta: float) -> void:
 		)
 		# look_at(global_position + velocity, Vector3.UP, true)
 
-	locomotion_value = move_toward(
-			locomotion_value,
+	_locomotion_value = move_toward(
+			_locomotion_value,
 			velocity.length() / MOVE_SPEED,
 			delta * 8
 	)
-	animation_tree.set("parameters/locomotion/blend_position", locomotion_value)
+	animation_tree.set("parameters/locomotion/blend_position", _locomotion_value)
 
-	advance_anim_delta_accum += delta
+	_advance_anim_delta_accum += delta
 
 	var advance_anim_step := maxi(
 		StaticNodesManager.main_camera.advance_anim_step,
@@ -115,21 +115,21 @@ func _animate(delta: float) -> void:
 	var advance := (frame + get_instance_id()) % advance_anim_step == 0
 	anim_advance_indicator.visible = advance and DebugManager.enabled
 	if advance:
-		animation_tree.advance(advance_anim_delta_accum)
-		advance_anim_delta_accum = 0
+		animation_tree.advance(_advance_anim_delta_accum)
+		_advance_anim_delta_accum = 0
 	
 
 func _wander(delta: float) -> void:
-	wandering_timer -= delta
-	if wandering_timer <= 0:
+	_wandering_timer -= delta
+	if _wandering_timer <= 0:
 		var new_pos_offset := Vector3(
-				randf_range(-max_wander_distance, max_wander_distance),
+				randf_range(-_max_wander_distance, _max_wander_distance),
 				0,
-				randf_range(-max_wander_distance, max_wander_distance),
+				randf_range(-_max_wander_distance, _max_wander_distance),
 		)
-		var new_pos := wandering_center + new_pos_offset
+		var new_pos := _wandering_center + new_pos_offset
 		nav_agent.set_target_position(new_pos)
-		wandering_timer = randf_range(-min_wander_interval, max_wander_interval)
+		_wandering_timer = randf_range(-_min_wander_interval, _max_wander_interval)
 
 
 func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
@@ -138,8 +138,8 @@ func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
 
 
 func _on_visibility_notifier_screen_entered() -> void:
-	is_on_screen = true
+	_is_on_screen = true
 
 
 func _on_visibility_notifier_screen_exited() -> void:
-	is_on_screen = false
+	_is_on_screen = false
