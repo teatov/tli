@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 			else:
 				_set_cursor(cursor_normal)
 
-	if event.is_action_pressed("toggle_camera_navigation"):
+	if event.is_action_pressed("toggle_confinement"):
 		disable_confinement = not disable_confinement
 		if disable_confinement:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
