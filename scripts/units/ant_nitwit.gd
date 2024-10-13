@@ -1,4 +1,4 @@
-extends ControlledUnit
+extends ControlledAntUnit
 class_name AntNitwit
 
 enum State {
@@ -12,7 +12,6 @@ const ITEM_BONE_NAME = "Nitwit_item_"
 var state: State = State.WANDERING
 
 @onready var gathering: Gathering = $Gathering
-@onready var skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
 
 
 static func get_cost() -> int:
@@ -21,7 +20,6 @@ static func get_cost() -> int:
 
 func _ready() -> void:
 	assert(gathering != null, "gathering missing!")
-	assert(skeleton != null, "skeleton missing!")
 	super._ready()
 	moving_started.connect(_on_moving_started)
 	moving_ended.connect(_on_moving_ended)

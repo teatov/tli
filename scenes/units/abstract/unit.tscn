@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c70vx0utm5knp"]
 
-[ext_resource type="Script" path="res://scripts/units/unit.gd" id="1_ulhs6"]
+[ext_resource type="Script" path="res://scripts/units/abstract/unit.gd" id="1_ulhs6"]
 [ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="2_uk1jy"]
 [ext_resource type="Script" path="res://scripts/sound_effects_player.gd" id="3_wl62h"]
 
