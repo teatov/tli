@@ -1,6 +1,6 @@
 extends AudioStreamPlayer3D
 class_name SoundEffectsPlayer
-## Wrapper of AudioStreamPlayer3D that has AudioStreamPlaybackPolyphonic
+## Wrapper of AudioStreamPlayer3D that has AudioStreamPlaybackPolyphonic.
 
 var _playback: AudioStreamPlaybackPolyphonic
 

@@ -9,8 +9,8 @@ enum State {
 const ZOOM_STEP: float = 0.1
 const ZOOM_DAMP: float = 5
 const ZOOM_VALUE_DEFAULT: float = 0.3
-## How many pixels the mouse needs to be away
-## from the screen edge to move the camera.
+## How many pixels close to the screen edge
+## the mouse needs to be to move the camera.
 const SCREEN_EDGE_THRESHOLD: float = 10
 const HEADING_SPEED: float = 0.75
 const WORLD_LIMIT_DISTANCE: float = 150 / 2
@@ -114,7 +114,7 @@ func _notification(what: int) -> void:
 		_window_out_of_focus = true
 
 
-## Start gradually moving camera towards a position
+## Start gradually moving camera towards a position.
 func head_to(to: Vector3, zoom: float = ZOOM_VALUE_DEFAULT) -> void:
 	_heading_to_position = to
 	_heading_from_position = _target_position

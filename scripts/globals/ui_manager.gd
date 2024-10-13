@@ -1,5 +1,5 @@
 extends Node
-## Holds references to all the menus
+## Holds references to all the menus.
 
 @onready var anthill_info: AnthillInfo = $/root/World/UI/AnthillInfo
 @onready var buy_ants: BuyAnts = $/root/World/UI/BuyAnts

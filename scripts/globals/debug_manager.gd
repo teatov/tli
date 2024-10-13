@@ -1,5 +1,5 @@
 extends CanvasLayer
-## Handles displaying debug info
+## Handles displaying debug info.
 
 const LINE_WIDTH: float = 2
 const MARKER_RADIUS: float = 0.2

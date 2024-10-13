@@ -28,7 +28,7 @@ func space_left() -> int:
 	return max_honeydew - honeydew
 
 
-## Returns amount of honeydew that did not fit
+## Returns amount of honeydew that did not fit.
 func deposit_honeydew(amount: int) -> int:
 	var new_honeydew_amount := honeydew + amount
 	var leftover: int = 0

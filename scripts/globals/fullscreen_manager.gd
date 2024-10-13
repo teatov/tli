@@ -1,5 +1,5 @@
 extends Node
-## Handles fullscreen toggling
+## Handles fullscreen toggling.
 
 var _is_fullscreen: bool = false
 

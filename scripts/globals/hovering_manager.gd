@@ -1,5 +1,5 @@
 extends Node3D
-## Handles mouse hovering over units
+## Handles mouse hovering over units.
 
 var hovered_node: Variant
 

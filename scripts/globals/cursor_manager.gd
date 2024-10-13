@@ -1,5 +1,5 @@
 extends Node
-## Handles cursor confinement and animation
+## Handles cursor confinement and animation.
 
 const CURSOR_HOTSPOT = Vector2(32, 32)
 
