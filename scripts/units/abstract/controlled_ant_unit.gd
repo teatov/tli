@@ -24,7 +24,7 @@ func _ready() -> void:
 	super._ready()
 	for bone_name in _bones_to_scale:
 		var bone := skeleton.find_bone(bone_name)
-		var bone_transform := skeleton.get_bone_rest(bone)
+		var bone_transform := skeleton.get_bone_pose(bone)
 		bone_transform.basis *= 1 + randf_range(
 				-BONE_SCALE_VARIATION, 
 				BONE_SCALE_VARIATION,
