@@ -53,11 +53,14 @@ var state: CameraState = CameraState.FREE
 var window_out_of_focus: bool = false
 
 @onready var attrs: CameraAttributesPractical = attributes
+@onready var listener: AudioListener3D = $AudioListener3D
 
 
 func _ready() -> void:
 	assert(attrs != null, "attrs missing!")
+	assert(listener != null, "listener missing!")
 	target_position = StaticNodesManager.player_anthill.global_position
+	listener.make_current()
 
 
 func _process(delta: float) -> void:
@@ -67,17 +70,20 @@ func _process(delta: float) -> void:
 	zoom_value = lerpf(zoom_value, zoom_unsmoothed, delta * ZOOM_DAMP)
 	
 	fov = lerpf(zoom_in_fov, zoom_out_fov, zoom_value)
-	rotation.x = lerpf(zoom_in_angle, zoom_out_angle, zoom_value)
+	global_rotation.x = lerpf(zoom_in_angle, zoom_out_angle, zoom_value)
 	var distance: float = lerpf(zoom_in_distance, zoom_out_distance, zoom_value)
 
-	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, rotation.x)
+	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, global_rotation.x)
 	var offset := offset_direction * distance
 	global_position = target_position + offset
+	listener.global_position = target_position + (Vector3.UP * distance)
+	listener.global_rotation = global_rotation
 
 	_handle_dof()
 	_handle_advance_anim_step()
 
 	DebugManager.marker(target_position, 0.05)
+	DebugManager.marker(listener.global_position, 0.05, Color.GREEN)
 
 
 func _input(event: InputEvent) -> void:
@@ -180,7 +186,7 @@ func _handle_movement(delta: float) -> void:
 
 	var direction := (
 			Vector3(move_input.x, 0, move_input.y)
-			.rotated(Vector3.UP, rotation.y)
+			.rotated(Vector3.UP, global_rotation.y)
 	)
 
 	var speed: float = lerpf(zoom_in_speed, zoom_out_speed, zoom_value)

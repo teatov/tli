@@ -50,7 +50,8 @@ func _handle_honeydew_spawn(delta: float) -> void:
 	if honeydew_spawn_timer >= 0:
 		honeydew_spawn_timer -= delta
 		return
-	
+	 
+	audio_player.play_sound(SoundManager.pop())
 	var new_honeydew := honeydew_scene.instantiate() as Honeydew
 	new_honeydew.set_aphid(self)
 

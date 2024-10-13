@@ -196,7 +196,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.9454, -8.10623e-06, -60.0
 gizmo_extents = 4.7
 script = ExtResource("3_vkmt5")
 what = 1
-amount = 30
+amount = 0
 
 [node name="UI" type="Node" parent="."]
 
@@ -216,7 +216,7 @@ fov = 37.8493
 script = ExtResource("1_gnxhh")
 
 [node name="AudioListener3D" type="AudioListener3D" parent="MainCamera"]
-current = true
+top_level = true
 
 [node name="AmbientAudio" type="AudioStreamPlayer" parent="."]
 process_mode = 3
