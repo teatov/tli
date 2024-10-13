@@ -7,7 +7,8 @@ enum State {
 	ANT_MOVING,
 	ANT_PICKING_UP,
 	ANT_DEPOSITING,
-	ANT_AWAITING,
+	ANT_WAITING_FOR_NEW_ITEMS,
+	ANT_WAITING_FOR_MORE_SPACE,
 	APHID_IDLE,
 	APHID_PANIC,
 	APHID_EAT,
@@ -90,7 +91,9 @@ func _get_gathering_state(gather_state: Gathering.State) -> void:
 			_state = State.ANT_PICKING_UP
 		Gathering.State.DEPOSITING:
 			_state = State.ANT_DEPOSITING
-		Gathering.State.AWAITING:
-			_state = State.ANT_AWAITING
+		Gathering.State.WAITING_FOR_NEW_ITEMS:
+			_state = State.ANT_WAITING_FOR_NEW_ITEMS
+		Gathering.State.WAITING_FOR_MORE_SPACE:
+			_state = State.ANT_WAITING_FOR_MORE_SPACE
 		Gathering.State.STOP:
 			_state = State.NONE

@@ -4,7 +4,8 @@ class_name Gathering
 const ANTHILL_DEPOSIT_RADIUS: float = 0.5
 
 enum State {
-	AWAITING,
+	WAITING_FOR_NEW_ITEMS,
+	WAITING_FOR_MORE_SPACE,
 	PICKING_UP,
 	DEPOSITING,
 	STOP,
@@ -88,6 +89,7 @@ func initialize(
 	_skeleton = skeleton_3d
 	_item_bones = bones
 	_unit.moving_started.connect(_on_unit_moving_started)
+	_unit.anthill.buy_ant.connect(_on_anthill_buy_ant)
 	_unit.nav_agent.navigation_finished.connect(
 			_on_nav_agent_navigation_finished
 	)
@@ -100,10 +102,7 @@ func start_gathering(item: Honeydew) -> void:
 
 
 func _go_pick_up(item: Honeydew) -> void:
-	if _unit.anthill.space_left() <= 0:
-		state = State.AWAITING
-		return
-	if _carrying_items.size() >= _max_carrying:
+	if _carrying_items.size() == _max_carrying:
 		_go_deposit()
 		return
 	_target = item
@@ -112,8 +111,8 @@ func _go_pick_up(item: Honeydew) -> void:
 
 
 func _go_deposit() -> void:
-	if _unit.anthill.space_left() <= 0:
-		state = State.AWAITING
+	if _unit.anthill.space_left() == 0:
+		state = State.WAITING_FOR_MORE_SPACE
 		return
 	state = State.DEPOSITING
 	var dir := _unit.anthill.global_position.direction_to(global_position)
@@ -132,8 +131,8 @@ func _get_nth_pile_pos(n: int) -> Vector3:
 
 func _pick_up() -> void:
 	if _target == null or _target.carried:
-		state = State.AWAITING
-		if _nearby_items.size() != 0:
+		state = State.WAITING_FOR_NEW_ITEMS
+		if _nearby_items.size() > 0:
 			_go_pick_up(_find_nearest(_nearby_items.values()))
 		elif _carrying_items.size() > 0:
 			_go_deposit()
@@ -148,7 +147,7 @@ func _pick_up() -> void:
 	audio_player.play_sound(SoundManager.pop())
 
 	await get_tree().create_timer(_pickup_interval).timeout
-	if _carrying_items.size() >= _max_carrying or _nearby_items.size() == 0:
+	if _carrying_items.size() == _max_carrying or _nearby_items.size() == 0:
 		_go_deposit()
 		return
 
@@ -161,8 +160,8 @@ func _deposit() -> void:
 		if state != State.DEPOSITING:
 			return
 
-		if _unit.anthill.space_left() <= 0:
-			state = State.AWAITING
+		if _unit.anthill.space_left() == 0:
+			state = State.WAITING_FOR_MORE_SPACE
 			return
 
 		var item := _carrying_items.pop_back() as Honeydew
@@ -178,7 +177,7 @@ func _deposit() -> void:
 		await get_tree().create_timer(_drop_interval).timeout
 	
 	if _nearby_items.size() == 0:
-		state = State.AWAITING
+		state = State.WAITING_FOR_NEW_ITEMS
 		_unit.navigate(gathering_center)
 		return
 	
@@ -215,7 +214,10 @@ func _on_body_entered(item: Node3D) -> void:
 		return
 	
 	_nearby_items[item_id] = item as Honeydew
-	if state == State.AWAITING:
+	if (
+			state == State.WAITING_FOR_NEW_ITEMS
+			or state == State.WAITING_FOR_MORE_SPACE
+	):
 		_go_pick_up(item as Honeydew)
 
 
@@ -237,3 +239,20 @@ func _on_nav_agent_navigation_finished() -> void:
 
 	if state == State.DEPOSITING:
 		_deposit()
+
+
+func _on_anthill_buy_ant() -> void:
+	if state != State.WAITING_FOR_MORE_SPACE:
+		return
+	
+	if (
+			_carrying_items.size() == _max_carrying
+			or (_carrying_items.size() > 0 and _nearby_items.size() == 0)
+	):
+		_go_deposit()
+		return
+
+	if _nearby_items.size() > 0:
+			_go_pick_up(_find_nearest(_nearby_items.values()))
+	else:
+		state = State.WAITING_FOR_NEW_ITEMS

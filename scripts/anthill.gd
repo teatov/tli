@@ -1,6 +1,8 @@
 extends Interactable
 class_name Anthill
 
+signal buy_ant
+
 const SPAWN_RADIUS: float = 1
 const DEFAULT_MAX_HONEYDEW: int = 120
 
@@ -82,4 +84,5 @@ func _create_unit(
 	)
 	if ding:
 		audio_player.play_sound(SoundManager.ding())
+	buy_ant.emit()
 	return new_unit
