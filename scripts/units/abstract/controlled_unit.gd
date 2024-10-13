@@ -4,7 +4,7 @@ class_name ControlledUnit
 signal moving_started
 signal moving_finished
 
-var _anthill: Anthill
+var anthill: Anthill
 
 var _hovered_rect: bool = false
 var _selected: bool = false
@@ -64,7 +64,7 @@ func _input(event: InputEvent) -> void:
 
 
 func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
-	_anthill = from
+	anthill = from
 	_spawn_pos = pos
 	return self
 

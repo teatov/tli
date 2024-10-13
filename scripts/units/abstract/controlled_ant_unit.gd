@@ -1,9 +1,9 @@
 extends ControlledUnit
 class_name ControlledAntUnit
 
-@onready var _skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
+@onready var skeleton: Skeleton3D = $AntModel/Armature/Skeleton3D
 
 
 func _ready() -> void:
-	assert(_skeleton != null, "_skeleton missing!")
+	assert(skeleton != null, "skeleton missing!")
 	super._ready()

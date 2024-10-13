@@ -46,6 +46,11 @@ func open(who: Unit) -> void:
 	set_target(unit.ui_origin)
 
 
+func close() -> void:
+	super.close()
+	unit = null
+
+
 func _handle_pictogram() -> void:
 	texture_rect.visible = _state != State.NONE
 	atlas.region.position.y = (_state - 1) * atlas.region.size.y

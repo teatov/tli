@@ -24,12 +24,10 @@ func _ready() -> void:
 	super._ready()
 	moving_started.connect(_on_moving_started)
 	moving_finished.connect(_on_moving_ended)
-	nav_agent.navigation_finished.connect(gathering.on_nav_agent_navigation_finished)
 	var item_bones: Array[int] = []
 	for i in MAX_CARRY:
-		item_bones.append(_skeleton.find_bone(ITEM_BONE_NAME + str(i)))
-	gathering.initialize(_anthill, _skeleton, item_bones, MAX_CARRY, 0.4, 1)
-	gathering.navigate_to.connect(_on_gathering_navigate_to)
+		item_bones.append(skeleton.find_bone(ITEM_BONE_NAME + str(i)))
+	gathering.initialize(self, skeleton, item_bones, MAX_CARRY, 0.4, 1)
 
 
 func _process(delta: float) -> void:
@@ -38,7 +36,6 @@ func _process(delta: float) -> void:
 		state = State.MOVING
 
 	_handle_wandering(delta)
-	_handle_gathering()
 
 
 func _interact(with: Interactable) -> void:
@@ -54,22 +51,9 @@ func _handle_wandering(delta: float) -> void:
 	_wander(delta)
 
 
-func _handle_gathering() -> void:
-	gathering.handle_gathering(_showing_info)
-
-
 func _on_moving_ended() -> void:
 	state = State.WANDERING
 
 
 func _on_moving_started() -> void:
-	if state == State.GATHERING:
-		gathering.stop_gathering()
 	state = State.MOVING
-
-
-func _on_gathering_navigate_to(pos: Vector3) -> void:
-	if state != State.GATHERING:
-		return
-
-	navigate(pos)

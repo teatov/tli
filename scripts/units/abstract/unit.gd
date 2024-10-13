@@ -4,6 +4,8 @@ class_name Unit
 const TURN_SPEED: float = 10
 const LOCOMOTION_CHANGE_SPEED: float = 8
 
+var showing_info: bool = false
+
 var _move_speed: float = 3
 
 var _max_wander_distance: float = 5
@@ -18,7 +20,6 @@ var _spawn_pos: Vector3
 var _locomotion_value: float = 0
 var _advance_anim_delta_accum: float = 0
 
-var _showing_info: bool = false
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
@@ -62,7 +63,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	_handle_animation(delta)
-	_showing_info = UiManager.unit_info.unit == self
+	showing_info = UiManager.unit_info.unit == self
 
 
 func _physics_process(_delta: float) -> void:
