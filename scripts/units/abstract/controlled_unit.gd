@@ -45,8 +45,6 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	super._input(event)
-	if not _is_on_screen:
-		return
 
 	if event is InputEventMouseButton and _selected:
 		var button_event := event as InputEventMouseButton
