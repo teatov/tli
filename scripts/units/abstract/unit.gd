@@ -139,7 +139,9 @@ func _on_nav_agent_velocity_computed(safe_velocity: Vector3) -> void:
 
 func _on_visibility_notifier_screen_entered() -> void:
 	_is_on_screen = true
+	SelectionManager.add_unit_to_visible(self)
 
 
 func _on_visibility_notifier_screen_exited() -> void:
 	_is_on_screen = false
+	SelectionManager.remove_unit_from_visible(self)

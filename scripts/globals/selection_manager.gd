@@ -11,15 +11,6 @@ const MAX_VISIBLE_UNITS = 120
 var selecting: bool = false
 var advance_anim_step: int = 1
 
-var _frustrum_polygon: ConvexPolygonShape3D = ConvexPolygonShape3D.new()
-var _frustrum_polygon_points: PackedVector3Array = [
-		Vector3.ZERO,
-		Vector3.UP,
-		Vector3.RIGHT,
-		Vector3.BACK,
-		Vector3.ONE,
-]
-
 var _visible_units: Dictionary = {}
 
 var _mouse_pressed: bool = false
@@ -28,25 +19,14 @@ var _selection_rect: Rect2 = Rect2()
 var _rect_style := preload("res://resources/styles/selection_rect.tres")
 
 @onready var camera: Camera3D = StaticNodesManager.main_camera
-@onready var frustrum_area: Area3D = Area3D.new()
-@onready var frustrum_collision_shape: CollisionShape3D = CollisionShape3D.new()
 @onready var rect_panel: Panel = Panel.new()
 
 
 func _ready() -> void:
-	_frustrum_polygon.points = _frustrum_polygon_points
-	frustrum_collision_shape.shape = _frustrum_polygon
 	rect_panel.visible = false
-	frustrum_area.body_entered.connect(_on_frustrum_area_body_entered)
-	frustrum_area.body_exited.connect(_on_frustrum_area_body_exited)
-	frustrum_area.input_ray_pickable = false
-	frustrum_area.set_collision_mask_value(1, false)
-	frustrum_area.set_collision_mask_value(2, true)
 	rect_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rect_panel.add_theme_stylebox_override("panel", _rect_style)
 	add_child(rect_panel)
-	add_child(frustrum_area)
-	frustrum_area.add_child(frustrum_collision_shape)
 
 
 func _process(_delta: float) -> void:
@@ -55,7 +35,6 @@ func _process(_delta: float) -> void:
 			and _selection_rect.size.length() >= MIN_DRAG_DISTANCE
 	)
 
-	_handle_frustrum_shape()
 	_handle_selection_box()
 	_handle_unit_selection()
 	_handle_advance_anim_step()
@@ -78,6 +57,22 @@ func _input(event: InputEvent) -> void:
 			_selection_rect.size = mouse_pos - _selection_rect.position
 		
 
+func add_unit_to_visible(unit: Unit) -> void:
+	var unit_id := unit.get_instance_id()
+	if _visible_units.keys().has(unit_id):
+		return
+	
+	_visible_units[unit_id] = unit as Unit
+
+
+func remove_unit_from_visible(unit: Unit) -> void:
+	var unit_id := unit.get_instance_id()
+	if not _visible_units.keys().has(unit_id):
+		return
+	
+	_visible_units.erase(unit_id)
+
+
 func _handle_advance_anim_step() -> void:
 	var remapped_unclamped := remap(
 			_visible_units.size(),
@@ -88,25 +83,6 @@ func _handle_advance_anim_step() -> void:
 	)
 	var clamped := clampf(remapped_unclamped, 0, 1)
 	advance_anim_step = roundi(lerpf(1, ANIM_MAX_STEP, clamped))
-
-
-func _handle_frustrum_shape() -> void:
-	var viewport_size := get_viewport().get_visible_rect().size
-
-	var origin := camera.global_position
-	var far := camera.far - 1
-	var corner_1 := camera.project_position(Vector2.ZERO, far)
-	var corner_2 := camera.project_position(Vector2(viewport_size.x, 0), far)
-	var corner_3 := camera.project_position(Vector2(0, viewport_size.y), far)
-	var corner_4 := camera.project_position(viewport_size, far)
-
-	_frustrum_polygon_points[0] = origin
-	_frustrum_polygon_points[1] = corner_1
-	_frustrum_polygon_points[2] = corner_2
-	_frustrum_polygon_points[3] = corner_3
-	_frustrum_polygon_points[4] = corner_4
-
-	_frustrum_polygon.points = _frustrum_polygon_points
 
 
 func _handle_selection_box() -> void:
@@ -143,22 +119,3 @@ func _set_selection_state(hover: bool) -> void:
 		else:
 			controlled_unit.set_selected(rect_abs.has_point(point))
 			controlled_unit.set_hovered_rect(false)
-
-
-func _on_frustrum_area_body_entered(unit: Node3D) -> void:
-	if unit is not Unit:
-		return
-
-	var unit_id := unit.get_instance_id()
-	if _visible_units.keys().has(unit_id):
-		return
-	
-	_visible_units[unit_id] = unit as Unit
-
-
-func _on_frustrum_area_body_exited(unit: Node3D) -> void:
-	var unit_id := unit.get_instance_id()
-	if not _visible_units.keys().has(unit_id):
-		return
-	
-	_visible_units.erase(unit_id)
