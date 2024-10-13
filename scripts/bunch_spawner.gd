@@ -1,5 +1,6 @@
 extends Marker3D
 class_name BunchSpawner
+## Spawns a bunch of specified nodes upon entering the tree
 
 enum WhatToSpawn {
 	APHID,

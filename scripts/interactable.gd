@@ -1,5 +1,6 @@
 extends CharacterBody3D
 class_name Interactable
+## A base interactable object that can be hovered over and clicked on
 
 const MIN_DRAG_DISTANCE: float = 15
 
