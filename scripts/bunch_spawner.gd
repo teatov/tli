@@ -42,7 +42,7 @@ func _spawn(scene: PackedScene, where: Vector3, holder: Node) -> void:
 	var new_node := scene.instantiate() as Node3D
 
 	if new_node is Unit:
-		(new_node as Unit).spawn_pos = where
+		(new_node as Unit)._spawn_pos = where
 	if new_node is Honeydew:
 		where.y += Honeydew.HEIGHT_OFFSET
 
