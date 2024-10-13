@@ -28,10 +28,10 @@ func _close() -> void:
 
 
 func _on_cancel_button_pressed() -> void:
-	print('cancel')
+	print("cancel")
 	_close()
 
 
 func _on_quit_button_pressed() -> void:
-	print('quit')
+	print("quit")
 	get_tree().quit()

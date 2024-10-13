@@ -81,7 +81,7 @@ func navigate(to: Vector3, relocating: bool = false) -> void:
 
 
 func _interact(with: Interactable) -> void:
-	print(self, ' interacting with ', with)
+	print(self, " interacting with ", with)
 
 
 func _set_target_click(mouse_pos: Vector2) -> void:

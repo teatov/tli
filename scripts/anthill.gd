@@ -41,11 +41,11 @@ func deposit_honeydew(amount: int) -> int:
 
 
 func spawn_nitwit(ding: bool = true) -> void:
-	print('spawn!')
+	print("spawn!")
 	var new_unit := _create_unit(_nitwit_scene, AntNitwit.get_cost(), ding)
 	if new_unit == null:
 		return
-	print('add!')
+	print("add!")
 	StaticNodesManager.nitwits_holder.add_child(new_unit)
 
 

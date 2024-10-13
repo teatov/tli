@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _click() -> void:
-	print(self, ' clicked!')
+	print(self, " clicked!")
 
 
 func _on_mouse_entered() -> void:

@@ -35,10 +35,10 @@ func _process(_delta: float) -> void:
 		return
 	_control.queue_redraw()
 
-	text('fps: ' + str(Performance.get_monitor(Performance.TIME_FPS)))
-	text('draw calls: ' + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
-	text('camera anim step: ' + str(StaticNodesManager.main_camera.advance_anim_step))
-	text('select anim step: ' + str(SelectionManager.advance_anim_step))
+	text("fps: " + str(Performance.get_monitor(Performance.TIME_FPS)))
+	text("draw calls: " + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
+	text("camera anim step: " + str(StaticNodesManager.main_camera.advance_anim_step))
+	text("select anim step: " + str(SelectionManager.advance_anim_step))
 
 
 func _input(event: InputEvent) -> void:
@@ -85,7 +85,7 @@ func _unproject(pos: Vector3) -> Vector2:
 
 
 func _draw_text() -> void:
-	_label.text = '\n'.join(_text_to_draw)
+	_label.text = "\n".join(_text_to_draw)
 
 
 func _draw_vector(from: Vector3, to: Vector3, color: Color) -> void:

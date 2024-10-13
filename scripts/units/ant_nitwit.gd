@@ -68,9 +68,9 @@ func _on_moving_started() -> void:
 
 
 func _on_gathering_navigate_to(pos: Vector3) -> void:
-	print('_on_gathering_navigate_to')
+	print("_on_gathering_navigate_to")
 	if state != State.GATHERING:
 		return
-	print('_on_gathering_navigate_to 2')
+	print("_on_gathering_navigate_to 2")
 
 	navigate(pos)
