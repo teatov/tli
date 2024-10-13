@@ -11,7 +11,6 @@ var selected: bool = false
 var is_relocating: bool = false
 var ground_plane: Plane = Plane(Vector3.UP, 0)
 
-@onready var camera: Camera3D = get_viewport().get_camera_3d()
 @onready var selection_indicator: VisualInstance3D = $SelectionIndicator
 
 
@@ -26,7 +25,6 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	assert(camera != null, "camera missing!")
 	assert(selection_indicator != null, "selection_indicator missing!")
 	nav_agent.navigation_finished.connect(_on_nav_agent_navigation_finished)
 	super._ready()
@@ -95,8 +93,8 @@ func _set_target_click(mouse_pos: Vector2) -> void:
 
 
 func _click_raycast(mouse_pos: Vector2) -> Vector3:
-	var from := camera.global_position
-	var to := camera.project_ray_normal(mouse_pos)
+	var from := StaticNodesManager.main_camera.global_position
+	var to := StaticNodesManager.main_camera.project_ray_normal(mouse_pos)
 	return ground_plane.intersects_ray(from, to)
 
 

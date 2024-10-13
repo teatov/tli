@@ -9,6 +9,7 @@ func _ready() -> void:
 	play()
 	playback = get_stream_playback()
 
+
 func play_sound(
 		new_stream: AudioStream,
 		from_offset: float = 0,

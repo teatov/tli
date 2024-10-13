@@ -3,7 +3,7 @@ extends Node3D
 var hovered_node: Variant
 var mouse_pos: Vector2 = Vector2.ZERO
 
-@onready var camera: Camera3D = get_viewport().get_camera_3d()
+@onready var camera: Camera3D = StaticNodesManager.main_camera
 
 
 func _physics_process(_delta: float) -> void:

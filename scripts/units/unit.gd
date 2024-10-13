@@ -24,7 +24,6 @@ var advance_anim_delta_accum: float = 0
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
 )
-@onready var main_camera: MainCamera = $/root/World/MainCamera
 @onready var audio_player: SoundEffectsPlayer = (
 		$SoundEffectsPlayer
 )
@@ -35,7 +34,6 @@ func _ready() -> void:
 	assert(animation_tree != null, "animation_tree missing!")
 	assert(visibility_notifier != null, "visibility_notifier missing!")
 	assert(ui_origin != null, "ui_origin missing!")
-	assert(main_camera != null, "main_camera missing!")
 	assert(anim_advance_indicator != null, "anim_advance_indicator missing!")
 	assert(audio_player != null, "audio_player missing!")
 	super._ready()
@@ -110,7 +108,7 @@ func _animate(delta: float) -> void:
 	advance_anim_delta_accum += delta
 
 	var advance_anim_step := maxi(
-		main_camera.advance_anim_step,
+		StaticNodesManager.main_camera.advance_anim_step,
 		SelectionManager.advance_anim_step
 	)
 	var frame := Engine.get_frames_drawn()

@@ -52,13 +52,12 @@ var state: CameraState = CameraState.FREE
 
 var window_out_of_focus: bool = false
 
-@onready var anthill: Anthill = $/root/World/Structures/Anthill
 @onready var attrs: CameraAttributesPractical = attributes
 
 
 func _ready() -> void:
 	assert(attrs != null, "attrs missing!")
-	target_position = anthill.global_position
+	target_position = StaticNodesManager.player_anthill.global_position
 
 
 func _process(delta: float) -> void:
@@ -95,7 +94,7 @@ func _input(event: InputEvent) -> void:
 			zoom_raw = clampf(zoom_raw, 0, 1)
 
 	if event.is_action_pressed("reset_camera"):
-		head_to(anthill.global_position)
+		head_to(StaticNodesManager.player_anthill.global_position)
 
 
 func _notification(what: int) -> void:

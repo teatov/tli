@@ -16,11 +16,8 @@ var spawned_honeydews: Dictionary = {}
 
 var honeydew_scene := preload("res://scenes/items/honeydew.tscn")
 
-@onready var holder: Node = $/root/World/Items/Honeydew
-
 
 func _ready() -> void:
-	assert(holder != null, "holder missing!")
 	super._ready()
 	_set_spawn_timer()
 
@@ -62,7 +59,7 @@ func _handle_honeydew_spawn(delta: float) -> void:
 		new_honeydew.HEIGHT_OFFSET,
 		randf_range(-HONEYDEW_SPAWN_SPREAD, HONEYDEW_SPAWN_SPREAD),
 	)
-	holder.add_child(new_honeydew)
+	StaticNodesManager.honeydew_holder.add_child(new_honeydew)
 	new_honeydew.global_position = global_position + new_pos
 	_put_honeydew(new_honeydew)
 

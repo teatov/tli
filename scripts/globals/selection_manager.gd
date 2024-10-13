@@ -25,7 +25,7 @@ var advance_anim_step: int = 1
 
 var rect_style := preload("res://resources/styles/selection_rect.tres")
 
-@onready var camera: Camera3D = get_viewport().get_camera_3d()
+@onready var camera: Camera3D = StaticNodesManager.main_camera
 @onready var frustrum_area: Area3D = Area3D.new()
 @onready var frustrum_collision_shape: CollisionShape3D = CollisionShape3D.new()
 @onready var rect_panel: Panel = Panel.new()

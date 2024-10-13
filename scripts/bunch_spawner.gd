@@ -12,11 +12,7 @@ enum WhatToSpawn {
 var aphid := preload("res://scenes/units/aphid.tscn")
 var honeydew := preload("res://scenes/items/honeydew.tscn")
 
-@onready var aphids_holder: Node = $/root/World/Units/Aphids
-@onready var honeydew_holder: Node = $/root/World/Items/Honeydew
-
 func _ready() -> void:
-	assert(aphids_holder != null, "aphids_holder missing!")
 	for i in amount:
 		var pos_offset := Vector3(
 				randf_range(-gizmo_extents, gizmo_extents),
@@ -25,9 +21,17 @@ func _ready() -> void:
 		)
 		match what:
 			WhatToSpawn.APHID:
-				_spawn(aphid, global_position + pos_offset, aphids_holder)
+				_spawn(
+						aphid,
+						global_position + pos_offset,
+						StaticNodesManager.aphids_holder
+				)
 			WhatToSpawn.HONEYDEW:
-				_spawn(honeydew, global_position + pos_offset, honeydew_holder)
+				_spawn(
+						honeydew,
+						global_position + pos_offset,
+						StaticNodesManager.honeydew_holder
+				)
 
 
 func _spawn(scene: PackedScene, where: Vector3, holder: Node) -> void:

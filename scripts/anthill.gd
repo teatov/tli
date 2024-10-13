@@ -11,8 +11,6 @@ var ant_nitwit := preload("res://scenes/units/ant_nitwit.tscn")
 var ant_gatherer := preload("res://scenes/units/ant_gatherer.tscn")
 
 @onready var ui_origin: Node3D = $UiOrigin
-@onready var nitwits_holder: Node = $/root/World/Units/Nitwits
-@onready var gatherers_holder: Node = $/root/World/Units/Gatherers
 @onready var audio_player: SoundEffectsPlayer = (
 		$SoundEffectsPlayer
 )
@@ -20,8 +18,6 @@ var ant_gatherer := preload("res://scenes/units/ant_gatherer.tscn")
 
 func _ready() -> void:
 	assert(ui_origin != null, "ui_origin missing!")
-	assert(nitwits_holder != null, "nitwits_holder missing!")
-	assert(gatherers_holder != null, "gatherers_holder missing!")
 	assert(audio_player != null, "audio_player missing!")
 	super._ready()
 	honeydew += AntNitwit.get_cost()
@@ -50,14 +46,14 @@ func spawn_nitwit(ding: bool = true) -> void:
 	if new_unit == null:
 		return
 	print('add!')
-	nitwits_holder.add_child(new_unit)
+	StaticNodesManager.nitwits_holder.add_child(new_unit)
 
 
 func spawn_gatherer() -> void:
 	var new_unit := _create_unit(ant_gatherer, AntGatherer.get_cost())
 	if new_unit == null:
 		return
-	gatherers_holder.add_child(new_unit)
+	StaticNodesManager.gatherers_holder.add_child(new_unit)
 
 
 func _click() -> void:

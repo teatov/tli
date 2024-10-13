@@ -73,7 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.3389, 0, -63.0179)
 [node name="Aphids" type="Node" parent="Bunches"]
 
 [node name="AphidsBunch" type="Marker3D" parent="Bunches/Aphids"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.716, 0, -56.9208)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.7297, 0, -59.3123)
 gizmo_extents = 2.71
 script = ExtResource("3_vkmt5")
 amount = 3
@@ -192,10 +192,11 @@ script = ExtResource("3_vkmt5")
 [node name="Honeydew" type="Node" parent="Bunches"]
 
 [node name="BunchSpawner" type="Marker3D" parent="Bunches/Honeydew"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.2604, -7.62939e-06, -58.6667)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.9454, -8.10623e-06, -60.0162)
 gizmo_extents = 4.7
 script = ExtResource("3_vkmt5")
 what = 1
+amount = 30
 
 [node name="UI" type="Node" parent="."]
 
@@ -213,6 +214,9 @@ attributes = SubResource("CameraAttributesPractical_ejt3n")
 current = true
 fov = 37.8493
 script = ExtResource("1_gnxhh")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="MainCamera"]
+current = true
 
 [node name="AmbientAudio" type="AudioStreamPlayer" parent="."]
 process_mode = 3
