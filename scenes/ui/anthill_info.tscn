@@ -52,7 +52,7 @@ offset_right = 232.0
 offset_bottom = 55.0
 
 [node name="AntBuyButton" type="TextureButton" parent="."]
-modulate = Color(0.827451, 0.717647, 0.564706, 1)
+self_modulate = Color(0.827451, 0.717647, 0.564706, 1)
 layout_mode = 0
 offset_left = 241.0
 offset_top = 13.0

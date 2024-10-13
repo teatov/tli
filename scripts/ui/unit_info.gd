@@ -13,37 +13,30 @@ enum InfoState {
 	APHID_EAT,
 }
 
+const ANIMATION_SPEED: float = 0.25
+
 var unit: Unit
 var state: InfoState = InfoState.NONE
+var anim_time: float = 0
 
-@onready var ant_idle: Control = $AntIdle
-@onready var ant_moving: Control = $AntMoving
-@onready var ant_picking_up: Control = $AntPickingUp
-@onready var ant_depositing: Control = $AntDepositing
-@onready var ant_awaiting: Control = $AntAwaiting
-@onready var aphid_idle: Control = $AphidIdle
-@onready var aphid_panic: Control = $AphidPanic
-@onready var aphid_eat: Control = $AphidEat
+@onready var texture_rect: TextureRect = $TextureRect
+@onready var atlas: AtlasTexture = texture_rect.texture as AtlasTexture
 
 
 func _ready() -> void:
-	assert(ant_idle != null, "ant_idle missing!")
-	assert(ant_moving != null, "ant_moving missing!")
-	assert(ant_picking_up != null, "ant_picking_up missing!")
-	assert(ant_depositing != null, "ant_depositing missing!")
-	assert(ant_awaiting != null, "ant_awaiting missing!")
-	assert(aphid_idle != null, "aphid_idle missing!")
-	assert(aphid_panic != null, "aphid_panic missing!")
-	assert(aphid_eat != null, "aphid_eat missing!")
+	assert(texture_rect != null, "texture_rect missing!")
+	assert(atlas != null, "atlas missing!")
 	super._ready()
 
 func _process(delta: float) -> void:
 	super._process(delta)
 	if unit == null or not visible:
 		return
+
+	anim_time += delta
 	
 	_get_state()
-	_set_image()
+	_handle_pictogram()
 
 
 func open(who: Unit) -> void:
@@ -59,28 +52,12 @@ func close() -> void:
 	super.close()
 
 
-func _set_image() -> void:
-	for child: Control in get_children():
-		child.visible = false
-
-	match state:
-		InfoState.ANT_IDLE:
-			ant_idle.visible = true
-		InfoState.ANT_MOVING:
-			ant_moving.visible = true
-		InfoState.ANT_PICKING_UP:
-			ant_picking_up.visible = true
-		InfoState.ANT_DEPOSITING:
-			ant_depositing.visible = true
-		InfoState.ANT_AWAITING:
-			ant_awaiting.visible = true
-		InfoState.APHID_IDLE:
-			aphid_idle.visible = true
-		InfoState.APHID_PANIC:
-			aphid_panic.visible = true
-		InfoState.APHID_EAT:
-			aphid_eat.visible = true
-	
+func _handle_pictogram() -> void:
+	texture_rect.visible = state != InfoState.NONE
+	atlas.region.position.y = (state - 1) * atlas.region.size.y
+	atlas.region.position.x = floor(
+			wrapf(anim_time / ANIMATION_SPEED, 0, 4)
+	) * atlas.region.size.x
 	
 func _get_state() -> void:
 	if unit is Aphid:

@@ -52,7 +52,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_k576p")
 
 [node name="QuitButton" type="TextureButton" parent="Panel"]
-modulate = Color(0.843007, 0.282913, 0.299802, 1)
+self_modulate = Color(0.843007, 0.282913, 0.299802, 1)
 layout_mode = 0
 offset_left = 38.0
 offset_top = 24.0
@@ -80,7 +80,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_td4xc")
 
 [node name="CancelButton" type="TextureButton" parent="Panel"]
-modulate = Color(0.827451, 0.717647, 0.564706, 1)
+self_modulate = Color(0.827451, 0.717647, 0.564706, 1)
 layout_mode = 0
 offset_left = 117.0
 offset_top = -25.0

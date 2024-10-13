@@ -6,21 +6,17 @@ const RANDOM_OFFSET: float = 5
 const GAP: float = 1
 const SPRITES_PER_RECT: int = 5
 
+@export var atlas: AtlasTexture
+
 var rects: Array[TextureRect] = []
 
 var max_count: int = 0
 var count_per_row: int = 0
 var rect_size: float = RECT_SIZE
 
-var counter_0 := preload("res://assets/textures/gui/honeydew_0.png")
-var counter_1 := preload("res://assets/textures/gui/honeydew_1.png")
-var counter_2 := preload("res://assets/textures/gui/honeydew_2.png")
-var counter_3 := preload("res://assets/textures/gui/honeydew_3.png")
-var counter_4 := preload("res://assets/textures/gui/honeydew_4.png")
-var counter_5 := preload("res://assets/textures/gui/honeydew_5.png")
-
 
 func _ready() -> void:
+	assert(atlas != null, "atlas missing!")
 	count_per_row = floor(size.x / (rect_size + GAP))
 
 
@@ -52,29 +48,21 @@ func update_counter(new_count: int) -> void:
 	for i in range(rects.size()):
 		var rect := rects[i]
 		var amount := i * SPRITES_PER_RECT
+		var count: int = 0
 		if amount >= new_count:
-			rect.texture = counter_0
-			continue
-		rect.modulate = Color.WHITE
-		if amount < whole:
-			rect.texture = counter_5
-			continue
+			count = 0
+		elif amount < whole:
+			count = 5
+		else:
+			count = remainder
 		
-		match remainder:
-			1:
-				rect.texture = counter_1
-			2:
-				rect.texture = counter_2
-			3:
-				rect.texture = counter_3
-			4:
-				rect.texture = counter_4
+		(rect.texture as AtlasTexture).region.position.x = count * atlas.region.size.x
 
 
 func _create_rect(col: int, row: int) -> TextureRect:
 	var rect := TextureRect.new()
 	add_child(rect)
-	rect.texture = counter_5
+	rect.texture = atlas.duplicate()
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.position.x = (
 			col

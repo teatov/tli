@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0bvmx8e8qc06"
-path="res://.godot/imported/honeydew_2.png-f178ab830fa2d76ad851dac2505f7663.ctex"
+uid="uid://3dcjgbpixtn1"
+path="res://.godot/imported/unit_state.png-e5105ee48539a83148cc624fb2d8513d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/gui/honeydew_2.png"
-dest_files=["res://.godot/imported/honeydew_2.png-f178ab830fa2d76ad851dac2505f7663.ctex"]
+source_file="res://assets/textures/gui/unit_state.png"
+dest_files=["res://.godot/imported/unit_state.png-e5105ee48539a83148cc624fb2d8513d.ctex"]
 
 [params]
 
