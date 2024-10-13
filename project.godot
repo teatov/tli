@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+StaticNodesManager="*res://scripts/globals/static_nodes_manager.gd"
 CursorManager="*res://scripts/globals/cursor_manager.gd"
 FullscreenManager="*res://scripts/globals/fullscreen_manager.gd"
 DebugManager="*res://scripts/globals/debug_manager.gd"
@@ -27,7 +28,6 @@ UiManager="*res://scripts/globals/ui_manager.gd"
 HoveringManager="*res://scripts/globals/hovering_manager.gd"
 SelectionManager="*res://scripts/globals/selection_manager.gd"
 SoundManager="*res://scripts/globals/sound_manager.gd"
-StaticNodesManager="*res://scripts/globals/static_nodes_manager.gd"
 
 [debug]
 

@@ -6,14 +6,14 @@ enum CameraState {
 	HEADING_TO,
 }
 
-const ZOOM_SPEED: float = 0.1
+const ZOOM_STEP: float = 0.1
 const ZOOM_DAMP: float = 5
 const ZOOM_VALUE_DEFAULT: float = 0.3
 ## How many pixels the mouse needs to be away
 ## from the screen edge to move the camera.
-const EDGE_THRESHOLD: float = 10
+const SCREEN_EDGE_THRESHOLD: float = 10
 const HEADING_SPEED: float = 0.75
-const BOUNDARY: float = 150 / 2
+const WORLD_LIMIT_DISTANCE: float = 150 / 2
 
 const ANIM_MAX_STEP = 10
 
@@ -36,10 +36,10 @@ const ANIM_MAX_STEP = 10
 @export var zoom_out_dof_near_transition: float = 20
 
 var target_position: Vector3 = Vector3.ZERO
-var mouse_position: Vector2 = Vector2()
+var mouse_position: Vector2 = Vector2.ZERO
 ## 0 = zoomed in. 1 = zoomed out.
 var zoom_value: float = ZOOM_VALUE_DEFAULT
-var zoom_raw: float = zoom_value
+var zoom_unsmoothed: float = zoom_value
 var advance_anim_step: int = 1
 
 var heading_to_position: Vector3 = Vector3.ZERO
@@ -62,10 +62,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_handle_heading_to(delta)
-	zoom_value = lerpf(zoom_value, zoom_raw, delta * ZOOM_DAMP)
-
 	_handle_movement(delta)
 
+	zoom_value = lerpf(zoom_value, zoom_unsmoothed, delta * ZOOM_DAMP)
+	
 	fov = lerpf(zoom_in_fov, zoom_out_fov, zoom_value)
 	rotation.x = lerpf(zoom_in_angle, zoom_out_angle, zoom_value)
 	var distance: float = lerpf(zoom_in_distance, zoom_out_distance, zoom_value)
@@ -88,10 +88,10 @@ func _input(event: InputEvent) -> void:
 		var button_event := event as InputEventMouseButton
 		if button_event.pressed:
 			if button_event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				zoom_raw -= ZOOM_SPEED
+				zoom_unsmoothed -= ZOOM_STEP
 			elif button_event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				zoom_raw += ZOOM_SPEED
-			zoom_raw = clampf(zoom_raw, 0, 1)
+				zoom_unsmoothed += ZOOM_STEP
+			zoom_unsmoothed = clampf(zoom_unsmoothed, 0, 1)
 
 	if event.is_action_pressed("reset_camera"):
 		head_to(StaticNodesManager.player_anthill.global_position)
@@ -163,17 +163,17 @@ func _handle_movement(delta: float) -> void:
 	var move_input := Vector2()
 
 	# Horizontal
-	if (mouse_position.x <= EDGE_THRESHOLD):
+	if (mouse_position.x <= SCREEN_EDGE_THRESHOLD):
 		move_input.x = -1
-	elif (mouse_position.x > viewport_size.x - EDGE_THRESHOLD):
+	elif (mouse_position.x > viewport_size.x - SCREEN_EDGE_THRESHOLD):
 		move_input.x = 1
 	else:
 		move_input.x = 0
 
 	# Vertical
-	if (mouse_position.y <= EDGE_THRESHOLD):
+	if (mouse_position.y <= SCREEN_EDGE_THRESHOLD):
 		move_input.y = -1
-	elif (mouse_position.y > viewport_size.y - EDGE_THRESHOLD):
+	elif (mouse_position.y > viewport_size.y - SCREEN_EDGE_THRESHOLD):
 		move_input.y = 1
 	else:
 		move_input.y = 0
@@ -186,8 +186,8 @@ func _handle_movement(delta: float) -> void:
 	var speed: float = lerpf(zoom_in_speed, zoom_out_speed, zoom_value)
 	var velocity := direction * speed
 	target_position += velocity * delta
-	target_position.x = clampf(target_position.x, -BOUNDARY, BOUNDARY)
-	target_position.z = clampf(target_position.z, -BOUNDARY, BOUNDARY)
+	target_position.x = clampf(target_position.x, -WORLD_LIMIT_DISTANCE, WORLD_LIMIT_DISTANCE)
+	target_position.z = clampf(target_position.z, -WORLD_LIMIT_DISTANCE, WORLD_LIMIT_DISTANCE)
 
 
 func _handle_heading_to(delta: float) -> void:
@@ -200,16 +200,15 @@ func _handle_heading_to(delta: float) -> void:
 	
 	heading_progress += HEADING_SPEED * delta
 	var eased_progress := ease(heading_progress, -3)
-	target_position = lerp(
-			heading_from_position,
+	target_position = heading_from_position.lerp(
 			heading_to_position,
-			eased_progress,
+			eased_progress
 	)
-	zoom_raw = bezier_interpolate(
+	zoom_unsmoothed = bezier_interpolate(
 			heading_from_zoom,
 			1,
 			1,
 			heading_to_zoom,
 			eased_progress,
 	)
-	zoom_value = zoom_raw
+	zoom_value = zoom_unsmoothed
