@@ -1,13 +1,15 @@
 extends Node
+## Holds references to nodes that other scripts reference
 
 @onready var player_anthill: Anthill = $/root/World/Structures/Anthill
 @onready var main_camera: MainCamera = $/root/World/MainCamera
 
+# Unit holders
 @onready var nitwits_holder: Node = $/root/World/Units/Nitwits
 @onready var gatherers_holder: Node = $/root/World/Units/Gatherers
-
 @onready var aphids_holder: Node = $/root/World/Units/Aphids
 
+# Item holders
 @onready var honeydew_holder: Node = $/root/World/Items/Honeydew
 
 func _ready() -> void:

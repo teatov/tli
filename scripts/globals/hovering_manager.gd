@@ -1,4 +1,5 @@
 extends Node3D
+## Handles mouse hovering over units
 
 var hovered_node: Variant
 var mouse_pos: Vector2 = Vector2.ZERO

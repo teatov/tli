@@ -60,7 +60,11 @@ func _click() -> void:
 	UiManager.anthill_info.open(self)
 
 
-func _create_unit(unit_scene: PackedScene, cost: int, ding: bool = true) -> ControlledUnit:
+func _create_unit(
+		unit_scene: PackedScene,
+		cost: int,
+		ding: bool = true,
+) -> ControlledUnit:
 	var new_honeydew_amount := honeydew - cost
 	print(new_honeydew_amount)
 	if new_honeydew_amount < 0:
@@ -73,7 +77,7 @@ func _create_unit(unit_scene: PackedScene, cost: int, ding: bool = true) -> Cont
 	var new_unit := (
 			(unit_scene.instantiate() as ControlledUnit).initialize(
 					self,
-					new_pos
+					new_pos,
 			)
 	)
 	if ding:

@@ -1,4 +1,5 @@
 extends Node
+## Handles selection of units
 
 const MIN_DRAG_DISTANCE: float = 15
 const UNIT_SELECT_OFFSET: float = 0.25

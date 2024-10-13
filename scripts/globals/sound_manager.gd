@@ -1,4 +1,5 @@
 extends Node
+## Holds all the sound effects for quick use
 
 var pop_streams: Array[AudioStream] = [
 	preload("res://assets/audio/units/pop_1.wav"),
