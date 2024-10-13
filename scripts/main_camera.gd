@@ -68,19 +68,22 @@ func _process(delta: float) -> void:
 	_handle_movement(delta)
 
 	zoom_value = lerpf(zoom_value, zoom_unsmoothed, delta * ZOOM_DAMP)
+
+	_handle_dof()
+	_handle_advance_anim_step()
 	
 	fov = lerpf(zoom_in_fov, zoom_out_fov, zoom_value)
 	global_rotation.x = lerpf(zoom_in_angle, zoom_out_angle, zoom_value)
 	var distance: float = lerpf(zoom_in_distance, zoom_out_distance, zoom_value)
 
-	var offset_direction := Vector3.BACK.rotated(Vector3.RIGHT, global_rotation.x)
+	var offset_direction := Vector3.BACK.rotated(
+			Vector3.RIGHT, 
+			global_rotation.x
+	)
 	var offset := offset_direction * distance
 	global_position = target_position + offset
 	listener.global_position = target_position + (Vector3.UP * distance)
 	listener.global_rotation = global_rotation
-
-	_handle_dof()
-	_handle_advance_anim_step()
 
 	DebugManager.marker(target_position, 0.05)
 	DebugManager.marker(listener.global_position, 0.05, Color.GREEN)
@@ -192,8 +195,16 @@ func _handle_movement(delta: float) -> void:
 	var speed: float = lerpf(zoom_in_speed, zoom_out_speed, zoom_value)
 	var velocity := direction * speed
 	target_position += velocity * delta
-	target_position.x = clampf(target_position.x, -WORLD_LIMIT_DISTANCE, WORLD_LIMIT_DISTANCE)
-	target_position.z = clampf(target_position.z, -WORLD_LIMIT_DISTANCE, WORLD_LIMIT_DISTANCE)
+	target_position.x = clampf(
+			target_position.x, 
+			-WORLD_LIMIT_DISTANCE, 
+			WORLD_LIMIT_DISTANCE
+	)
+	target_position.z = clampf(
+			target_position.z, 
+			-WORLD_LIMIT_DISTANCE, 
+			WORLD_LIMIT_DISTANCE
+	)
 
 
 func _handle_heading_to(delta: float) -> void:
