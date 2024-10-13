@@ -22,7 +22,7 @@ func _ready() -> void:
 	assert(gathering != null, "gathering missing!")
 	super._ready()
 	moving_started.connect(_on_moving_started)
-	moving_ended.connect(_on_moving_ended)
+	moving_finished.connect(_on_moving_ended)
 	nav_agent.navigation_finished.connect(gathering.on_nav_agent_navigation_finished)
 	var item_bones: Array[int] = []
 	for i in gathering.DEFAULT_MAX_CARRYING:
@@ -33,7 +33,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	if _is_relocating:
+	if _is_moving:
 		state = State.MOVING
 
 	_handle_wandering(delta)

@@ -2,13 +2,13 @@ extends Unit
 class_name ControlledUnit
 
 signal moving_started
-signal moving_ended
+signal moving_finished
 
 var _anthill: Anthill
 
 var _hovered_rect: bool = false
 var _selected: bool = false
-var _is_relocating: bool = false
+var _is_moving: bool = false
 var _ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var selection_indicator: VisualInstance3D = $SelectionIndicator
@@ -38,9 +38,9 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
-	if _is_relocating and nav_agent.is_navigation_finished():
-		_is_relocating = false
-		moving_ended.emit()
+	if _is_moving and nav_agent.is_navigation_finished():
+		_is_moving = false
+		moving_finished.emit()
 
 
 func _input(event: InputEvent) -> void:
@@ -55,8 +55,12 @@ func _input(event: InputEvent) -> void:
 			if HoveringManager.hovered_node is Interactable:
 				_interact(HoveringManager.hovered_node as Interactable)
 			else:
+				var click_pos := _click_raycast(button_event.position)
+				if click_pos == null:
+					return
+					
+				navigate(click_pos, true)
 				moving_started.emit()
-				_set_target_click(button_event.position)
 
 
 func initialize(from: Anthill, pos: Vector3) -> ControlledUnit:
@@ -73,21 +77,13 @@ func set_selected(on: bool) -> void:
 	_selected = on
 
 
-func navigate(to: Vector3, relocating: bool = false) -> void:
-	_is_relocating = relocating
+func navigate(to: Vector3, moving: bool = false) -> void:
+	_is_moving = moving
 	nav_agent.set_target_position(to)
 
 
 func _interact(with: Interactable) -> void:
 	print(self, " interacting with ", with)
-
-
-func _set_target_click(mouse_pos: Vector2) -> void:
-	var click_pos := _click_raycast(mouse_pos)
-	if click_pos == null:
-		return
-		
-	navigate(click_pos, true)
 
 
 func _click_raycast(mouse_pos: Vector2) -> Vector3:
