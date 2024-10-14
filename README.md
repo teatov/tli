@@ -19,4 +19,4 @@ If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/
 - Other sounds - my mouth
 
 ## License
-The code is licensed under the [MIT License](https://github.com/teatov/tli/blob/main/LICENSE). The assets are licensed under [CC0 1.0](https://github.com/teatov/tli/blob/main/assets/LICENSE).
+The code is licensed under the [MIT License](https://github.com/teatov/tli/blob/main/LICENSE). The art assets are licensed under [CC0 1.0](https://github.com/teatov/tli/blob/main/assets/LICENSE).
