@@ -17,3 +17,6 @@ If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/
 - Audio editing - Audacity
 - Nature sounds - a nearby forest
 - Other sounds - my mouth
+
+## License
+The code is licensed under the [MIT License](https://github.com/teatov/tli/blob/main/LICENSE). The assets are licensed under [CC BY 4.0](https://github.com/teatov/tli/blob/main/assets/LICENSE).
