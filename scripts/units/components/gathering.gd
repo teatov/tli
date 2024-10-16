@@ -59,7 +59,7 @@ func _process(_delta: float) -> void:
 	)
 
 	if _target != null:
-		DebugManager.circle(_target.global_position)
+		DebugManager.circle("gather_targ", _target.global_position)
 
 
 func _input(event: InputEvent) -> void:

@@ -85,6 +85,9 @@ func _handle_navigation() -> void:
 	var new_velocity := direction * _move_speed
 	nav_agent.set_velocity(new_velocity)
 
+	if visibility_notifier.is_on_screen():
+		DebugManager.vector("nav" + str(get_instance_id()), global_position, next_pos, Color.BLUE)
+
 
 func _handle_animation(delta: float) -> void:
 	if not visibility_notifier.is_on_screen():

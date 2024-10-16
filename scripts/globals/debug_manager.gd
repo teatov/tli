@@ -11,10 +11,10 @@ var enabled: bool = false
 var _control: Control = Control.new()
 var _label: RichTextLabel = RichTextLabel.new()
 
-var _vectors_to_draw: Array[Dictionary] = []
-var _markers_to_draw: Array[Dictionary] = []
-var _circles_to_draw: Array[Dictionary] = []
-var _text_to_draw: PackedStringArray = []
+var _vectors_to_draw: Dictionary = {}
+var _markers_to_draw: Dictionary = {}
+var _circles_to_draw: Dictionary = {}
+var _text_to_draw: Dictionary = {}
 
 
 func _ready() -> void:
@@ -35,34 +35,39 @@ func _process(_delta: float) -> void:
 		return
 	_control.queue_redraw()
 
-	text("fps: " + str(Performance.get_monitor(Performance.TIME_FPS)))
-	text("draw calls: " + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
-	text("camera anim step: " + str(StaticNodesManager.main_camera.advance_anim_step))
-	text("select anim step: " + str(SelectionManager.advance_anim_step))
+	text("fps", str(Engine.get_frames_per_second()))
+	text("draw calls", str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
+	text("camera anim step", str(StaticNodesManager.main_camera.advance_anim_step))
+	text("select anim step", str(SelectionManager.advance_anim_step))
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_debug"):
 		enabled = not enabled
 		visible = enabled
-		_vectors_to_draw.clear()
 
 
-func text(body: String) -> void:
+func text(key: String, value: String) -> void:
 	if not enabled:
 		return
 
-	_text_to_draw.append(body)
+	_text_to_draw[key] = value
 
 
-func vector(from: Vector3, to: Vector3, color: Color = DEFAULT_COLOR) -> void:
+func vector(
+		key: String,
+		from: Vector3,
+		to: Vector3,
+		color: Color = DEFAULT_COLOR,
+) -> void:
 	if not enabled:
 		return
 
-	_vectors_to_draw.append({"from": from, "to": to, "color": color})
+	_vectors_to_draw[key] = {"from": from, "to": to, "color": color, "on": true}
 
 
 func marker(
+		key: String,
 		pos: Vector3,
 		radius: float = MARKER_RADIUS,
 		color: Color = DEFAULT_COLOR,
@@ -70,22 +75,26 @@ func marker(
 	if not enabled:
 		return
 
-	_markers_to_draw.append({"pos": pos, "radius": radius, "color": color})
+	_markers_to_draw[key] = {"pos": pos, "radius": radius, "color": color, "on": true}
 
 
-func circle(pos: Vector3, color: Color = DEFAULT_COLOR) -> void:
+func circle(
+		key: String,
+		pos: Vector3,
+		color: Color = DEFAULT_COLOR,
+) -> void:
 	if not enabled:
 		return
 
-	_circles_to_draw.append({"pos": pos, "color": color})
+	_circles_to_draw[key] = {"pos": pos, "color": color, "on": true}
 
 
 func _unproject(pos: Vector3) -> Vector2:
 	return StaticNodesManager.main_camera.unproject_position(pos)
 
 
-func _draw_text() -> void:
-	_label.text = "\n".join(_text_to_draw)
+func _draw_text(key: String, value: String) -> void:
+	_label.text += key + ": " + value + "\n"
 
 
 func _draw_vector(from: Vector3, to: Vector3, color: Color) -> void:
@@ -131,25 +140,30 @@ func _on_control_draw() -> void:
 	if not enabled:
 		return
 
-	for v in _vectors_to_draw:
-		_draw_vector(
-				v["from"] as Vector3,
-				v["to"] as Vector3,
-				v["color"] as Color,
-		)
-	_vectors_to_draw.clear()
+	for v: Dictionary in _vectors_to_draw.values():
+		if v["on"]:
+			_draw_vector(
+					v["from"] as Vector3,
+					v["to"] as Vector3,
+					v["color"] as Color,
+			)
+			v["on"] = false
 
-	for v in _markers_to_draw:
-		_draw_marker(
-				v["pos"] as Vector3,
-				v["radius"] as float,
-				v["color"] as Color,
-		)
-	_markers_to_draw.clear()
+	for v: Dictionary in _markers_to_draw.values():
+		if v["on"]:
+			_draw_marker(
+					v["pos"] as Vector3,
+					v["radius"] as float,
+					v["color"] as Color,
+			)
+			v["on"] = false
 
-	for v in _circles_to_draw:
-		_draw_circle(v["pos"] as Vector3, v["color"] as Color)
-	_circles_to_draw.clear()
+	for v: Dictionary in _circles_to_draw.values():
+		if v["on"]:
+			_draw_circle(v["pos"] as Vector3, v["color"] as Color)
+			v["on"] = false
 
-	_draw_text()
-	_text_to_draw.clear()
+	_label.text = ""
+	for k: String in _text_to_draw.keys():
+		var v: String = _text_to_draw[k]
+		_draw_text(k, v)
