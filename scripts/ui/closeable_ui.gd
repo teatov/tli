@@ -32,39 +32,47 @@ func _input(event: InputEvent) -> void:
 
 
 func close() -> void:
-	await _close_animation()
+	await _close_animation(self)
 	visible = false
 
 
-func _open_animation() -> void:
+func _open_animation(control: Control) -> void:
 	await _animate(
+			control,
+			Vector2.ZERO,
 			Vector2.ONE,
 			OPEN_TWEEN_DURATION,
 			Tween.EASE_OUT,
 			Tween.TRANS_ELASTIC,
 	)
 
-func _close_animation() -> void:
+
+func _close_animation(control: Control) -> void:
 	await _animate(
+			control,
+			Vector2.ONE,
 			Vector2.ZERO,
 			CLOSE_TWEEN_DURATION,
 			Tween.EASE_IN,
 			Tween.TRANS_BACK,
 	)
 
+
 func _animate(
+		control: Control,
+		from_scale: Vector2,
 		to_scale: Vector2,
 		duration: float,
 		ease_type: Tween.EaseType,
 		trans_type: Tween.TransitionType,
 ) -> void:
 	if _tween:
-		_tween.stop()
-	scale = Vector2.ONE
+		_tween.kill()
+	control.scale = from_scale
 	_tween = create_tween()
 	await (
 			_tween
-			.tween_property(self, "scale", to_scale, duration)
+			.tween_property(control, "scale", to_scale, duration)
 			.set_ease(ease_type)
 			.set_trans(trans_type)
 			.finished

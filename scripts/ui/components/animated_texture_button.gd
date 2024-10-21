@@ -35,7 +35,7 @@ func _hover_off_animation() -> void:
 
 func _animate(to_scale: Vector2) -> void:
 	if _tween:
-		_tween.stop()
+		_tween.kill()
 	_tween = create_tween()
 	await (
 			_tween

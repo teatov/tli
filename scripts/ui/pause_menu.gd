@@ -80,7 +80,7 @@ func _animate(
 		trans_type: Tween.TransitionType,
 ) -> void:
 	if _tween:
-		_tween.stop()
+		_tween.kill()
 	panel.scale = panel_scale_init
 	controls_info.position = controls_info_pos_init
 	_tween = create_tween()
