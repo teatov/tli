@@ -1,6 +1,6 @@
 extends AudioStreamPlayer
 
-const ZOOMED_IN_CUTOFF = 10000
+const ZOOMED_IN_CUTOFF = 7500
 const ZOOMED_OUT_CUTOFF = 0
 
 var _audio_1 := preload("res://assets/audio/ambient/ambient_1.ogg")

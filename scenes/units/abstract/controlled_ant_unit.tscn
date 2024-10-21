@@ -121,6 +121,7 @@ transform = Transform3D(0.772715, 0, 0, 0, 0.772715, 0, 0, 0, 0.772715, 0, 0, 0)
 
 [node name="MoveSoundPlayer" parent="." index="11"]
 stream = ExtResource("4_80pw8")
+attenuation_filter_db = 0.0
 
 [node name="Decal" parent="." index="12"]
 size = Vector3(1.5, 1, 1.5)
