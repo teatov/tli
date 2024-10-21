@@ -1,4 +1,7 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://f5ibq3dhugoo"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://f5ibq3dhugoo"]
+
+[ext_resource type="Texture2D" uid="uid://b5h2tlrbln76d" path="res://assets/textures/units/aphid_albedo.png" id="1_5lbiv"]
 
 [resource]
-albedo_color = Color(0.566719, 0.862261, 0.382946, 1)
+shading_mode = 0
+albedo_texture = ExtResource("1_5lbiv")
