@@ -237,7 +237,10 @@ func _on_nav_agent_navigation_finished() -> void:
 	if state == State.PICKING_UP:
 		_pick_up()
 
-	if state == State.DEPOSITING:
+	if (
+			state == State.DEPOSITING
+			and global_position.distance_to(_unit.anthill.global_position) < 1
+	):
 		_deposit()
 
 
