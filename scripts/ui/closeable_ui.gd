@@ -1,6 +1,8 @@
 extends Control
 class_name CloseableUI
 
+signal closed
+
 const OPEN_TWEEN_DURATION: float = 0.5
 const CLOSE_TWEEN_DURATION: float = 0.25
 
@@ -33,6 +35,7 @@ func _input(event: InputEvent) -> void:
 
 
 func close() -> void:
+	closed.emit()
 	await _close_animation(self)
 	visible = false
 

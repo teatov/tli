@@ -4,6 +4,7 @@ class_name MainCamera
 enum State {
 	FREE,
 	HEADING_TO,
+	FOCUSED,
 }
 
 const ZOOM_STEP: float = 0.1
@@ -49,6 +50,8 @@ var _heading_from_position: Vector3 = Vector3.ZERO
 var _heading_from_zoom: float = 0
 var _heading_progress: float = 0
 
+var _focus_target: Node3D
+
 var _state: State = State.FREE
 
 var _window_out_of_focus: bool = false
@@ -67,6 +70,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_handle_heading_to(delta)
 	_handle_movement(delta)
+	_handle_focusing()
 
 	zoom_value = lerpf(zoom_value, _zoom_unsmoothed, delta * ZOOM_DAMP)
 
@@ -85,6 +89,8 @@ func _process(delta: float) -> void:
 	global_position = _target_position + offset
 	listener.global_position = _target_position + (Vector3.UP * distance)
 	listener.global_rotation = global_rotation
+
+	UiManager.unit_info.closed.connect(_on_unit_info_closed)
 
 	DebugManager.marker("mc_target", _target_position, 0.05)
 	DebugManager.marker("mc_listener", listener.global_position, 0.05, Color.GREEN)
@@ -105,6 +111,13 @@ func _input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("reset_camera"):
 		head_to(StaticNodesManager.player_anthill.global_position)
+
+	if (
+			event.is_action_pressed("focus_camera")
+			and UiManager.unit_info.unit != null
+	):
+		_state = State.FOCUSED
+		_focus_target = UiManager.unit_info.unit
 
 
 func _notification(what: int) -> void:
@@ -230,3 +243,17 @@ func _handle_heading_to(delta: float) -> void:
 			eased_progress,
 	)
 	zoom_value = _zoom_unsmoothed
+
+
+func _handle_focusing() -> void:
+	if _state != State.FOCUSED:
+		return
+
+	_target_position = _focus_target.global_position
+
+
+func _on_unit_info_closed() -> void:
+	if _state != State.FOCUSED:
+		return
+
+	_state = State.FREE

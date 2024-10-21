@@ -25,7 +25,7 @@ region = Rect2(532.01, 2.29694, 48.3741, 55.326)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wimn7"]
 atlas = ExtResource("4_dmywd")
-region = Rect2(9.61571, 881, 845.387, 129)
+region = Rect2(9.61571, 881, 1006.99, 129)
 
 [node name="PauseMenu" type="Panel"]
 process_mode = 3
@@ -122,7 +122,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 15.0
 offset_top = -169.0
-offset_right = 895.0
+offset_right = 1063.0
 offset_bottom = -21.0
 grow_vertical = 0
 theme_override_styles/panel = ExtResource("1_06xpe")
@@ -134,10 +134,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -422.5
-offset_top = -64.5
-offset_right = 422.5
-offset_bottom = 64.5
+offset_left = -503.0
+offset_top = -64.0
+offset_right = 503.0
+offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_wimn7")

@@ -50,7 +50,10 @@ func _on_quit_button_pressed() -> void:
 func _open_animation() -> void:
 	await _animate(
 			Vector2.ZERO,
-			Vector2(_controls_info_pos.x, 1080),
+			Vector2(
+					_controls_info_pos.x,
+					get_viewport().get_visible_rect().size.y
+			),
 			Vector2.ONE,
 			_controls_info_pos,
 			OPEN_TWEEN_DURATION,
@@ -63,7 +66,10 @@ func _close_animation() -> void:
 			Vector2.ONE,
 			_controls_info_pos,
 			Vector2.ZERO,
-			Vector2(_controls_info_pos.x, 1080),
+			Vector2(
+					_controls_info_pos.x,
+					get_viewport().get_visible_rect().size.y
+			),
 			CLOSE_TWEEN_DURATION,
 			Tween.EASE_IN,
 			Tween.TRANS_BACK,
