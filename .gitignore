@@ -3,6 +3,7 @@
 /android/
 
 /art/*
+/build/*
 
 !.gdignore
 
