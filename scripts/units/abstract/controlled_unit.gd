@@ -83,7 +83,7 @@ func navigate(to: Vector3, moving: bool = false) -> void:
 	_is_moving = moving
 	nav_agent.set_target_position(to)
 	if _is_moving:
-		move_target_indicator.global_position = nav_agent.target_position
+		move_target_indicator.global_position = nav_agent.get_final_position()
 
 
 func _interact(with: Interactable) -> void:
