@@ -41,8 +41,10 @@ bones/6/rotation = Quaternion(-3.38449e-07, 0.863712, 0.503987, -5.80021e-07)
 bones/7/rotation = Quaternion(0.526107, -8.35521e-14, 7.06609e-07, 0.850418)
 bones/10/rotation = Quaternion(-0.235443, 0.235445, -0.666758, 0.666758)
 bones/11/rotation = Quaternion(-0.235443, 0.235445, -0.666758, 0.666758)
+bones/12/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(-0.235443, -0.235445, 0.666758, 0.666758)
 bones/14/rotation = Quaternion(-0.235443, -0.235445, 0.666758, 0.666758)
+bones/15/scale = Vector3(1, 1, 1)
 
 [node name="AnimationTree" parent="." index="1"]
 root_node = NodePath("../AphidModel")

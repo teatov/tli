@@ -19,7 +19,6 @@ var spawned_honeydews: Dictionary = {}
 var honeydew_scene := preload("res://scenes/items/honeydew.tscn")
 
 var _bones_to_scale: PackedStringArray = [
-	"Root",
 	"Antenna_root_L",
 	"Eye_L",
 	"Antenna_root_R",
@@ -40,7 +39,11 @@ func _ready() -> void:
 				-BONE_SCALE_VARIATION, 
 				BONE_SCALE_VARIATION,
 		)
-		skeleton.set_bone_pose_scale(bone, Vector3.ZERO)
+		skeleton.set_bone_pose(bone, bone_transform)
+	skeleton.scale *= 1 + randf_range(
+			-BONE_SCALE_VARIATION, 
+			BONE_SCALE_VARIATION,
+	)
 
 
 func _process(delta: float) -> void:
