@@ -4,6 +4,8 @@ The theme was **Tiny creatures**. Insects are pretty tiny. So I decided to make 
 
 If you want to clone the repo, make sure you have [Git LFS](https://git-lfs.com/) installed.
 
+I post updates in our [Twitter](https://twitter.com/23cmline) and [Bluesky](https://bsky.app/profile/23cmline.com).
+
 ## Tools used
 ### For development
 - Game engine - Godot
