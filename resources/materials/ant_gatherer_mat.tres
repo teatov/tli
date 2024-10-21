@@ -1,4 +1,7 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://b68amtoih28uv"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b68amtoih28uv"]
+
+[ext_resource type="Texture2D" uid="uid://5so6y60hbpdn" path="res://assets/textures/units/ant_gatherer_albedo.png" id="1_mk0rf"]
 
 [resource]
-albedo_color = Color(0.427362, 0.310254, 0.0821833, 1)
+shading_mode = 0
+albedo_texture = ExtResource("1_mk0rf")

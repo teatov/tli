@@ -1,7 +1,7 @@
 extends Area3D
 class_name Gathering
 
-const ANTHILL_DEPOSIT_RADIUS: float = 0.5
+const ANTHILL_DEPOSIT_RADIUS: float = 0.75
 
 enum State {
 	WAITING_FOR_NEW_ITEMS,
@@ -242,7 +242,7 @@ func _on_nav_agent_navigation_finished() -> void:
 
 	if (
 			state == State.DEPOSITING
-			and global_position.distance_to(_unit.anthill.global_position) < 1
+			and global_position.distance_to(_unit.anthill.global_position) < 2
 	):
 		_deposit()
 

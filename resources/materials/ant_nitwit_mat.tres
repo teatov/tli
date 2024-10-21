@@ -1,4 +1,7 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://djj2dnbws3ee5"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://djj2dnbws3ee5"]
+
+[ext_resource type="Texture2D" uid="uid://dbmukruk1sjqu" path="res://assets/textures/units/ant_nitwit_albedo.png" id="1_04vsm"]
 
 [resource]
-albedo_color = Color(0.351705, 0.303438, 0.356593, 1)
+shading_mode = 0
+albedo_texture = ExtResource("1_04vsm")

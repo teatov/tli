@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pbcyrj6uvp40"
-path.bptc="res://.godot/imported/honeydew.png-bd1d59692920d0f506a1dd7f5c6e85b7.bptc.ctex"
+uid="uid://5so6y60hbpdn"
+path.bptc="res://.godot/imported/ant_gatherer_albedo.png-e6a59ac4697cbda7b89aba71d0490a5f.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/items/honeydew.png"
-dest_files=["res://.godot/imported/honeydew.png-bd1d59692920d0f506a1dd7f5c6e85b7.bptc.ctex"]
+source_file="res://assets/textures/units/ant_gatherer_albedo.png"
+dest_files=["res://.godot/imported/ant_gatherer_albedo.png-e6a59ac4697cbda7b89aba71d0490a5f.bptc.ctex"]
 
 [params]
 
