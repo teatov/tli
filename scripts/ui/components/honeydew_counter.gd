@@ -26,18 +26,19 @@ func initialize(
 		init_max_count: int,
 		r_size: float = RECT_SIZE,
 ) -> void:
-	_max_count = init_max_count
-	_rect_size = r_size
-	_rects.clear()
-	for rect in get_children():
-		remove_child(rect)
-		rect.queue_free()
+	if _max_count != init_max_count:
+		_max_count = init_max_count
+		_rect_size = r_size
+		_rects.clear()
+		for rect in get_children():
+			remove_child(rect)
+			rect.queue_free()
 
-	for i in (ceil(init_max_count / SPRITES_PER_RECT) as int):
-		var col: int = i % _count_per_row
-		var row: int = floori(i / _count_per_row)
-		var rect := _create_rect(col, row)
-		_rects.append(rect)
+		for i in (ceil(init_max_count / SPRITES_PER_RECT) as int):
+			var col: int = i % _count_per_row
+			var row: int = floori(i / _count_per_row)
+			var rect := _create_rect(col, row)
+			_rects.append(rect)
 	
 	update_counter(init_count)
 
