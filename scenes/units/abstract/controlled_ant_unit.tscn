@@ -65,7 +65,7 @@ visible = false
 root_node = NodePath("../AntModel")
 tree_root = SubResource("AnimationNodeStateMachine_v8drs")
 anim_player = NodePath("../AntModel/AnimationPlayer")
-parameters/locomotion/blend_position = 0
+parameters/locomotion/blend_position = 0.023431
 
 [node name="CollisionShape3D" parent="." index="2"]
 shape = SubResource("CylinderShape3D_8admi")
