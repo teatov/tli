@@ -132,8 +132,9 @@ func _get_nth_pile_pos(n: int) -> Vector3:
 func _pick_up() -> void:
 	if _target == null or _target.carried:
 		state = State.WAITING_FOR_NEW_ITEMS
-		if _nearby_items.size() > 0:
-			_go_pick_up(_find_nearest(_nearby_items.values()))
+		var nearest_item := _find_nearest(_nearby_items.values())
+		if nearest_item != null:
+			_go_pick_up(nearest_item)
 		elif _carrying_items.size() > 0:
 			_go_deposit()
 		return
@@ -147,11 +148,12 @@ func _pick_up() -> void:
 	audio_player.play_sound(SoundManager.pop())
 
 	await get_tree().create_timer(_pickup_interval).timeout
-	if _carrying_items.size() == _max_carrying or _nearby_items.size() == 0:
+	var nearest := _find_nearest(_nearby_items.values())
+	if _carrying_items.size() == _max_carrying or nearest == null:
 		_go_deposit()
 		return
 
-	_go_pick_up(_find_nearest(_nearby_items.values()))
+	_go_pick_up(nearest)
 
 
 func _deposit() -> void:
@@ -176,12 +178,13 @@ func _deposit() -> void:
 		_unit.anthill.deposit_honeydew(1)
 		await get_tree().create_timer(_drop_interval).timeout
 	
-	if _nearby_items.size() == 0:
+	var nearest := _find_nearest(_nearby_items.values())
+	if nearest == null:
 		state = State.WAITING_FOR_NEW_ITEMS
 		_unit.navigate(gathering_center)
 		return
 	
-	_go_pick_up(_find_nearest(_nearby_items.values()))
+	_go_pick_up(nearest)
 	
 
 func _find_nearest(items: Array) -> Honeydew:
@@ -248,14 +251,15 @@ func _on_anthill_buy_ant() -> void:
 	if state != State.WAITING_FOR_MORE_SPACE:
 		return
 	
+	var nearest := _find_nearest(_nearby_items.values())
 	if (
 			_carrying_items.size() == _max_carrying
-			or (_carrying_items.size() > 0 and _nearby_items.size() == 0)
+			or (_carrying_items.size() > 0 and nearest == null)
 	):
 		_go_deposit()
 		return
 
-	if _nearby_items.size() > 0:
-			_go_pick_up(_find_nearest(_nearby_items.values()))
+	if nearest != null:
+			_go_pick_up(nearest)
 	else:
 		state = State.WAITING_FOR_NEW_ITEMS
