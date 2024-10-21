@@ -12,6 +12,7 @@ func _ready() -> void:
 	visible = false
 
 
+
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return

@@ -15,17 +15,20 @@ func _ready() -> void:
 
 
 func _press_down_animation() -> void:
+	SoundManager.audio_player.play_sound(SoundManager.press_down())
 	_animate(PRESS_SCALE)
 
 
 func _press_up_animation() -> void:
 	if is_hovered():
+		SoundManager.audio_player.play_sound(SoundManager.press_up())
 		_animate(HOVER_SCALE)
 	else:
 		_animate(Vector2.ONE)
 
 
 func _hover_over_animation() -> void:
+	SoundManager.audio_player.play_sound(SoundManager.hover())
 	_animate(HOVER_SCALE)
 
 
