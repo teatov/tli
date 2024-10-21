@@ -171,7 +171,9 @@ func _deposit() -> void:
 		_unit.animation_playback.travel("plop_up")
 		audio_player.play_sound(SoundManager.swoosh())
 
-		await item.start_tweening(_unit.anthill.global_position).tween_finished
+		await item.start_tweening(
+				_unit.anthill.deposit_point.global_position
+		).tween_finished
 
 		audio_player.play_sound(SoundManager.tok())
 		item.remove_from_spawner()

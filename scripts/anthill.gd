@@ -13,6 +13,8 @@ var _nitwit_scene := preload("res://scenes/units/ant_nitwit.tscn")
 var _gatherer_scene := preload("res://scenes/units/ant_gatherer.tscn")
 
 @onready var ui_origin: Node3D = $UiOrigin
+@onready var deposit_point: Node3D = $DepositPoint
+@onready var animation_player: AnimationPlayer = $Anthill/AnimationPlayer
 @onready var audio_player: SoundEffectsPlayer = (
 		$SoundEffectsPlayer
 )
@@ -39,6 +41,8 @@ func deposit_honeydew(amount: int) -> int:
 		leftover = new_honeydew_amount - max_honeydew
 	else:
 		honeydew = new_honeydew_amount
+	animation_player.stop()
+	animation_player.play("plop_down")
 	return leftover
 
 
@@ -84,5 +88,8 @@ func _create_unit(
 	)
 	if ding:
 		audio_player.play_sound(SoundManager.ding())
+		animation_player.stop()
+		animation_player.play("plop_up")
+
 	buy_ant.emit()
 	return new_unit
