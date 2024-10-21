@@ -27,5 +27,5 @@ func _process(_delta: float) -> void:
 	_filter.cutoff_hz = lerpf(
 			ZOOMED_IN_CUTOFF,
 			ZOOMED_OUT_CUTOFF,
-			StaticNodesManager.main_camera.zoom_value,
+			ease(StaticNodesManager.main_camera.zoom_value, 0.5),
 	)
