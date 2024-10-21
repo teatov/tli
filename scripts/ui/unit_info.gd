@@ -45,6 +45,7 @@ func open(who: Unit) -> void:
 	visible = true
 	unit = who
 	set_target(unit.ui_origin)
+	_open_animation()
 
 
 func close() -> void:

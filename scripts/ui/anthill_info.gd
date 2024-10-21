@@ -41,6 +41,7 @@ func open(at: Anthill) -> void:
 	_anthill = at
 	set_target(_anthill.ui_origin)
 	counter.initialize(_anthill.honeydew, _anthill.max_honeydew)
+	_open_animation()
 
 
 func close() -> void:

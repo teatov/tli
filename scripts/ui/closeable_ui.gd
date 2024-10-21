@@ -1,7 +1,11 @@
 extends Control
 class_name CloseableUI
 
+const OPEN_TWEEN_DURATION: float = 0.5
+const CLOSE_TWEEN_DURATION: float = 0.25
+
 var _is_mouse_over: bool = false
+var _tween: Tween
 
 
 func _ready() -> void:
@@ -28,4 +32,32 @@ func _input(event: InputEvent) -> void:
 
 
 func close() -> void:
+	await _close_animation()
 	visible = false
+
+
+func _open_animation() -> void:
+	if _tween:
+		_tween.stop()
+	scale = Vector2.ZERO
+	_tween = create_tween()
+	await (
+			_tween
+			.tween_property(self, "scale", Vector2.ONE, OPEN_TWEEN_DURATION)
+			.set_ease(Tween.EASE_OUT)
+			.set_trans(Tween.TRANS_ELASTIC)
+			.finished
+	)
+
+func _close_animation() -> void:
+	if _tween:
+		_tween.stop()
+	scale = Vector2.ONE
+	_tween = create_tween()
+	await (
+			_tween
+			.tween_property(self, "scale", Vector2.ZERO, CLOSE_TWEEN_DURATION)
+			.set_ease(Tween.EASE_IN)
+			.set_trans(Tween.TRANS_BACK)
+			.finished
+	)

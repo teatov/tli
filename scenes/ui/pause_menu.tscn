@@ -49,6 +49,7 @@ offset_right = 80.0
 offset_bottom = 55.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(81, 54.5)
 theme_override_styles/panel = SubResource("StyleBoxTexture_k576p")
 
 [node name="QuitButton" type="TextureButton" parent="Panel"]
