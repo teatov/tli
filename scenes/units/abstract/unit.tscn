@@ -46,4 +46,10 @@ visible = false
 mesh = SubResource("BoxMesh_hvf81")
 
 [node name="SoundEffectsPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 script = ExtResource("3_wl62h")
+
+[node name="MoveSoundPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+attenuation_model = 1
+attenuation_filter_db = 0.0

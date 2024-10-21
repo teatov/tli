@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://lbs0vilymbum"]
+[gd_scene load_steps=11 format=3 uid="uid://lbs0vilymbum"]
 
 [ext_resource type="PackedScene" uid="uid://cidd3q2tet7ku" path="res://scenes/units/abstract/controlled_unit.tscn" id="1_66kao"]
 [ext_resource type="Script" path="res://scripts/units/abstract/controlled_ant_unit.gd" id="2_77pj2"]
 [ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="2_e21vo"]
+[ext_resource type="AudioStream" uid="uid://ds7c5gkf1mssj" path="res://assets/audio/units/ant_move.wav" id="4_80pw8"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jem3o"]
 animation = &"idle"
@@ -80,5 +81,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 
 [node name="SelectionIndicator" parent="." index="7"]
 transform = Transform3D(0.772715, 0, 0, 0, 0.772715, 0, 0, 0, 0.772715, 0, 0, 0)
+
+[node name="MoveSoundPlayer" parent="." index="10"]
+stream = ExtResource("4_80pw8")
 
 [editable path="AntModel"]

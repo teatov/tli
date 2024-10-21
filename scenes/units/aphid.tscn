@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bw8cabkva3k4f"]
+[gd_scene load_steps=12 format=3 uid="uid://bw8cabkva3k4f"]
 
 [ext_resource type="PackedScene" uid="uid://c70vx0utm5knp" path="res://scenes/units/abstract/unit.tscn" id="1_ghhpv"]
 [ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_c6sy4"]
 [ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="2_vtmi4"]
 [ext_resource type="Material" uid="uid://f5ibq3dhugoo" path="res://resources/materials/aphid_mat.tres" id="3_b828p"]
+[ext_resource type="AudioStream" uid="uid://bqt1xdorarhoi" path="res://assets/audio/units/aphid_move.wav" id="5_f4mon"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f1f0e"]
 animation = &"idle"
@@ -51,5 +52,9 @@ transform = Transform3D(0.759866, 0, 0, 0, 0.759866, 0, 0, 0, 0.759866, 0, 0, 0)
 
 [node name="UiOrigin" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.531, 0)
+
+[node name="MoveSoundPlayer" parent="." index="9"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.25, 0)
+stream = ExtResource("5_f4mon")
 
 [editable path="AphidModel"]

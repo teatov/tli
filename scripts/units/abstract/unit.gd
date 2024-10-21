@@ -31,6 +31,7 @@ var _advance_anim_delta_accum: float = 0
 @onready var audio_player: SoundEffectsPlayer = (
 		$SoundEffectsPlayer
 )
+@onready var move_audio_player: AudioStreamPlayer3D = $MoveSoundPlayer;
 
 
 func _ready() -> void:
@@ -40,7 +41,10 @@ func _ready() -> void:
 	assert(ui_origin != null, "ui_origin missing!")
 	assert(anim_advance_indicator != null, "anim_advance_indicator missing!")
 	assert(audio_player != null, "audio_player missing!")
+	assert(move_audio_player != null, "move_audio_player missing!")
 	super._ready()
+
+	move_audio_player.pitch_scale += randf_range(-0.25, 0.25)
 
 	anim_advance_indicator.visible = false
 	if _spawn_pos != null and _spawn_pos != Vector3.ZERO:
@@ -63,6 +67,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	_handle_animation(delta)
+	_handle_move_sound()
 	showing_info = UiManager.unit_info.unit == self
 
 
@@ -125,6 +130,16 @@ func _handle_animation(delta: float) -> void:
 		
 	anim_advance_indicator.visible = advance and DebugManager.enabled
 	
+
+func _handle_move_sound() -> void:
+	if move_audio_player.stream == null:
+		return
+
+	if move_audio_player.playing and velocity.length() < _move_speed / 2:
+		move_audio_player.stop()
+	if not move_audio_player.playing and velocity.length() >= _move_speed / 2:
+		move_audio_player.play(randf() * move_audio_player.stream.get_length())
+
 
 func _wander(delta: float) -> void:
 	_wandering_timer -= delta
