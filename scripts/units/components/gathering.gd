@@ -149,6 +149,10 @@ func _pick_up() -> void:
 	_unit.animation_playback.travel("plop_down")
 
 	await get_tree().create_timer(_pickup_interval).timeout
+	
+	if state == State.STOP:
+		return
+
 	var nearest := _find_nearest(_nearby_items.values())
 	if _carrying_items.size() == _max_carrying or nearest == null:
 		_go_deposit()
@@ -158,7 +162,6 @@ func _pick_up() -> void:
 
 
 func _deposit() -> void:
-	await get_tree().create_timer(0.5).timeout
 	while _carrying_items.size() > 0:
 		if state != State.DEPOSITING:
 			return
@@ -182,6 +185,9 @@ func _deposit() -> void:
 		_unit.anthill.deposit_honeydew(1)
 		await get_tree().create_timer(_drop_interval).timeout
 	
+	if state == State.STOP:
+		return
+
 	var nearest := _find_nearest(_nearby_items.values())
 	if nearest == null:
 		state = State.WAITING_FOR_NEW_ITEMS

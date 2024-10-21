@@ -50,6 +50,10 @@ window/stretch/aspect="expand"
 mouse_cursor/custom_image="res://assets/textures/gui/cursor.png"
 mouse_cursor/custom_image_hotspot=Vector2(32, 32)
 
+[editor]
+
+movie_writer/movie_file="E:/Projects/Games/tli/build/recording.avi"
+
 [filesystem]
 
 import/fbx2gltf/enabled=false
