@@ -1,6 +1,8 @@
 extends Node
 ## Handles selection of units.
 
+signal deselect
+
 const MIN_DRAG_DISTANCE: float = 15
 const UNIT_SELECT_OFFSET: float = 0.25
 
@@ -50,6 +52,7 @@ func _input(event: InputEvent) -> void:
 				_selection_rect.size = Vector2.ZERO
 			elif selecting:
 				_set_selection_state(false)
+				deselect.emit()
 	
 	if event is InputEventMouseMotion:
 		if _mouse_pressed:
@@ -71,6 +74,11 @@ func remove_unit_from_visible(unit: Unit) -> void:
 		return
 	
 	_visible_units.erase(unit_id)
+
+
+func is_unit_visible(unit: Unit) -> bool:
+	var unit_id := unit.get_instance_id()
+	return _visible_units.keys().has(unit_id)
 
 
 func _handle_advance_anim_step() -> void:

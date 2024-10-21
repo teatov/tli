@@ -28,6 +28,7 @@ func _init() -> void:
 func _ready() -> void:
 	assert(selection_indicator != null, "selection_indicator missing!")
 	nav_agent.navigation_finished.connect(_on_nav_agent_navigation_finished)
+	SelectionManager.deselect.connect(_on_selection_manager_deselect)
 	super._ready()
 
 
@@ -98,3 +99,8 @@ func _click_raycast(mouse_pos: Vector2) -> Vector3:
 
 func _on_nav_agent_navigation_finished() -> void:
 	_wandering_center = nav_agent.get_final_position()
+
+
+func _on_selection_manager_deselect() -> void:
+	if _selected and not SelectionManager.is_unit_visible(self):
+		set_selected(false)
