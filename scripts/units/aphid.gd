@@ -9,7 +9,7 @@ const BONE_SCALE_VARIATION: float = 0.25
 
 const HONEYDEW_INTERVAL_MIN: float = 5
 const HONEYDEW_INTERVAL_MAX: float = 60
-const HONEYDEW_SPAWN_SPREAD: float = 0.5
+const HONEYDEW_SPAWN_SPREAD: float = 0.25
 const HONEYDEWS_MAX: int = 5
 
 var state: State = State.WANDERING

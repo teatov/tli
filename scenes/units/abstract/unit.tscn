@@ -58,6 +58,6 @@ attenuation_model = 1
 [node name="Decal" type="Decal" parent="."]
 size = Vector3(1, 1, 1)
 texture_albedo = ExtResource("4_iixjt")
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0.242208, 0.2075, 0.25, 1)
 albedo_mix = 0.5
 cull_mask = 32

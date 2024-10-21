@@ -11,27 +11,6 @@ radius = 15.0
 [node name="AntGatherer" instance=ExtResource("1_m5yy7")]
 script = ExtResource("2_7pblm")
 
-[node name="Skeleton3D" parent="AntModel/Armature" index="0"]
-bones/14/scale = Vector3(1, 1, 1)
-bones/15/scale = Vector3(1, 1, 1)
-bones/16/scale = Vector3(1, 1, 1)
-bones/18/rotation = Quaternion(0.0294712, -6.21995e-15, 4.35675e-07, 0.999566)
-bones/19/rotation = Quaternion(0.0294712, -5.33139e-15, 4.35675e-07, 0.999566)
-bones/20/rotation = Quaternion(0.0294712, -6.21995e-15, 4.35675e-07, 0.999566)
-bones/21/rotation = Quaternion(0.0294712, -6.21995e-15, 4.35675e-07, 0.999566)
-bones/22/rotation = Quaternion(0.0294712, -6.21995e-15, 4.35675e-07, 0.999566)
-bones/23/rotation = Quaternion(0.0294712, -5.33139e-15, 4.35675e-07, 0.999566)
-bones/24/rotation = Quaternion(0.0294712, -6.21995e-15, 4.35675e-07, 0.999566)
-bones/25/rotation = Quaternion(0.0294712, -5.33139e-15, 4.35675e-07, 0.999566)
-bones/26/scale = Vector3(1, 1, 1)
-bones/27/scale = Vector3(1, 1, 1)
-bones/32/scale = Vector3(1, 1, 1)
-bones/34/scale = Vector3(1, 1, 1)
-bones/35/scale = Vector3(1, 1, 1)
-bones/36/scale = Vector3(1, 1, 1)
-bones/41/scale = Vector3(1, 1, 1)
-bones/43/scale = Vector3(1, 1, 1)
-
 [node name="GathererMesh" parent="AntModel/Armature/Skeleton3D" index="0"]
 visible = true
 

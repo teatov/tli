@@ -37,6 +37,6 @@ mesh = SubResource("QuadMesh_qwehm")
 [node name="Decal" type="Decal" parent="."]
 size = Vector3(0.5, 0.5, 0.5)
 texture_albedo = ExtResource("4_goini")
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0.242208, 0.2075, 0.25, 1)
 albedo_mix = 0.25
 cull_mask = 32
