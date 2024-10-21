@@ -1,11 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://cidd3q2tet7ku"]
+[gd_scene load_steps=7 format=3 uid="uid://cidd3q2tet7ku"]
 
 [ext_resource type="PackedScene" uid="uid://c70vx0utm5knp" path="res://scenes/units/abstract/unit.tscn" id="1_iivmb"]
 [ext_resource type="Script" path="res://scripts/units/abstract/controlled_unit.gd" id="2_ruawn"]
 [ext_resource type="Material" uid="uid://bghl8uypb17xy" path="res://resources/materials/indicators/select_indicator_mat.tres" id="3_3totu"]
+[ext_resource type="Material" uid="uid://dgsd4m4dnqddv" path="res://resources/materials/indicators/move_target_mat.tres" id="3_7b21u"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_4fevy"]
 material = ExtResource("3_3totu")
+center_offset = Vector3(0, 0.001, 0)
+orientation = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_ewb03"]
+material = ExtResource("3_7b21u")
 center_offset = Vector3(0, 0.001, 0)
 orientation = 1
 
@@ -15,3 +21,8 @@ script = ExtResource("2_ruawn")
 [node name="SelectionIndicator" type="MeshInstance3D" parent="." index="6"]
 cast_shadow = 0
 mesh = SubResource("QuadMesh_4fevy")
+
+[node name="MoveTarget" type="MeshInstance3D" parent="." index="7"]
+top_level = true
+cast_shadow = 0
+mesh = SubResource("QuadMesh_ewb03")

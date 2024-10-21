@@ -12,6 +12,7 @@ var _is_moving: bool = false
 var _ground_plane: Plane = Plane(Vector3.UP, 0)
 
 @onready var selection_indicator: VisualInstance3D = $SelectionIndicator
+@onready var move_target_indicator: VisualInstance3D = $MoveTarget
 
 
 static func get_cost() -> int:
@@ -34,6 +35,7 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	selection_indicator.visible = _selected
 	hover_indicator.visible = _hovered or _hovered_rect
+	move_target_indicator.visible = _is_moving and (_selected or showing_info)
 
 
 func _physics_process(delta: float) -> void:
@@ -80,6 +82,8 @@ func set_selected(on: bool) -> void:
 func navigate(to: Vector3, moving: bool = false) -> void:
 	_is_moving = moving
 	nav_agent.set_target_position(to)
+	if _is_moving:
+		move_target_indicator.global_position = nav_agent.target_position
 
 
 func _interact(with: Interactable) -> void:
