@@ -10,7 +10,7 @@ var _move_speed: float = 3
 
 var _max_wander_distance: float = 5
 var _min_wander_interval: float = 0.25
-var _max_wander_interval: float = 5
+var _max_wander_interval: float = 10
 
 var _wandering_center: Vector3 = Vector3.ZERO
 var _wandering_timer: float = 0

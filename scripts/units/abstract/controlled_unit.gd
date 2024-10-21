@@ -21,7 +21,7 @@ static func get_cost() -> int:
 func _init() -> void:
 	_max_wander_distance = 2
 	_min_wander_interval = 0.5
-	_max_wander_interval = 10
+	_max_wander_interval = 15
 
 
 func _ready() -> void:
