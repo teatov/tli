@@ -1,11 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://c70rhvk2okkcu"]
+[gd_scene load_steps=14 format=3 uid="uid://c70rhvk2okkcu"]
 
 [ext_resource type="StyleBox" uid="uid://do5c5v5kvgv0s" path="res://resources/styles/panel_small_style.tres" id="1_wcf51"]
 [ext_resource type="Script" path="res://scripts/ui/buy_ants.gd" id="2_sf7hb"]
 [ext_resource type="Texture2D" uid="uid://bh01xbmjanku0" path="res://assets/textures/gui/button_bg.png" id="2_shpjn"]
 [ext_resource type="Texture2D" uid="uid://jv8twhntt6x3" path="res://assets/textures/gui/button_hover_bg.png" id="3_bwnfl"]
 [ext_resource type="Texture2D" uid="uid://slraulfmk8c0" path="res://assets/textures/gui/pictograms.png" id="4_s7jbe"]
-[ext_resource type="Script" path="res://scripts/ui/honeydew_counter.gd" id="6_k6iup"]
+[ext_resource type="Script" path="res://scripts/ui/components/honeydew_counter.gd" id="6_k6iup"]
+[ext_resource type="Script" path="res://scripts/ui/components/animated_texture_button.gd" id="6_msnw2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7i0n"]
 atlas = ExtResource("4_s7jbe")
@@ -63,11 +64,13 @@ offset_left = 13.0
 offset_top = 16.0
 offset_right = 112.0
 offset_bottom = 72.0
+pivot_offset = Vector2(49, 27)
 texture_normal = ExtResource("2_shpjn")
 texture_pressed = ExtResource("2_shpjn")
 texture_hover = ExtResource("3_bwnfl")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("6_msnw2")
 
 [node name="ButtonTexture" type="TextureRect" parent="BuyNitwitButton"]
 layout_mode = 1
@@ -100,11 +103,13 @@ offset_left = 15.0
 offset_top = 77.0
 offset_right = 114.0
 offset_bottom = 133.0
+pivot_offset = Vector2(47, 26)
 texture_normal = ExtResource("2_shpjn")
 texture_pressed = ExtResource("2_shpjn")
 texture_hover = ExtResource("3_bwnfl")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("6_msnw2")
 
 [node name="ButtonTexture" type="TextureRect" parent="BuyGathererButton"]
 layout_mode = 1

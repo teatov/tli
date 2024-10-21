@@ -37,27 +37,35 @@ func close() -> void:
 
 
 func _open_animation() -> void:
-	if _tween:
-		_tween.stop()
-	scale = Vector2.ZERO
-	_tween = create_tween()
-	await (
-			_tween
-			.tween_property(self, "scale", Vector2.ONE, OPEN_TWEEN_DURATION)
-			.set_ease(Tween.EASE_OUT)
-			.set_trans(Tween.TRANS_ELASTIC)
-			.finished
+	await _animate(
+			Vector2.ONE,
+			OPEN_TWEEN_DURATION,
+			Tween.EASE_OUT,
+			Tween.TRANS_ELASTIC,
 	)
 
 func _close_animation() -> void:
+	await _animate(
+			Vector2.ZERO,
+			CLOSE_TWEEN_DURATION,
+			Tween.EASE_IN,
+			Tween.TRANS_BACK,
+	)
+
+func _animate(
+		to_scale: Vector2,
+		duration: float,
+		ease_type: Tween.EaseType,
+		trans_type: Tween.TransitionType,
+) -> void:
 	if _tween:
 		_tween.stop()
 	scale = Vector2.ONE
 	_tween = create_tween()
 	await (
 			_tween
-			.tween_property(self, "scale", Vector2.ZERO, CLOSE_TWEEN_DURATION)
-			.set_ease(Tween.EASE_IN)
-			.set_trans(Tween.TRANS_BACK)
+			.tween_property(self, "scale", to_scale, duration)
+			.set_ease(ease_type)
+			.set_trans(trans_type)
 			.finished
 	)

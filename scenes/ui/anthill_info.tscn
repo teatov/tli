@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://d8ut24fit87x"]
+[gd_scene load_steps=9 format=3 uid="uid://d8ut24fit87x"]
 
 [ext_resource type="StyleBox" uid="uid://do5c5v5kvgv0s" path="res://resources/styles/panel_small_style.tres" id="1_tod8w"]
 [ext_resource type="Script" path="res://scripts/ui/anthill_info.gd" id="2_aj5vl"]
-[ext_resource type="Script" path="res://scripts/ui/honeydew_counter.gd" id="3_kibtv"]
+[ext_resource type="Script" path="res://scripts/ui/components/honeydew_counter.gd" id="3_kibtv"]
 [ext_resource type="Texture2D" uid="uid://bh01xbmjanku0" path="res://assets/textures/gui/button_bg.png" id="4_b8264"]
 [ext_resource type="Texture2D" uid="uid://slraulfmk8c0" path="res://assets/textures/gui/pictograms.png" id="4_dw0d6"]
 [ext_resource type="Texture2D" uid="uid://jv8twhntt6x3" path="res://assets/textures/gui/button_hover_bg.png" id="5_f3si0"]
+[ext_resource type="Script" path="res://scripts/ui/components/animated_texture_button.gd" id="6_live5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nwfun"]
 atlas = ExtResource("4_dw0d6")
@@ -60,11 +61,13 @@ offset_left = 241.0
 offset_top = 13.0
 offset_right = 321.0
 offset_bottom = 63.0
+pivot_offset = Vector2(40, 23)
 texture_normal = ExtResource("4_b8264")
 texture_pressed = ExtResource("4_b8264")
 texture_hover = ExtResource("5_f3si0")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("6_live5")
 
 [node name="TextureRect" type="TextureRect" parent="AntBuyButton"]
 layout_mode = 1
