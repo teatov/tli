@@ -24,6 +24,9 @@ var _advance_anim_delta_accum: float = 0
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var animation_playback: AnimationNodeStateMachinePlayback = (
+		animation_tree.get("parameters/playback")
+)
 @onready var anim_advance_indicator: VisualInstance3D = $AnimAdvanceIndicator
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D

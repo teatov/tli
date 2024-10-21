@@ -66,6 +66,15 @@ var _press_up_streams: Array[AudioStream] = [
 	preload("res://assets/audio/ui/press_up_6.wav"),
 ]
 
+var _aphid_poop_streams: Array[AudioStream] = [
+	preload("res://assets/audio/units/aphid_poop_1.wav"),
+	preload("res://assets/audio/units/aphid_poop_2.wav"),
+	preload("res://assets/audio/units/aphid_poop_3.wav"),
+	preload("res://assets/audio/units/aphid_poop_4.wav"),
+	preload("res://assets/audio/units/aphid_poop_5.wav"),
+	preload("res://assets/audio/units/aphid_poop_6.wav"),
+]
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -101,3 +110,7 @@ func press_down() -> AudioStream:
 
 func press_up() -> AudioStream:
 	return _press_up_streams.pick_random()
+
+
+func aphid_poop() -> AudioStream:
+	return _aphid_poop_streams.pick_random()

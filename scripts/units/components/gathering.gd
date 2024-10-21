@@ -146,6 +146,7 @@ func _pick_up() -> void:
 			_get_nth_pile_pos(_carrying_items.size() - 1)
 	).tween_finished
 	audio_player.play_sound(SoundManager.pop())
+	_unit.animation_playback.travel("plop_down")
 
 	await get_tree().create_timer(_pickup_interval).timeout
 	var nearest := _find_nearest(_nearby_items.values())
@@ -167,6 +168,7 @@ func _deposit() -> void:
 			return
 
 		var item := _carrying_items.pop_back() as Honeydew
+		_unit.animation_playback.travel("plop_up")
 		audio_player.play_sound(SoundManager.swoosh())
 
 		await item.start_tweening(_unit.anthill.global_position).tween_finished

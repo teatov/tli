@@ -65,6 +65,7 @@ func _ready() -> void:
 	assert(listener != null, "listener missing!")
 	_target_position = StaticNodesManager.player_anthill.global_position
 	listener.make_current()
+	UiManager.unit_info.closed.connect(_on_unit_info_closed)
 
 
 func _process(delta: float) -> void:
@@ -90,7 +91,6 @@ func _process(delta: float) -> void:
 	listener.global_position = _target_position + (Vector3.UP * distance)
 	listener.global_rotation = global_rotation
 
-	UiManager.unit_info.closed.connect(_on_unit_info_closed)
 
 	DebugManager.marker("mc_target", _target_position, 0.05)
 	DebugManager.marker("mc_listener", listener.global_position, 0.05, Color.GREEN)

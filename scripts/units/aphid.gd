@@ -87,6 +87,9 @@ func _handle_honeydew_spawn(delta: float) -> void:
 	new_honeydew.global_position = global_position + new_pos
 	_put_honeydew(new_honeydew)
 
+	audio_player.play_sound(SoundManager.aphid_poop())
+	animation_playback.travel("plop")
+
 	_set_spawn_timer()
 
 
