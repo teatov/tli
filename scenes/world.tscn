@@ -78,6 +78,7 @@ script = ExtResource("3_vkmt5")
 
 [node name="AphidsBunch2" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0519, -1.90735e-06, -58.8914)
+visible = false
 gizmo_extents = 1.38
 script = ExtResource("3_vkmt5")
 
@@ -108,6 +109,7 @@ script = ExtResource("3_vkmt5")
 
 [node name="AphidsBunch8" type="Marker3D" parent="Bunches/Aphids"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.994, 9.53674e-07, -41.5218)
+visible = false
 gizmo_extents = 4.35
 script = ExtResource("3_vkmt5")
 

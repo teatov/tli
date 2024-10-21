@@ -14,6 +14,10 @@ var _aphid_scene := preload("res://scenes/units/aphid.tscn")
 var _honeydew_scene := preload("res://scenes/items/honeydew.tscn")
 
 func _ready() -> void:
+	if not visible:
+		return
+
+		
 	for i in _amount:
 		var pos_offset := Vector3(
 				randf_range(-gizmo_extents, gizmo_extents),
