@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c70vx0utm5knp"]
+[gd_scene load_steps=7 format=3 uid="uid://c70vx0utm5knp"]
 
 [ext_resource type="Script" path="res://scripts/units/abstract/unit.gd" id="1_ulhs6"]
 [ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="2_uk1jy"]
 [ext_resource type="Script" path="res://scripts/sound_effects_player.gd" id="3_wl62h"]
+[ext_resource type="Texture2D" uid="uid://4hyvuk7g4257" path="res://assets/textures/shadow.png" id="4_iixjt"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_igohi"]
 material = ExtResource("2_uk1jy")
@@ -53,3 +54,10 @@ script = ExtResource("3_wl62h")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 attenuation_model = 1
 attenuation_filter_db = 0.0
+
+[node name="Decal" type="Decal" parent="."]
+size = Vector3(1, 1, 1)
+texture_albedo = ExtResource("4_iixjt")
+modulate = Color(0, 0, 0, 1)
+albedo_mix = 0.5
+cull_mask = 32

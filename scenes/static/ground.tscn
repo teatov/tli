@@ -6,4 +6,5 @@
 [node name="Ground" instance=ExtResource("1_wapwq")]
 
 [node name="ground" parent="." index="0"]
+layers = 32
 surface_material_override/0 = ExtResource("2_pmgjw")

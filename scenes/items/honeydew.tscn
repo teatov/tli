@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dx544tb0so0b4"]
+[gd_scene load_steps=8 format=3 uid="uid://dx544tb0so0b4"]
 
 [ext_resource type="Script" path="res://scripts/items/honeydew.gd" id="1_6fg3d"]
 [ext_resource type="Material" uid="uid://c33we3533cr8k" path="res://resources/materials/honeydew_mat.tres" id="2_fnxpb"]
 [ext_resource type="Material" uid="uid://f0nlf4tdpvbd" path="res://resources/materials/indicators/hover_indicator_mat.tres" id="3_cofwb"]
+[ext_resource type="Texture2D" uid="uid://4hyvuk7g4257" path="res://assets/textures/shadow.png" id="4_goini"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_6pru1"]
 material = ExtResource("2_fnxpb")
@@ -32,3 +33,10 @@ shape = SubResource("SphereShape3D_8lnyq")
 transform = Transform3D(0.66646, 0, 0, 0, 0.66646, 0, 0, 0, 0.66646, 0, -0.0175649, 0)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_qwehm")
+
+[node name="Decal" type="Decal" parent="."]
+size = Vector3(0.5, 0.5, 0.5)
+texture_albedo = ExtResource("4_goini")
+modulate = Color(0, 0, 0, 1)
+albedo_mix = 0.25
+cull_mask = 32
