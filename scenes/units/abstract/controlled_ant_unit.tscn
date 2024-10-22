@@ -1,48 +1,50 @@
-[gd_scene load_steps=15 format=3 uid="uid://lbs0vilymbum"]
+[gd_scene load_steps=14 format=3 uid="uid://lbs0vilymbum"]
 
 [ext_resource type="PackedScene" uid="uid://cidd3q2tet7ku" path="res://scenes/units/abstract/controlled_unit.tscn" id="1_66kao"]
 [ext_resource type="Script" path="res://scripts/units/abstract/controlled_ant_unit.gd" id="2_77pj2"]
 [ext_resource type="PackedScene" uid="uid://bi231xk2sp410" path="res://assets/models/ant.glb" id="2_e21vo"]
 [ext_resource type="AudioStream" uid="uid://ds7c5gkf1mssj" path="res://assets/audio/units/ant_move.wav" id="4_80pw8"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jem3o"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lip5d"]
 animation = &"idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f5jro"]
-animation = &"walk"
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_7c5f2"]
 
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_0mwos"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_jem3o")
-blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_f5jro")
-blend_point_1/pos = 1.0
-min_space = 0.0
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gnejs"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0h55w"]
 animation = &"plop_down"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_finoi"]
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_wsc5y"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Body", "Armature/Skeleton3D:Leg_back_mid_L", "Armature/Skeleton3D:Leg_back_mid_R", "Armature/Skeleton3D:Leg_back_root_L", "Armature/Skeleton3D:Leg_back_root_R", "Armature/Skeleton3D:Leg_back_tip_L", "Armature/Skeleton3D:Leg_back_tip_R", "Armature/Skeleton3D:Leg_front_mid_L", "Armature/Skeleton3D:Leg_front_mid_R", "Armature/Skeleton3D:Leg_front_root_L", "Armature/Skeleton3D:Leg_front_root_R", "Armature/Skeleton3D:Leg_front_tip_L", "Armature/Skeleton3D:Leg_front_tip_R", "Armature/Skeleton3D:Leg_mid_mid_L", "Armature/Skeleton3D:Leg_mid_mid_R", "Armature/Skeleton3D:Leg_mid_root_L", "Armature/Skeleton3D:Leg_mid_root_R", "Armature/Skeleton3D:Leg_mid_tip_L", "Armature/Skeleton3D:Leg_mid_tip_R"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3qepx"]
 animation = &"plop_up"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pwnkm"]
-advance_mode = 2
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_4ftkg"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Body", "Armature/Skeleton3D:Leg_back_mid_L", "Armature/Skeleton3D:Leg_back_mid_R", "Armature/Skeleton3D:Leg_back_root_L", "Armature/Skeleton3D:Leg_back_root_R", "Armature/Skeleton3D:Leg_back_tip_L", "Armature/Skeleton3D:Leg_back_tip_R", "Armature/Skeleton3D:Leg_front_mid_L", "Armature/Skeleton3D:Leg_front_mid_R", "Armature/Skeleton3D:Leg_front_root_L", "Armature/Skeleton3D:Leg_front_root_R", "Armature/Skeleton3D:Leg_front_tip_L", "Armature/Skeleton3D:Leg_front_tip_R", "Armature/Skeleton3D:Leg_mid_mid_L", "Armature/Skeleton3D:Leg_mid_mid_R", "Armature/Skeleton3D:Leg_mid_root_L", "Armature/Skeleton3D:Leg_mid_root_R", "Armature/Skeleton3D:Leg_mid_tip_L", "Armature/Skeleton3D:Leg_mid_tip_R"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_67qgu"]
-switch_mode = 2
-advance_mode = 2
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_grmq1"]
+animation = &"walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b5tcb"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_v8drs"]
-states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_0mwos")
-states/locomotion/position = Vector2(334, 100)
-states/plop_down/node = SubResource("AnimationNodeAnimation_gnejs")
-states/plop_down/position = Vector2(457, 39)
-states/plop_up/node = SubResource("AnimationNodeAnimation_finoi")
-states/plop_up/position = Vector2(499, 90)
-transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_pwnkm"), "plop_down", "locomotion", SubResource("AnimationNodeStateMachineTransition_67qgu"), "plop_up", "locomotion", SubResource("AnimationNodeStateMachineTransition_b5tcb")]
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4gyt5"]
+graph_offset = Vector2(-327.784, 80.2142)
+nodes/idle_anim/node = SubResource("AnimationNodeAnimation_lip5d")
+nodes/idle_anim/position = Vector2(-320, 80)
+nodes/locomotion_blend/node = SubResource("AnimationNodeBlend2_7c5f2")
+nodes/locomotion_blend/position = Vector2(-100, 120)
+nodes/output/position = Vector2(680, 160)
+nodes/plop_down_anim/node = SubResource("AnimationNodeAnimation_0h55w")
+nodes/plop_down_anim/position = Vector2(-40, 360)
+nodes/plop_down_oneshot/node = SubResource("AnimationNodeOneShot_wsc5y")
+nodes/plop_down_oneshot/position = Vector2(180, 140)
+nodes/plop_up_anim/node = SubResource("AnimationNodeAnimation_3qepx")
+nodes/plop_up_anim/position = Vector2(260, 400)
+nodes/plop_up_oneshot/node = SubResource("AnimationNodeOneShot_4ftkg")
+nodes/plop_up_oneshot/position = Vector2(440, 140)
+nodes/walk_anim/node = SubResource("AnimationNodeAnimation_grmq1")
+nodes/walk_anim/position = Vector2(-320, 220)
+node_connections = [&"locomotion_blend", 0, &"idle_anim", &"locomotion_blend", 1, &"walk_anim", &"output", 0, &"plop_up_oneshot", &"plop_down_oneshot", 0, &"locomotion_blend", &"plop_down_oneshot", 1, &"plop_down_anim", &"plop_up_oneshot", 0, &"plop_down_oneshot", &"plop_up_oneshot", 1, &"plop_up_anim"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8admi"]
 height = 0.5
@@ -96,11 +98,20 @@ visible = false
 [node name="NitwitMesh" parent="AntModel/Armature/Skeleton3D" index="1"]
 visible = false
 
+[node name="AnimationPlayer" parent="AntModel" index="1"]
+deterministic = true
+
 [node name="AnimationTree" parent="." index="1"]
 root_node = NodePath("../AntModel")
-tree_root = SubResource("AnimationNodeStateMachine_v8drs")
+tree_root = SubResource("AnimationNodeBlendTree_4gyt5")
 anim_player = NodePath("../AntModel/AnimationPlayer")
-parameters/locomotion/blend_position = 0.023431
+parameters/locomotion_blend/blend_amount = 0
+parameters/plop_down_oneshot/active = false
+parameters/plop_down_oneshot/internal_active = false
+parameters/plop_down_oneshot/request = 0
+parameters/plop_up_oneshot/active = false
+parameters/plop_up_oneshot/internal_active = false
+parameters/plop_up_oneshot/request = 0
 
 [node name="CollisionShape3D" parent="." index="2"]
 shape = SubResource("CylinderShape3D_8admi")

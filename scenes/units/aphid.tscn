@@ -1,39 +1,39 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw8cabkva3k4f"]
+[gd_scene load_steps=12 format=3 uid="uid://bw8cabkva3k4f"]
 
 [ext_resource type="PackedScene" uid="uid://c70vx0utm5knp" path="res://scenes/units/abstract/unit.tscn" id="1_ghhpv"]
 [ext_resource type="Script" path="res://scripts/units/aphid.gd" id="2_c6sy4"]
 [ext_resource type="PackedScene" uid="uid://ch02ae8fj2lhh" path="res://assets/models/aphid.glb" id="2_vtmi4"]
 [ext_resource type="AudioStream" uid="uid://bqt1xdorarhoi" path="res://assets/audio/units/aphid_move.wav" id="5_f4mon"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f1f0e"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vr4bn"]
 animation = &"idle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mfl87"]
-animation = &"walk"
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_6hdai"]
 
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_lgt8u"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_f1f0e")
-blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_mfl87")
-blend_point_1/pos = 1.0
-min_space = 0.0
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vx1kl"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_la1j2"]
 animation = &"plop"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_17r08"]
-advance_mode = 2
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_qspit"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Root"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vqilr"]
-switch_mode = 2
-advance_mode = 2
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g6qll"]
+animation = &"walk"
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_38sa4"]
-states/locomotion/node = SubResource("AnimationNodeBlendSpace1D_lgt8u")
-states/locomotion/position = Vector2(333, 100)
-states/plop/node = SubResource("AnimationNodeAnimation_vx1kl")
-states/plop/position = Vector2(468, 47)
-transitions = ["Start", "locomotion", SubResource("AnimationNodeStateMachineTransition_17r08"), "plop", "locomotion", SubResource("AnimationNodeStateMachineTransition_vqilr")]
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_a3xja"]
+graph_offset = Vector2(-418.868, 27.0018)
+nodes/idle_anim/node = SubResource("AnimationNodeAnimation_vr4bn")
+nodes/idle_anim/position = Vector2(-180, 100)
+nodes/locomotion_blend/node = SubResource("AnimationNodeBlend2_6hdai")
+nodes/locomotion_blend/position = Vector2(20, 140)
+nodes/output/position = Vector2(500, 160)
+nodes/plop_anim/node = SubResource("AnimationNodeAnimation_la1j2")
+nodes/plop_anim/position = Vector2(100, 380)
+nodes/plop_oneshot/node = SubResource("AnimationNodeOneShot_qspit")
+nodes/plop_oneshot/position = Vector2(300, 220)
+nodes/walk_anim/node = SubResource("AnimationNodeAnimation_g6qll")
+nodes/walk_anim/position = Vector2(-180, 260)
+node_connections = [&"locomotion_blend", 0, &"idle_anim", &"locomotion_blend", 1, &"walk_anim", &"output", 0, &"plop_oneshot", &"plop_oneshot", 0, &"locomotion_blend", &"plop_oneshot", 1, &"plop_anim"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_t1vrx"]
 radius = 0.3
@@ -55,11 +55,17 @@ bones/13/rotation = Quaternion(-0.235443, -0.235445, 0.666758, 0.666758)
 bones/14/rotation = Quaternion(-0.235443, -0.235445, 0.666758, 0.666758)
 bones/15/scale = Vector3(1, 1, 1)
 
+[node name="AnimationPlayer" parent="AphidModel" index="1"]
+deterministic = true
+
 [node name="AnimationTree" parent="." index="1"]
 root_node = NodePath("../AphidModel")
-tree_root = SubResource("AnimationNodeStateMachine_38sa4")
+tree_root = SubResource("AnimationNodeBlendTree_a3xja")
 anim_player = NodePath("../AphidModel/AnimationPlayer")
-parameters/locomotion/blend_position = 0
+parameters/locomotion_blend/blend_amount = 0.0
+parameters/plop_oneshot/active = false
+parameters/plop_oneshot/internal_active = false
+parameters/plop_oneshot/request = 0
 
 [node name="CollisionShape3D" parent="." index="2"]
 shape = SubResource("SphereShape3D_t1vrx")

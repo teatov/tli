@@ -24,9 +24,6 @@ var _advance_anim_delta_accum: float = 0
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var ui_origin: Node3D = $UiOrigin
 @onready var animation_tree: AnimationTree = $AnimationTree
-@onready var animation_playback: AnimationNodeStateMachinePlayback = (
-		animation_tree.get("parameters/playback")
-)
 @onready var anim_advance_indicator: VisualInstance3D = $AnimAdvanceIndicator
 @onready var visibility_notifier: VisibleOnScreenNotifier3D = (
 		$VisibleOnScreenNotifier3D
@@ -116,7 +113,7 @@ func _handle_animation(delta: float) -> void:
 			velocity.length() / _move_speed,
 			delta * LOCOMOTION_CHANGE_SPEED
 	)
-	animation_tree.set("parameters/locomotion/blend_position", _locomotion_value)
+	animation_tree["parameters/locomotion_blend/blend_amount"] = _locomotion_value
 
 	_advance_anim_delta_accum += delta
 

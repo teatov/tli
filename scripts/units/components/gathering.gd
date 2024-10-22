@@ -146,7 +146,9 @@ func _pick_up() -> void:
 			_get_nth_pile_pos(_carrying_items.size() - 1)
 	).tween_finished
 	audio_player.play_sound(SoundManager.pop())
-	_unit.animation_playback.travel("plop_down")
+	_unit.animation_tree["parameters/plop_down_oneshot/request"] = (
+			AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	)
 
 	await get_tree().create_timer(_pickup_interval).timeout
 	
@@ -171,7 +173,9 @@ func _deposit() -> void:
 			return
 
 		var item := _carrying_items.pop_back() as Honeydew
-		_unit.animation_playback.travel("plop_up")
+		_unit.animation_tree["parameters/plop_up_oneshot/request"] = (
+				AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+		)
 		audio_player.play_sound(SoundManager.swoosh())
 
 		await item.start_tweening(

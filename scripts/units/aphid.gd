@@ -88,7 +88,9 @@ func _handle_honeydew_spawn(delta: float) -> void:
 	_put_honeydew(new_honeydew)
 
 	audio_player.play_sound(SoundManager.aphid_poop())
-	animation_playback.travel("plop")
+	animation_tree["parameters/plop_oneshot/request"] = (
+			AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	)
 
 	_set_spawn_timer()
 
