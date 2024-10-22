@@ -256,7 +256,7 @@ func _on_nav_agent_navigation_finished() -> void:
 
 	if (
 			state == State.DEPOSITING
-			and global_position.distance_to(_unit.anthill.global_position) < 2
+			# and global_position.distance_to(_unit.anthill.global_position) < 2
 	):
 		_deposit()
 
